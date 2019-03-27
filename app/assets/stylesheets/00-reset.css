@@ -40,3 +40,7 @@ button,
 input[type="submit"] {
   cursor: pointer;
 }
+
+ body {
+    background-color: #f48f42;
+ };
