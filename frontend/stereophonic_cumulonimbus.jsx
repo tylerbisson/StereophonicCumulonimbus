@@ -5,7 +5,19 @@ import Root from './components/root';
 import configureStore from './store/store';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const store = configureStore();
+    let store;
+    if (window.currentUser) {
+        const preloadedState = {
+            entities: {
+                users: { [window.currentUser.id]: window.currentUser }
+            },
+            session: { id: window.currentUser.id }
+        };
+        store = configureStore(preloadedState);
+        delete window.currentUser;
+    } else {
+        store = configureStore();
+    }
     //TESTINGTESTINGTESTING
     window.login = sessionActions.login;
     // window.signup = sessionAPIUtil.signup;
@@ -18,6 +30,5 @@ document.addEventListener('DOMContentLoaded', () => {
     //TESTINGTESTINGTESTING
     const root = document.getElementById('root');
     ReactDOM.render(<h1>Welcome to Stereophonic Cumulonimbus</h1>, root);
+    ReactDOM.render(<Root store={ store }/>, root);
 });
-
-// GITTY TEST 2
