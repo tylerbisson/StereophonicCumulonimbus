@@ -6,4 +6,4 @@ document.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(<h1>Welcome to Stereophonic Cumulonimbus</h1>, root);
 });
 
-// GITTY TEST 
+// GITTY TEST 2
