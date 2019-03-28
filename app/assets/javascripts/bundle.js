@@ -232,9 +232,14 @@ __webpack_require__.r(__webpack_exports__);
 var Greeting = function Greeting(_ref) {
   var currentUser = _ref.currentUser,
       logout = _ref.logout,
-      openModal = _ref.openModal;
+      demoLogin = _ref.demoLogin,
+      openModal = _ref.openModal,
+      closeModal = _ref.closeModal;
 
-  // debugger
+  if (currentUser) {
+    closeModal();
+  }
+
   var sessionLinks = function sessionLinks() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "greeting-hero"
@@ -257,7 +262,17 @@ var Greeting = function Greeting(_ref) {
       onClick: function onClick() {
         return openModal('signup');
       }
-    }, "Create account"))));
+    }, "Create account"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "hero-slogan"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "What's next in music is first on Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "demo-button",
+      onClick: function onClick() {
+        return demoLogin({
+          username: "Demonstrational User For Your Convenience",
+          password: 'password'
+        });
+      }
+    }, "Try a demo")));
   };
 
   var personalGreeting = function personalGreeting() {
@@ -271,7 +286,7 @@ var Greeting = function Greeting(_ref) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttonbox-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "logo",
+        className: "nav-loggedin-logo",
         src: window.logoURL
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-home"
@@ -326,6 +341,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     openModal: function openModal(modal) {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openModal"])(modal));
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    },
+    demoLogin: function demoLogin(demoUser) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["login"])(demoUser));
     }
   };
 };
@@ -554,15 +575,23 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      // debugger
       e.preventDefault();
-      this.props.closeModal();
+
+      if (!this.props.errors) {
+        this.props.closeModal();
+      }
+
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
+      // debugger
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "modal-errors"
+      }, this.props.errors.map(function (error, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
         }, error);
@@ -571,10 +600,22 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var modalMessage = "";
+
+      if (this.props.formType === 'login') {
+        modalMessage = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "modal-message"
+        }, "Sign into your Stereophonic Cumulonimbus account");
+      } else {
+        modalMessage = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "modal-message"
+        }, "Create your Stereophonic Cumulonimbus account");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "login-form-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, modalMessage, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -593,7 +634,7 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "session-submit",
         type: "submit"
-      }, "Continue")));
+      }, "Continue"), this.renderErrors()));
     }
   }]);
 
@@ -770,8 +811,9 @@ __webpack_require__.r(__webpack_exports__);
   Object.freeze(state);
 
   switch (action.type) {
-    // case RECEIVE_SESSION_ERRORS:
-    //     return action.errors;
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
+      return action.errors;
+
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return [];
 
@@ -29936,7 +29978,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

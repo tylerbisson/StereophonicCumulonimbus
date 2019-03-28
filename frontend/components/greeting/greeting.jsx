@@ -1,8 +1,13 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 
-const Greeting = ({ currentUser, logout, openModal}) => {
-    // debugger
+
+const Greeting = ({ currentUser, logout, demoLogin, openModal, closeModal}) => {
+
+    if (currentUser) {
+        closeModal() 
+    }
+
     const sessionLinks = () => (
         <section className="greeting-hero">
             <nav className="login-signup">
@@ -11,11 +16,20 @@ const Greeting = ({ currentUser, logout, openModal}) => {
                     <h1>STEREOPHONIC CUMULONIMBUS</h1>     
                 </div>
                 <div className="nav-buttonbox-right">
-                    <button className="nav-login" onClick={() => openModal('login')}>Sign in</button>
+                    <button className="nav-login" 
+                        onClick={() => openModal('login')}>Sign in</button>
                         &nbsp;&nbsp;
-                    <button className="nav-signup" onClick={() => openModal('signup')}>Create account</button>
+                    <button className="nav-signup" 
+                        onClick={() => openModal('signup')}>Create account</button>
                 </div>
             </nav>
+            <div className="hero-slogan">
+                <h1>What's next in music is first on Stereophonic Cumulonimbus</h1>
+                <button className="demo-button"
+                    onClick={() => demoLogin(
+                        { username: "Demonstrational User For Your Convenience", password: 'password' })}
+                        >Try a demo</button>
+            </div>
         </section>
     );
     const personalGreeting = () => (
@@ -26,7 +40,7 @@ const Greeting = ({ currentUser, logout, openModal}) => {
         // <section className="greeting-hero">
             <nav className="nav-loggedin">
                 <div className="nav-buttonbox-left">
-                    <img className="logo" src={window.logoURL} />
+                    <img className="nav-loggedin-logo" src={window.logoURL} />
                     <button className="nav-home">Home</button>
                 </div>
                     <div className="nav-buttonbox-right-loggedin">

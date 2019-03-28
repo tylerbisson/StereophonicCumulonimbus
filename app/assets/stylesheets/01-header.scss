@@ -6,20 +6,39 @@ body {
   margin: auto;
   height: 425px;
   width: 1240px;
-  background-image: image-url("dj.jpg");
+  background-image: image-url("schero2.jpg");
   background-position: right 35% bottom 80%;
   /* background-repeat: no-repeat; */
   // background-position: center; 
   background-size: 100%;
   font-size: 20px;
+  border-top: solid;
+  border-color: rgb(255, 84, 10);
+  border-width: 4px;
 }
 
-/* header{
-  height: 100px;
-  background-color: saddle-brown;
-} */
+.hero-slogan{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 35px; 
+  color: white; 
+  position: relative;
+  top: 25%;
+  text-align: center
+}
+
+.demo-button{
+  margin-top: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid rgb(255, 84, 10);
+  background-color: rgb(255, 84, 10);
+  // padding-left: 10px;
+  // padding-right: 10px;
+  padding: 10px;
+}
 
 nav {
+  margin-top: 12px;
   height: 50px;
   /* width: 100%; */
   font-family: 'Quicksand', sans-serif;
@@ -39,6 +58,11 @@ nav .logo {
   width: auto;
 }
 
+nav .nav-loggedin-logo{
+  margin-left: 25px;
+  height: 100%;
+  width: auto;
+}
 
 nav .nav-buttonbox-left-splash {
   height: 100%;
@@ -50,6 +74,7 @@ nav .nav-buttonbox-left-splash {
   color: #ebeff4;
   font-style: italic;
   letter-spacing: 2px;
+  margin-left: 15px;
   // font-weight: 600;
 }
 
@@ -57,23 +82,39 @@ nav .nav-buttonbox-left {
   height: 100%;
   width: auto;
   display: flex;
-  align-items: center;
+  // align-items: center;
   letter-spacing: 2px;
   // font-weight: 600;
 }
 
+.nav-buttonbox-right{
+  height: 70%;
+  display: flex;
+  margin-top: 10px;
+  vertical-align: middle;
+  // align-items: center;
+  // line-height: 22px;
+}
+
 nav .nav-signup{
-  padding: 10px;
+  // padding: 10px;
   border-radius: 5px;
-  border: 1px solid orange;
-  background-color: orange;
-  margin-right: 5px;
+  border: 1px solid rgb(255, 84, 10);
+  background-color: rgb(255, 84, 10);
+  margin-right: 20px;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 nav .nav-login{
-  padding: 10px;
+  // height: 50%;
+  // padding: 10px;
   border-radius: 5px;
   border: 1px solid white;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 
@@ -96,34 +137,51 @@ nav .nav-login{
 }
 
 .login-form-box{
+  height: 570px;
+  width: 400px;
   background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10px;
+  // margin: 10px;
   padding: 40px;
   // font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-family: 'Quicksand', sans-serif;
 }
 
+// .login-text{
+//   width: 100%;
+//   // margin: 10px;
+//   // padding: 10px;
+//   // display: flex;
+//   // border-radius: 5px;
+//   // border: 1px solid darkgrey;
+//   // justify-content: center;
+// }
+
 .login-input{
-  margin: 10px;
+  width: 100%;
+  // margin: 10px;
   padding: 10px;
   display: flex;
   border-radius: 5px;
   border: 1px solid darkgrey;
   justify-content: center;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 .session-submit{
-  margin: 10px;
+  width: 100%;
+  // margin: 10px;
   padding: 10px;
   display: flex;
   border-radius: 5px;
   color: white;
-  background-color: orange;
+  background-color: rgb(255, 84, 10);
   text-align: center;
   display: inline-block;
+  box-sizing: border-box;
 }
 
 .nav-loggedin{
@@ -132,11 +190,6 @@ nav .nav-login{
   background-color:#3e4042;
 }
 
-.nav-buttonbox-right{
-  height: 100%;
-  display: flex;
-  margin-top: 10px;
-}
 
 .nav-buttonbox-right-loggedin{
   height: 100%;
@@ -168,9 +221,16 @@ nav .nav-home {
   border-width: 1px;
 }
 
-// .modal-exit{
-//    position:absolute;
-//    top:0;
-//    right:0;
-//    color: blue;
-// }
+.modal-message{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 35px; 
+  color: black; 
+  position: relative;
+  top: -10%;
+  text-align: center;
+}
+
+.modal-errors{
+  margin-top: 20px;
+  text-align: center;
+}

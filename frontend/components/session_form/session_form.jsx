@@ -18,15 +18,19 @@ class SessionForm extends React.Component {
     }
 
     handleSubmit(e) {
+        // debugger
         e.preventDefault();
-        this.props.closeModal();
+        if (!this.props.errors){
+            this.props.closeModal();
+        }
         const user = Object.assign({}, this.state);
         this.props.processForm(user);
     }
 
     renderErrors() {
+        // debugger
         return (
-            <ul>
+            <ul className="modal-errors">
                 {this.props.errors.map((error, i) => (
                     <li key={`error-${i}`}>
                         {error}
@@ -37,13 +41,20 @@ class SessionForm extends React.Component {
     }
 
     render() {
+        let modalMessage =""
+        if (this.props.formType === 'login'){
+            modalMessage = <h1 className="modal-message">Sign into your Stereophonic Cumulonimbus account</h1>;
+        } else {
+            modalMessage = <h1 className="modal-message">Create your Stereophonic Cumulonimbus account</h1>;
+        }
+
         return (
             <>
             {/* <div className="modal-exit" onClick={this.props.closeModal} className="close-x">X</div> */}
             <form onSubmit={this.handleSubmit} 
                 className="login-form-box">
+                {modalMessage}
                 <br />
-                    {this.renderErrors()}
                     <br />
                     <div className="login-text"> 
                             <input type="text"
@@ -51,8 +62,8 @@ class SessionForm extends React.Component {
                                     onChange={this.update('username')}
                                     className="login-input"
                                     placeholder="username"
-                                />
-                        </div>
+                                    />
+                    </div>
                     <br />
                     <div className="login-text"> 
                         <input type="password"
@@ -60,12 +71,13 @@ class SessionForm extends React.Component {
                                 onChange={this.update('password')}
                                 className="login-input"
                                 placeholder="password"
-                            />
+                                />
                     </div>
                     <br />
                     <button className="session-submit" type="submit"> 
                         Continue 
                     </button>
+            {this.renderErrors()}
             </form>
             </>
         );
