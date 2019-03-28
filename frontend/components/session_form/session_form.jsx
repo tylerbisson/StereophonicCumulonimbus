@@ -29,9 +29,10 @@ class SessionForm extends React.Component {
 
     renderErrors() {
         // debugger
+        let errorArr = Object.values(this.props.errors)
         return (
             <ul className="modal-errors">
-                {this.props.errors.map((error, i) => (
+                {errorArr.map((error, i) => (
                     <li key={`error-${i}`}>
                         {error}
                     </li>

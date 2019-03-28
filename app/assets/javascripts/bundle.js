@@ -589,9 +589,10 @@ function (_React$Component) {
     key: "renderErrors",
     value: function renderErrors() {
       // debugger
+      var errorArr = Object.values(this.props.errors);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "modal-errors"
-      }, this.props.errors.map(function (error, i) {
+      }, errorArr.map(function (error, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
         }, error);
