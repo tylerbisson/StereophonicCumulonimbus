@@ -1,11 +1,16 @@
 body {
-  background-color: grey;
+  background-color: white;
 }
 
 .greeting-hero{
+  margin: auto;
   height: 425px;
-  background-color: goldenrod;
-  background-image: url("bee_tv.png");
+  width: 1240px;
+  /* background-color: goldenrod; */
+  background-image: url("singing.jpg");
+  /* background-repeat: no-repeat; */
+  background-position: center; 
+  background-size: 100%;
 }
 
 /* header{
@@ -15,7 +20,8 @@ body {
 
 nav {
   height: 50px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* width: 100%; */
+  font-family: 'Montserrat', sans-serif;
   font-size: 20px; 
   color: white; 
   display: flex;
@@ -28,11 +34,20 @@ nav .nav-buttonbox {
 }
 
 nav .logo {
-  /* object-fit: contain; */
   height: 100%;
   width: auto;
 }
 
+nav .nav-home {
+  margin-left: 30px;
+}
+
+nav .nav-buttonbox-left {
+  height: 100%;
+  width: auto;
+  display: flex;
+  align-items: center;
+}
 
 nav .nav-signup{
   padding: 10px;
@@ -46,6 +61,7 @@ nav .nav-login{
   border-radius: 5px;
   border: 2px solid white;
 }
+
 
 .modal-background {
   position: fixed;
@@ -92,4 +108,19 @@ nav .nav-login{
   width: 70%;
   text-align: center;
   display: inline-block;
+}
+
+.nav-loggedin{
+  height: 50px;
+  width: 100%;
+  background-color:#333235;
+}
+
+.nav-buttonbox-right{
+  display: flex;
+}
+
+.nav-logout {
+  margin-left: 30px;
+  margin-right: 15px;
 }

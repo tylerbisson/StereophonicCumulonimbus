@@ -240,11 +240,13 @@ var Greeting = function Greeting(_ref) {
       className: "greeting-hero"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
       className: "login-signup"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "nav-buttonbox-left"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       className: "logo",
       src: window.logoURL
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "nav-buttonbox"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Stereophonic Cumulonimbus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "nav-buttonbox-right"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "nav-login",
       onClick: function onClick() {
@@ -266,15 +268,19 @@ var Greeting = function Greeting(_ref) {
       // <section className="greeting-hero">
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "nav-loggedin"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-buttonbox-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "logo",
         src: window.logoURL
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "nav-buttonbox"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "nav-login"
-      }, "Home"))) // </section>
-
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "nav-home"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-buttonbox-right"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Hi, ", currentUser.username, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "nav-logout",
+        onClick: logout
+      }, "Log Out")))
     );
   };
 
