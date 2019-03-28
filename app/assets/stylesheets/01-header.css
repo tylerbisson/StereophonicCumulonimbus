@@ -1,9 +1,4 @@
 body {
-<<<<<<< HEAD
-  background-color:pink;
-};
-
-=======
   background-color: grey;
 }
 
@@ -98,4 +93,3 @@ nav .nav-login{
   text-align: center;
   display: inline-block;
 }
->>>>>>> auth
