@@ -6,12 +6,13 @@ const Greeting = ({ currentUser, logout, openModal}) => {
     const sessionLinks = () => (
         <section className="greeting-hero">
             <nav className="login-signup">
-                <img className="logo" src={window.logoURL} />
-                <div className="nav-buttonbox">
-                    {/* <Link className="nav-login" to="/login">Login</Link> */}
+                <div className="nav-buttonbox-left">
+                    <img className="logo" src={window.logoURL} />
+                    <h1>Stereophonic Cumulonimbus</h1>     
+                </div>
+                <div className="nav-buttonbox-right">
                     <button className="nav-login" onClick={() => openModal('login')}>Login</button>
                         &nbsp;&nbsp;
-                    {/* <Link className="nav-signup" to="/signup">Sign up!</Link> */}
                     <button className="nav-signup" onClick={() => openModal('signup')}>Sign up!</button>
                 </div>
             </nav>
@@ -24,14 +25,16 @@ const Greeting = ({ currentUser, logout, openModal}) => {
         // </hgroup>
         // <section className="greeting-hero">
             <nav className="nav-loggedin">
-                <img className="logo" src={window.logoURL} />
-                <div className="nav-buttonbox">
-                    <button className="nav-login">Home</button>
-                    {/* &nbsp;&nbsp; */}
-                    {/* <button className="nav-signup" onClick={() => openModal('signup')}>Sign up!</button> */}
+                <div className="nav-buttonbox-left">
+                    <img className="logo" src={window.logoURL} />
+                    <button className="nav-home">Home</button>
                 </div>
+                    <div className="nav-buttonbox-right">
+                        <h1>Hi, {currentUser.username}!</h1>
+                        <button className="nav-logout" 
+                            onClick={logout}>Log Out</button>
+                    </div>
             </nav>
-        // </section>
     );
 
     return currentUser ? personalGreeting() : sessionLinks();
