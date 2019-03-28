@@ -1,0 +1,95 @@
+body {
+  background-color: grey;
+}
+
+.greeting-hero{
+  height: 425px;
+  background-color: goldenrod;
+  background-image: url("bee_tv.png");
+}
+
+/* header{
+  height: 100px;
+  background-color: saddle-brown;
+} */
+
+nav {
+  height: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 20px; 
+  color: white; 
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .nav-buttonbox {
+}
+
+nav .logo {
+  /* object-fit: contain; */
+  height: 100%;
+  width: auto;
+}
+
+
+nav .nav-signup{
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid orange;
+  background-color: orange;
+}
+
+nav .nav-login{
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid white;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+}
+
+.modal-child {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form-box{
+  background-color: white;
+  justify-content: center;
+  margin: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.login-input{
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid darkgrey;
+  width: 70%;
+  justify-content: center;
+}
+
+.session-submit{
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  border-radius: 5px;
+  color: white;
+  background-color: orange;
+  width: 70%;
+  text-align: center;
+  display: inline-block;
+}
