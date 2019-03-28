@@ -38,10 +38,11 @@ class SessionForm extends React.Component {
 
     render() {
         return (
+            <>
+            {/* <div className="modal-exit" onClick={this.props.closeModal} className="close-x">X</div> */}
             <form onSubmit={this.handleSubmit} 
                 className="login-form-box">
                 <br />
-                    <div onClick={this.props.closeModal} className="close-x">X</div>
                     {this.renderErrors()}
                     <br />
                     <div className="login-text"> 
@@ -66,6 +67,7 @@ class SessionForm extends React.Component {
                         Continue 
                     </button>
             </form>
+            </>
         );
     }
 }
