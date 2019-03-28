@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as sessionActions from './actions/session_actions';
+import * as sessionAPIUtil from './util/session_api_util';
 import Root from './components/root';
 import configureStore from './store/store';
 
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //TESTINGTESTINGTESTING
     window.login = sessionActions.login;
     // window.signup = sessionAPIUtil.signup;
-    // window.logout = sessionAPIUtil.logout;
+    window.logout = sessionAPIUtil.logout;
     // we don't put the store directly on the window because
     // it can be confusing when debugging, sometimes giving you access to state
     // when you shouldn't

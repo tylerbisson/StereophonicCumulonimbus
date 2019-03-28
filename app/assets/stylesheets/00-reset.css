@@ -41,6 +41,9 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+<<<<<<< HEAD:app/assets/stylesheets/00-reset.css
  body {
     background-color: #f48f42;
  };
+=======
+>>>>>>> auth:app/assets/stylesheets/00-reset.css
