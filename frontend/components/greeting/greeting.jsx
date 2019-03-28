@@ -6,14 +6,14 @@ const Greeting = ({ currentUser, logout, openModal}) => {
     const sessionLinks = () => (
         <section className="greeting-hero">
             <nav className="login-signup">
-                <div className="nav-buttonbox-left">
+                <div className="nav-buttonbox-left-splash">
                     <img className="logo" src={window.logoURL} />
-                    <h1>Stereophonic Cumulonimbus</h1>     
+                    <h1>STEREOPHONIC CUMULONIMBUS</h1>     
                 </div>
                 <div className="nav-buttonbox-right">
-                    <button className="nav-login" onClick={() => openModal('login')}>Login</button>
+                    <button className="nav-login" onClick={() => openModal('login')}>Sign in</button>
                         &nbsp;&nbsp;
-                    <button className="nav-signup" onClick={() => openModal('signup')}>Sign up!</button>
+                    <button className="nav-signup" onClick={() => openModal('signup')}>Create account</button>
                 </div>
             </nav>
         </section>
@@ -29,8 +29,9 @@ const Greeting = ({ currentUser, logout, openModal}) => {
                     <img className="logo" src={window.logoURL} />
                     <button className="nav-home">Home</button>
                 </div>
-                    <div className="nav-buttonbox-right">
-                        <h1>Hi, {currentUser.username}!</h1>
+                    <div className="nav-buttonbox-right-loggedin">
+                        <button className={"nav-greetingmessage"}>
+                            Hi, {currentUser.username}!</button>
                         <button className="nav-logout" 
                             onClick={logout}>Log Out</button>
                     </div>
