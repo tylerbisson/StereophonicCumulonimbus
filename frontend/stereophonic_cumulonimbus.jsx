@@ -2,17 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as sessionActions from './actions/session_actions';
 import * as sessionAPIUtil from './util/session_api_util';
+import * as recordingActions from './actions/recordings_actions';
 import Root from './components/root';
 import configureStore from './store/store';
 
 document.addEventListener('DOMContentLoaded', () => {
     let store;
     if (window.currentUser) {
+        // debugger 
         const preloadedState = {
             entities: {
-                users: { [window.currentUser.id]: window.currentUser }
+                recordings: window.currentUser.recordings,
+                users: { [window.currentUser.user.id]: window.currentUser.user }
             },
-            session: { id: window.currentUser.id }
+            session: { id: window.currentUser.user.id }
         };
         store = configureStore(preloadedState);
         delete window.currentUser;
@@ -28,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // when you shouldn't
     window.getState = store.getState;
     window.dispatch = store.dispatch; // just for testing!
+    window.createRecording = recordingActions.createRecording;
     //TESTINGTESTINGTESTING
     const root = document.getElementById('root');
     ReactDOM.render(<h1>Welcome to Stereophonic Cumulonimbus</h1>, root);

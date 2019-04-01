@@ -1,0 +1,17 @@
+.user-recordings-list{
+    display: flex;
+    /* width: 100px; */
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.recording-item {
+    display: flex;
+    align-items: flex-end;
+    background-image: url("white_album.jpg");
+    flex: none;
+    height: 150px; 
+    width: 150px;
+    margin: 10px;
+    margin-bottom: 10px;
+}

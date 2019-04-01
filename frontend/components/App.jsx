@@ -11,6 +11,7 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import Modal from '../components/modal/modal'
 import { AuthRoute } from '../util/route_util';
+import RecordingIndex from '../components/recordings/recording_index'
 
 const App = () => (
     <div>
@@ -19,10 +20,10 @@ const App = () => (
             {/* <h1>Stereophonic Cumulonimbus</h1> */}
             <GreetingContainer />
             <Switch>
-                {/* <AuthRoute path="/login" component={LogInFormContainer} />
-                <AuthRoute path="/signup" component={SignUpFormContainer} /> */}
+                <Route exact path='/recordings/:userId' component={RecordingIndex}/>
             </Switch>
         </header>
+        {/* <RecordingIndex/> */}
     </div>
 );
 
