@@ -283,8 +283,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-    exact: true,
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
     path: "/recordings/:userId",
     component: _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_7__["default"]
   }))));
@@ -345,16 +344,19 @@ function (_React$Component) {
   _createClass(Greeting, [{
     key: "handleDemoLogin",
     value: function handleDemoLogin() {
+      var _this2 = this;
+
       this.props.demoLogin({
         username: "Demonstrational User For Your Convenience",
         password: 'password'
+      }).then(function (data) {
+        _this2.props.history.push("/recordings/".concat(data.currentUser.user.id));
       });
-      this.props.history.push('/recordings/15');
     }
   }, {
     key: "sessionLinks",
     value: function sessionLinks() {
-      var _this2 = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "greeting-hero"
@@ -370,12 +372,12 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-login",
         onClick: function onClick() {
-          return _this2.props.openModal('login');
+          return _this3.props.openModal('login');
         }
       }, "Sign in"), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-signup",
         onClick: function onClick() {
-          return _this2.props.openModal('signup');
+          return _this3.props.openModal('signup');
         }
       }, "Create account"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "hero-slogan"
@@ -624,8 +626,20 @@ function (_React$Component) {
         var recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "recording-item",
-            key: recording.id
-          }, recording.title);
+            key: "recording-item" + recording.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-img",
+            key: "recording-item-img" + recording.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "recording-item-play-button",
+            src: window.playButtonURL
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-title",
+            key: "recording-item-title" + recording.id
+          }, recording.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-user",
+            key: "recording-item-user" + recording.id
+          }, recording.username));
         });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "user-recordings"
@@ -1362,12 +1376,13 @@ var destroyRecording = function destroyRecording(id) {
 /*!*************************************!*\
   !*** ./frontend/util/route_util.js ***!
   \*************************************/
-/*! exports provided: AuthRoute */
+/*! exports provided: AuthRoute, ProtectedRoute */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthRoute", function() { return AuthRoute; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProtectedRoute", function() { return ProtectedRoute; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
@@ -1392,13 +1407,31 @@ var Auth = function Auth(_ref) {
   });
 };
 
+var Protected = function Protected(_ref2) {
+  var Component = _ref2.component,
+      path = _ref2.path,
+      loggedIn = _ref2.loggedIn,
+      exact = _ref2.exact;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    path: path,
+    exact: exact,
+    render: function render(props) {
+      return loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
+        to: "/"
+      });
+    }
+  });
+};
+
 var mapStateToProps = function mapStateToProps(state) {
+  // debugger
   return {
     loggedIn: Boolean(state.session.id)
   };
 };
 
 var AuthRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, null)(Auth));
+var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Protected));
 
 /***/ }),
 

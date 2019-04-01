@@ -11,7 +11,9 @@ class Greeting extends React.Component {
 
     handleDemoLogin(){
         this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
-        this.props.history.push('/recordings/15');
+            .then(data => {
+                this.props.history.push(`/recordings/${data.currentUser.user.id}`)
+            });
     }
 
     sessionLinks(){

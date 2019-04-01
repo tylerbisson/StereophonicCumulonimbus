@@ -1,17 +1,52 @@
 .user-recordings-list{
     display: flex;
-    /* width: 100px; */
     justify-content: space-between;
     flex-wrap: wrap;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .recording-item {
-    display: flex;
-    align-items: flex-end;
-    background-image: url("white_album.jpg");
-    flex: none;
-    height: 150px; 
     width: 150px;
-    margin: 10px;
-    margin-bottom: 10px;
+    height: 100%;
+    overflow-wrap: break-word;
+}
+
+.recording-item:hover .recording-item-play-button{
+    /* color: red; */
+    opacity: .8;
+}
+
+.recording-item-img {
+    background-image: url("white_album.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 135px; 
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.recording-item-play-button{
+    opacity: 0;
+    position: relative;
+    height: 50%;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 25%;
+}
+
+.recording-item-title {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.recording-item-user {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;    
+    color: grey;
+    font-size: 12px;
 }
