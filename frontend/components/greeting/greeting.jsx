@@ -10,6 +10,7 @@ class Greeting extends React.Component {
     }
 
     handleDemoLogin(){
+        // debugger 
         this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
             .then(data => {
                 this.props.history.push(`/recordings/${data.currentUser.user.id}`)

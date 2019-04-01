@@ -7,6 +7,7 @@
             json.set! recording.id do
                 json.extract! recording, :id, :title
                 json.extract! user, :username
+                json.artUrl url_for(recording.art)
             end
         end
     end

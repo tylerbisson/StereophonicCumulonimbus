@@ -35,6 +35,7 @@ class RecordingIndex extends React.Component {
         let recordingItems = recordings.map(recording => 
             <div className="recording-item" key={"recording-item" + recording.id}>
                 <div className="recording-item-img" key={"recording-item-img" + recording.id}>
+                    <img className="recording-art" src={recording.artUrl}/>
                     <img className="recording-item-play-button" src={window.playButtonURL} />
                 </div>
                 <div className="recording-item-title" key={"recording-item-title" + recording.id}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class SessionForm extends React.Component {
     constructor(props) {
@@ -24,8 +25,18 @@ class SessionForm extends React.Component {
             this.props.closeModal();
         }
         const user = Object.assign({}, this.state);
+        this.props.history.push(`/recordings/15`);
         this.props.processForm(user);
+        // debugger
+            // .then(data => {this.props.history.push(`/recordings/${data.currentUser.user.id}`)});;
     }
+
+    // handleDemoLogin() {
+    //     this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
+    //         .then(data => {
+    //             this.props.history.push(`/recordings/${data.currentUser.user.id}`)
+    //         });
+    // }
 
     renderErrors() {
         // debugger
@@ -85,4 +96,4 @@ class SessionForm extends React.Component {
     }
 }
 
-export default SessionForm;
+export default withRouter(SessionForm);

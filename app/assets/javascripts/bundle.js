@@ -346,6 +346,7 @@ function (_React$Component) {
     value: function handleDemoLogin() {
       var _this2 = this;
 
+      // debugger 
       this.props.demoLogin({
         username: "Demonstrational User For Your Convenience",
         password: 'password'
@@ -631,6 +632,9 @@ function (_React$Component) {
             className: "recording-item-img",
             key: "recording-item-img" + recording.id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "recording-art",
+            src: recording.artUrl
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
             className: "recording-item-play-button",
             src: window.playButtonURL
           })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -769,6 +773,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -788,6 +793,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -831,8 +837,16 @@ function (_React$Component) {
       }
 
       var user = Object.assign({}, this.state);
-      this.props.processForm(user);
-    }
+      this.props.history.push("/recordings/15");
+      this.props.processForm(user); // debugger
+      // .then(data => {this.props.history.push(`/recordings/${data.currentUser.user.id}`)});;
+    } // handleDemoLogin() {
+    //     this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
+    //         .then(data => {
+    //             this.props.history.push(`/recordings/${data.currentUser.user.id}`)
+    //         });
+    // }
+
   }, {
     key: "renderErrors",
     value: function renderErrors() {
@@ -890,7 +904,7 @@ function (_React$Component) {
   return SessionForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (SessionForm);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SessionForm));
 
 /***/ }),
 
