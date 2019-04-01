@@ -830,16 +830,22 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       // debugger
-      e.preventDefault();
-
-      if (!this.props.errors) {
-        this.props.closeModal();
-      }
+      // this.props.closeModal();
+      e.preventDefault(); // debugger
+      // if (this.props.errors.length === 0){
+      //     this.props.closeModal();
+      // } 
 
       var user = Object.assign({}, this.state);
-      this.props.history.push("/recordings/15");
-      this.props.processForm(user); // debugger
+      this.props.processForm(user); // .then(() => console.log("buttass"));
+
+      this.props.history.push("/recordings/15"); // debugger
+      // debugger;
       // .then(data => {this.props.history.push(`/recordings/${data.currentUser.user.id}`)});;
+
+      if (this.props.errors.length === 0) {
+        this.props.closeModal();
+      }
     } // handleDemoLogin() {
     //     this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
     //         .then(data => {
