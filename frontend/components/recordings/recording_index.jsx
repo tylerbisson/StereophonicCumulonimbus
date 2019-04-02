@@ -65,6 +65,7 @@ class RecordingIndex extends React.Component {
 
 const msp = (state, ownProps) => {
     // debugger
+    
     return {
         recordings: state.entities.recordings,
         userId: ownProps.match.params.userId

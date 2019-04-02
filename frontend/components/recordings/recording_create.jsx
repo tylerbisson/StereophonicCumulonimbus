@@ -66,15 +66,19 @@ class CreateRecordingForm extends React.Component {
 
     render(){
         return(
-            <form onSubmit={this.handleSubmit.bind(this)}>
-                <label htmlFor="">Title</label>
-                <input type="text" onChange={this.updated('title')}/>
-                <input type="file"
-                    onChange={this.handleAudioFile.bind(this)}/>
-                <input type="file"
-                    onChange={this.handleImgFile.bind(this)} />
-                <input type="submit" value="submit"/>
-            </form>
+            <section className="recording-create">
+                <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
+                    <div className="recording-create-audio-file"> Choose Track To Upload
+                        <input className="recording-create-audio-file-input"
+                            type="file" onChange={this.handleAudioFile.bind(this)}/>
+                    </div>
+                    <label htmlFor="">Title
+                        <input type="text" onChange={this.updated('title')} />
+                    </label>
+                    <input type="file" onChange={this.handleImgFile.bind(this)} />
+                    <input type="submit" value="submit"/>
+                </form>
+            </section>
         )
     }
 }
