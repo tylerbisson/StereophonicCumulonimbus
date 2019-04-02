@@ -627,6 +627,7 @@ function (_React$Component) {
       audioFile: null,
       user_id: _this.props.user_id
     };
+    _this.audio_selected = false;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -675,6 +676,8 @@ function (_React$Component) {
       if (file) {
         fileReader.readAsDataURL(file);
       }
+
+      this.audio_selected = true;
     }
   }, {
     key: "handleImgFile",
@@ -698,29 +701,56 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "recording-create"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "recording-create-form",
-        onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "recording-create-audio-file"
-      }, " Choose Track To Upload", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "recording-create-audio-file-input",
-        type: "file",
-        onChange: this.handleAudioFile.bind(this)
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: ""
-      }, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        onChange: this.updated('title')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "file",
-        onChange: this.handleImgFile.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "submit"
-      })));
+      if (this.audio_selected === false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "recording-create"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "recording-create-form",
+          onSubmit: this.handleSubmit.bind(this)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-create-audio-file"
+        }, " Choose Track To Upload", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "recording-create-audio-file-input",
+          type: "file",
+          onChange: this.handleAudioFile.bind(this)
+        }))));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "recording-create"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "recording-create-form",
+          onSubmit: this.handleSubmit.bind(this)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-create-audio-file"
+        }, "Choose Track To Upload", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "recording-create-audio-file-input",
+          type: "file",
+          onChange: this.handleAudioFile.bind(this)
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-create-artandtitle"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-create-img-file"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Update Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "recording-create-img-input",
+          type: "file",
+          onChange: this.handleImgFile.bind(this)
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-title"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "recording-title-input",
+          type: "text",
+          onChange: this.updated('title')
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-description"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          className: "recording-title-input",
+          onChange: this.updated('description')
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "submit-recording-form",
+          type: "submit",
+          value: "Save"
+        }))));
+      }
     }
   }]);
 

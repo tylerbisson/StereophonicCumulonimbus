@@ -22,6 +22,7 @@
     height: 40px;
     margin: auto;
     margin-top: 250px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -29,4 +30,82 @@
     width: 100%;
     height: 100%;
     opacity: 0;
+}
+
+.recording-create-artandtitle{
+    margin-top: 20px;
+    width: 70%;
+    height: 500px;
+    position: relative;
+    border: solid;
+    border-color: lightgray;
+    /* background-color: red; */
+    border-width: 1px;
+    margin: auto;
+}
+
+.recording-create-img-file{
+    height: 260px;
+    width: 260px;
+    border: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.recording-create-img-input{
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    /* position: absolute;
+    bottom: 5%;
+    margin: auto; */
+}
+
+.submit-recording-form{
+    width: 60px;
+    height: 30px;
+    position: absolute;
+    color: white;
+    border-radius: 5px;
+    bottom: 5%;
+    right: 5%;
+    text-align: center;
+    background-color: rgb(255, 84, 10);
+}
+
+.recording-title{
+    position: absolute;
+    right: 20%;
+    top: 20%;
+    position: flex;
+}
+
+.recording-title-input{
+    border: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.recording-description{
+    position: absolute;
+    right: 20%;
+    top: 30%;
+    position: flex;
+}
+
+.recording-description-input{
+    border: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    margin-left: 5px;
+    border-radius: 5px;
 }
