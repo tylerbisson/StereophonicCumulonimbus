@@ -1,5 +1,21 @@
+html, body {
+  height: 100%;
+}
+
+#root{
+  height: 100%;
+}
+
+#app{
+  height: 100%;
+}
+
+#header{
+  height: 100%;
+}
+
 body {
-  background-color: white;
+  background-color: lightgrey;
 }
 
 .greeting-hero{
@@ -56,6 +72,7 @@ nav .nav-buttonbox {
 nav .logo {
   height: 100%;
   width: auto;
+
 }
 
 nav .nav-loggedin-logo{
@@ -116,7 +133,6 @@ nav .nav-login{
   padding-left: 10px;
   padding-right: 10px;
 }
-
 
 .modal-background {
   position: fixed;
@@ -184,12 +200,25 @@ nav .nav-login{
   box-sizing: border-box;
 }
 
-.nav-loggedin{
+.nav-bar{
   height: 50px;
   width: 100%;
   background-color:#3e4042;
 }
 
+.nav-loggedin{
+  margin: auto;
+  height: 50px;
+  width: 1240px;
+  background-color:#3e4042;
+  border-left: solid;
+  border-width: 1px;
+  border-color: black;
+}
+
+// .nav-loggedin-middle{
+//   width: 1240px;
+// }
 
 .nav-buttonbox-right-loggedin{
   height: 100%;
@@ -209,6 +238,7 @@ nav .nav-home {
   padding-left: 20px;
   padding-right: 20px;
   border-left: solid;
+  border-right: solid;
   border-color: black;
   border-width: 1px;
 }

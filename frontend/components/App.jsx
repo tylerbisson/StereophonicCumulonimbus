@@ -14,9 +14,9 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import RecordingIndex from '../components/recordings/recording_index'
 
 const App = () => (
-    <div>
+    <div id="app">
         <Modal />
-        <header>
+        <header id="header">
             {/* <h1>Stereophonic Cumulonimbus</h1> */}
             <GreetingContainer />
             <Switch>

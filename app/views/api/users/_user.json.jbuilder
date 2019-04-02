@@ -8,6 +8,7 @@
                 json.extract! recording, :id, :title
                 json.extract! user, :username
                 json.artUrl url_for(recording.art)
+                json.audioUrl url_for(recording.audio)
             end
         end
     end

@@ -11,7 +11,7 @@ class Greeting extends React.Component {
 
     handleDemoLogin(){
         // debugger 
-        this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
+        this.props.demoLogin({ username: "Tyler Bisson", password: 'password' })
             .then(data => {
                 this.props.history.push(`/recordings/${data.currentUser.user.id}`)
             });
@@ -44,18 +44,20 @@ class Greeting extends React.Component {
         // console.log("this.props.currentUser");
         // console.log(this.props.currentUser);
         return(
-            <nav className="nav-loggedin">
-                <div className="nav-buttonbox-left">
-                    <img className="nav-loggedin-logo" src={window.logoURL} />
-                    <button className="nav-home">Home</button>
-                </div>
-                    <div className="nav-buttonbox-right-loggedin">
-                        <button className={"nav-greetingmessage"}>
-                            Hi, {this.props.currentUser.username}!</button>
-                        <button className="nav-logout" 
-                            onClick={this.props.logout}>Log Out</button>
+            <div className="nav-bar"> 
+                <nav className="nav-loggedin">
+                    <div className="nav-buttonbox-left">
+                        <img className="nav-loggedin-logo" src={window.logoURL} />
+                        <button className="nav-home">Home</button>
                     </div>
-            </nav>
+                        <div className="nav-buttonbox-right-loggedin">
+                            <button className={"nav-greetingmessage"}>
+                                Hi, {this.props.currentUser.username}!</button>
+                            <button className="nav-logout" 
+                                onClick={this.props.logout}>Log Out</button>
+                        </div>
+                </nav>
+            </div> 
         )
     };
 

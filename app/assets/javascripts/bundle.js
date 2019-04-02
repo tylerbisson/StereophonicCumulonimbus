@@ -283,7 +283,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "app"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+    id: "header"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
     path: "/recordings/:userId",
     component: _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_7__["default"]
   }))));
@@ -348,7 +352,7 @@ function (_React$Component) {
 
       // debugger 
       this.props.demoLogin({
-        username: "Demonstrational User For Your Convenience",
+        username: "Tyler Bisson",
         password: 'password'
       }).then(function (data) {
         _this2.props.history.push("/recordings/".concat(data.currentUser.user.id));
@@ -392,7 +396,9 @@ function (_React$Component) {
     value: function personalGreeting() {
       // console.log("this.props.currentUser");
       // console.log(this.props.currentUser);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-bar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "nav-loggedin"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttonbox-left"
@@ -408,7 +414,7 @@ function (_React$Component) {
       }, "Hi, ", this.props.currentUser.username, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-logout",
         onClick: this.props.logout
-      }, "Log Out")));
+      }, "Log Out"))));
     }
   }, {
     key: "render",
@@ -576,9 +582,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -595,13 +601,29 @@ function (_React$Component) {
   _inherits(RecordingIndex, _React$Component);
 
   function RecordingIndex(props) {
+    var _this;
+
     _classCallCheck(this, RecordingIndex);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props)); // window.fetchRecordings = this.props.fetchRecordings
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props)); // window.fetchRecordings = this.props.fetchRecordings
     // this.state = this.props.recordings;
+
+    _this.playRecording = _this.playRecording.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(RecordingIndex, [{
+    key: "playRecording",
+    value: function playRecording(e) {
+      if (e.currentTarget.childNodes[0].className === "not_playing") {
+        e.currentTarget.childNodes[0].play();
+        e.currentTarget.childNodes[0].className = "playing";
+      } else {
+        e.currentTarget.childNodes[0].pause();
+        e.currentTarget.childNodes[0].className = "not_playing";
+      }
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {// console.log("componentDidMount")
       // console.log(new Date().getMilliseconds())
@@ -611,6 +633,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       // console.log("render")
       // console.log(new Date().getMilliseconds())
       // debugger
@@ -627,8 +651,14 @@ function (_React$Component) {
         var recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "recording-item",
-            key: "recording-item" + recording.id
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: "recording-item" + recording.id,
+            onClick: _this2.playRecording
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+            className: "not_playing"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+            src: recording.audioUrl,
+            type: "audio/mpeg"
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "recording-item-img",
             key: "recording-item-img" + recording.id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
