@@ -1,9 +1,12 @@
 class Api::RecordingsController < ApplicationController 
     
     def create 
+        # debugger
         @recording = Recording.new(recording_params)
-        @recording.user_id = current_user.id 
+        @recording.user_id = current_user.id;
+        # debugger
         if @recording.save
+            # debugger
             render :show
         else 
             render json: @recording.errors.full_messages, status: 422 
@@ -16,7 +19,7 @@ class Api::RecordingsController < ApplicationController
     end 
 
     def recording_params 
-        params.require(:recording).permit(:title, :description)
+        params.require(:recording).permit(:title, :description, :audio, :art)
     end
 
 end

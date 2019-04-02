@@ -2,7 +2,9 @@ export const createRecording = recording => {
     return $.ajax({
         method: 'post',
         url: 'api/recordings',
-        data: { recording }
+        data: recording,
+        contentType: false,
+        processData: false
     });
 };
 

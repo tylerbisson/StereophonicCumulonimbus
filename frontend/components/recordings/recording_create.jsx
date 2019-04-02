@@ -9,21 +9,80 @@ class CreateRecordingForm extends React.Component {
         this.state = {
             title: this.props.recording.title,
             description: this.props.recording.description,
-            artUrl: "",
-            audioUrl: ""
+            artFile: null,
+            artUrl: null,
+            audioUrl: null,
+            audioFile: null,
+            user_id: this.props.user_id
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('recording[audio]', this.state.audioFile)
+        formData.append('recording[title]', this.state.title);
+        formData.append('recording[art]', this.state.artFile);
+        // debugger
+        $.ajax({
+            url: '/api/recordings',
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false
+        });
+        // this.props.createRecording(formData);
+    }
+ 
+    updated(field){
+        return e => this.setState({
+            [field]: e.target.value
+        })
+    }
+
+    handleAudioFile(e){
+        const file = e.currentTarget.files[0];
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            this.setState({ audioFile: file, audioUrl: fileReader.result});
+        }
+        if (file) {
+            fileReader.readAsDataURL(file);
+        }
+    }
+
+    handleImgFile(e) {
+        const file = e.currentTarget.files[0];
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            this.setState({ artFile: file, artUrl: fileReader.result });
+        }
+        if (file) {
+            fileReader.readAsDataURL(file);
         }
     }
 
     render(){
         return(
-            <h1>YOOOOOOO</h1>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+                <label htmlFor="">Title</label>
+                <input type="text" onChange={this.updated('title')}/>
+                <input type="file"
+                    onChange={this.handleAudioFile.bind(this)}/>
+                <input type="file"
+                    onChange={this.handleImgFile.bind(this)} />
+                <input type="submit" value="submit"/>
+            </form>
         )
     }
 }
 
 const msp = state => {
     return {
-        recording: {title: "", description: ""}
+        recording: {title: "", description: ""},
+        user_id: state.session.id
     }
 }
 

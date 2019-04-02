@@ -166,7 +166,7 @@ var receiveRecordingErrors = function receiveRecordingErrors(errors) {
 };
 var createRecording = function createRecording(recording) {
   return function (dispatch) {
-    // debugger
+    debugger;
     return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["createRecording"](recording).then(function (recording) {
       return dispatch(receiveRecording(recording)) // , err => (
       // dispatch(receiveErrors(err.responseJSON))
@@ -585,6 +585,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -593,9 +595,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -619,16 +621,100 @@ function (_React$Component) {
     _this.state = {
       title: _this.props.recording.title,
       description: _this.props.recording.description,
-      artUrl: "",
-      audioUrl: ""
+      artFile: null,
+      artUrl: null,
+      audioUrl: null,
+      audioFile: null,
+      user_id: _this.props.user_id
     };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(CreateRecordingForm, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var formData = new FormData();
+      formData.append('recording[audio]', this.state.audioFile);
+      formData.append('recording[title]', this.state.title);
+      formData.append('recording[art]', this.state.artFile); // debugger
+
+      $.ajax({
+        url: '/api/recordings',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false
+      }); // this.props.createRecording(formData);
+    }
+  }, {
+    key: "updated",
+    value: function updated(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleAudioFile",
+    value: function handleAudioFile(e) {
+      var _this3 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function () {
+        _this3.setState({
+          audioFile: file,
+          audioUrl: fileReader.result
+        });
+      };
+
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
+    key: "handleImgFile",
+    value: function handleImgFile(e) {
+      var _this4 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function () {
+        _this4.setState({
+          artFile: file,
+          artUrl: fileReader.result
+        });
+      };
+
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "YOOOOOOO");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit.bind(this)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: ""
+      }, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        onChange: this.updated('title')
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        onChange: this.handleAudioFile.bind(this)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        onChange: this.handleImgFile.bind(this)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "submit"
+      }));
     }
   }]);
 
@@ -640,7 +726,8 @@ var msp = function msp(state) {
     recording: {
       title: "",
       description: ""
-    }
+    },
+    user_id: state.session.id
   };
 };
 
@@ -1481,9 +1568,9 @@ var createRecording = function createRecording(recording) {
   return $.ajax({
     method: 'post',
     url: 'api/recordings',
-    data: {
-      recording: recording
-    }
+    data: recording,
+    contentType: false,
+    processData: false
   });
 };
 var fetchRecording = function fetchRecording(id) {

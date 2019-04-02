@@ -27,7 +27,7 @@ export const receiveRecordingErrors = errors => ({
 });
 
 export const createRecording = recording => dispatch => {
-    // debugger
+    debugger
     return (
         RecordingsUtil.createRecording(recording).then(recording => (
             dispatch(receiveRecording(recording))
