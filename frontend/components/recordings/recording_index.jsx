@@ -6,8 +6,11 @@ import {fetchRecordings} from '../../actions/recordings_actions'
 class RecordingIndex extends React.Component {
     constructor(props) {
         super(props);
-        // window.fetchRecordings = this.props.fetchRecordings
-        // this.state = this.props.recordings;
+
+        this.state = {
+            recordings: this.props.title, 
+            userId: this.props.userId
+        }
         this.playRecording = this.playRecording.bind(this)
     }
     
@@ -22,27 +25,17 @@ class RecordingIndex extends React.Component {
     } 
 
     componentDidMount(){   
-        // console.log("componentDidMount")
-        // console.log(new Date().getMilliseconds())
-        // console.log()
-        // this.props.fetchRecordings()
     }
 
     render(){
-        // console.log("render")
-        // console.log(new Date().getMilliseconds())
-    // debugger
-    // console.log(this.props.recordings)
-    // console.log("this.props.recordings")
-    // console.log(Array.isArray(Object.values(this.props.recordings)));
-
-    // debugger
     if(Object.keys(this.props.recordings).length < 1){
         // debugger
         // this.props.fetchRecordings()
         return(null)
     } else {
         let recordings = Object.values(this.props.recordings);
+        recordings = recordings.filter(recording => recording["user_id"] === parseInt(this.state.userId));
+        // debugger 
         let recordingItems = recordings.map(recording => 
             <div className="recording-item" key={"recording-item" + recording.id}
                 onClick={this.playRecording}>

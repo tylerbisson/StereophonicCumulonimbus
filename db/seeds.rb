@@ -10,6 +10,8 @@ User.destroy_all
 
 demo_user = User.new({username:"Tyler Bisson", password:'password'})
 demo_user.save 
+demo_user.portrait.attach(io: File.open("app/assets/images/tyler.jpeg"),
+    filename: "tyler.jpeg")
 
 r1 = Recording.new({title:"Leaf Crackle", description:"cool beat", user_id: demo_user.id})
 r1.save! 

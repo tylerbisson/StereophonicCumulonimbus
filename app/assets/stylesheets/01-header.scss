@@ -95,13 +95,18 @@ nav .nav-buttonbox-left-splash {
   // font-weight: 600;
 }
 
+.user-portrait{
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  border-radius: 100%;
+}
+
 nav .nav-buttonbox-left {
   height: 100%;
   width: auto;
   display: flex;
-  // align-items: center;
   letter-spacing: 2px;
-  // font-weight: 600;
 }
 
 .nav-buttonbox-right{
@@ -249,6 +254,18 @@ nav .nav-home {
   border-left: solid;
   border-color: black;
   border-width: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-upload{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-color: black;
+  border-width: 1px;
+  display: flex;
+  align-items: center;
 }
 
 .modal-message{

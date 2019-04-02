@@ -268,12 +268,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./greeting/greeting_container */ "./frontend/components/greeting/greeting_container.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.jsx");
-/* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form/login_form_container */ "./frontend/components/session_form/login_form_container.jsx");
-/* harmony import */ var _components_modal_modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/modal/modal */ "./frontend/components/modal/modal.jsx");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
-/* harmony import */ var _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/recordings/recording_index */ "./frontend/components/recordings/recording_index.jsx");
-
+/* harmony import */ var _components_modal_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/modal/modal */ "./frontend/components/modal/modal.jsx");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/recordings/recording_index */ "./frontend/components/recordings/recording_index.jsx");
+/* harmony import */ var _components_recordings_recording_create__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/recordings/recording_create */ "./frontend/components/recordings/recording_create.jsx");
 
 
 
@@ -285,11 +283,16 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     id: "header"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/recordings/new",
+    component: _components_recordings_recording_create__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
     path: "/recordings/:userId",
-    component: _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_5__["default"]
   }))));
 };
 
@@ -394,6 +397,8 @@ function (_React$Component) {
   }, {
     key: "personalGreeting",
     value: function personalGreeting() {
+      var _this4 = this;
+
       // console.log("this.props.currentUser");
       // console.log(this.props.currentUser);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -410,8 +415,16 @@ function (_React$Component) {
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttonbox-right-loggedin"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "nav-upload",
+        onClick: function onClick() {
+          return _this4.props.history.push("/recordings/new");
+        }
+      }, "Upload"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-greetingmessage"
-      }, "Hi, ", this.props.currentUser.username, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "user-portrait",
+        src: this.props.currentUser.portraitUrl
+      }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "nav-logout",
         onClick: this.props.logout
       }, "Log Out"))));
@@ -557,6 +570,92 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/recordings/recording_create.jsx":
+/*!*************************************************************!*\
+  !*** ./frontend/components/recordings/recording_create.jsx ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var CreateRecordingForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CreateRecordingForm, _React$Component);
+
+  function CreateRecordingForm(props) {
+    var _this;
+
+    _classCallCheck(this, CreateRecordingForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CreateRecordingForm).call(this, props));
+    _this.state = {
+      title: _this.props.recording.title,
+      description: _this.props.recording.description,
+      artUrl: "",
+      audioUrl: ""
+    };
+    return _this;
+  }
+
+  _createClass(CreateRecordingForm, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "YOOOOOOO");
+    }
+  }]);
+
+  return CreateRecordingForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var msp = function msp(state) {
+  return {
+    recording: {
+      title: "",
+      description: ""
+    }
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    createRecording: function createRecording(recording) {
+      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__["createRecording"])(recording));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(CreateRecordingForm));
+
+/***/ }),
+
 /***/ "./frontend/components/recordings/recording_index.jsx":
 /*!************************************************************!*\
   !*** ./frontend/components/recordings/recording_index.jsx ***!
@@ -605,9 +704,11 @@ function (_React$Component) {
 
     _classCallCheck(this, RecordingIndex);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props)); // window.fetchRecordings = this.props.fetchRecordings
-    // this.state = this.props.recordings;
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props));
+    _this.state = {
+      recordings: _this.props.title,
+      userId: _this.props.userId
+    };
     _this.playRecording = _this.playRecording.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -625,29 +726,22 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {// console.log("componentDidMount")
-      // console.log(new Date().getMilliseconds())
-      // console.log()
-      // this.props.fetchRecordings()
-    }
+    value: function componentDidMount() {}
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      // console.log("render")
-      // console.log(new Date().getMilliseconds())
-      // debugger
-      // console.log(this.props.recordings)
-      // console.log("this.props.recordings")
-      // console.log(Array.isArray(Object.values(this.props.recordings)));
-      // debugger
       if (Object.keys(this.props.recordings).length < 1) {
         // debugger
         // this.props.fetchRecordings()
         return null;
       } else {
         var recordings = Object.values(this.props.recordings);
+        recordings = recordings.filter(function (recording) {
+          return recording["user_id"] === parseInt(_this2.state.userId);
+        }); // debugger 
+
         var recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "recording-item",

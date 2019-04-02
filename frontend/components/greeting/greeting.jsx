@@ -51,8 +51,13 @@ class Greeting extends React.Component {
                         <button className="nav-home">Home</button>
                     </div>
                         <div className="nav-buttonbox-right-loggedin">
+                        <button className="nav-upload" 
+                            onClick={() => this.props.history.push(`/recordings/new`)} 
+                            >Upload</button>
                             <button className={"nav-greetingmessage"}>
-                                Hi, {this.props.currentUser.username}!</button>
+                                <img className="user-portrait" 
+                                    src={this.props.currentUser.portraitUrl} />
+                                {this.props.currentUser.username}</button>
                             <button className="nav-logout" 
                                 onClick={this.props.logout}>Log Out</button>
                         </div>
