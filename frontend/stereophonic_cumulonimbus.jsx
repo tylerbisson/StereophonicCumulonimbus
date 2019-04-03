@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as sessionActions from './actions/session_actions';
 import * as sessionAPIUtil from './util/session_api_util';
 import * as recordingActions from './actions/recordings_actions';
+import * as userActions from './actions/user_actions';
 import Root from './components/root';
 import configureStore from './store/store';
 
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.dispatch = store.dispatch; // just for testing!
     window.createRecording = recordingActions.createRecording;
     window.fetchSplashRecordings = recordingActions.fetchSplashRecordings;
+    window.fetchUser = userActions.fetchUser;
     //TESTINGTESTINGTESTING
     const root = document.getElementById('root');
     ReactDOM.render(<h1>Welcome to Stereophonic Cumulonimbus</h1>, root);

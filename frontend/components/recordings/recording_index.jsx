@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { throws } from 'assert';
-import {fetchRecordings} from '../../actions/recordings_actions'
+import {fetchRecordings} from '../../actions/recordings_actions';
+import {fetchUser} from '../../actions/user_actions';
 
 class RecordingIndex extends React.Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class RecordingIndex extends React.Component {
         this.state = {
             recordings: this.props.title, 
             userId: this.props.userId,
-            currentUser: this.props.currentUser
+            currentUser: this.props.currentUser,
+            userOfPage: this.props.userOfPage
         }
         this.playRecording = this.playRecording.bind(this);
     }
@@ -25,54 +27,8 @@ class RecordingIndex extends React.Component {
         }
     } 
 
-    // getAverageRGB(imgEl) {
-
-    //     var blockSize = 5, // only visit every 5 pixels
-    //         defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
-    //         canvas = document.createElement('canvas'),
-    //         context = canvas.getContext && canvas.getContext('2d'),
-    //         data, width, height,
-    //         i = -4,
-    //         length,
-    //         rgb = { r: 0, g: 0, b: 0 },
-    //         count = 0;
-
-    //     if (!context) {
-    //         return defaultRGB;
-    //     }
-
-    //     height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
-    //     width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-
-    //     context.drawImage(imgEl, 0, 0);
-
-    //     try {
-    //         data = context.getImageData(0, 0, width, height);
-    //     } catch (e) {
-    //         /* security error, img on diff domain */alert('x');
-    //         return defaultRGB;
-    //     }
-
-    //     length = data.data.length;
-
-    //     while ((i += blockSize * 4) < length) {
-    //         ++count;
-    //         rgb.r += data.data[i];
-    //         rgb.g += data.data[i + 1];
-    //         rgb.b += data.data[i + 2];
-    //     }
-
-    //     // ~~ used to floor values
-    //     rgb.r = ~~(rgb.r / count);
-    //     rgb.g = ~~(rgb.g / count);
-    //     rgb.b = ~~(rgb.b / count);
-
-    //     return rgb;
-    // }
-
     componentDidMount(){ 
-        // var rgb = this.getAverageRGB(this.props.currentUser.portraitUrl);
-        // document.body.style.backgroundColor = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')'; 
+        this.props.fetchUser(this.props.userId)
     }
 
     render(){
@@ -101,9 +57,9 @@ class RecordingIndex extends React.Component {
             </div>)
 
             let backgroundImg = {
-                backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
+                backgroundImage: 'url(' + this.props.userOfPage.portraitUrl + ')'
             };
-
+            // debugger
             return(
                 <>
                     <section className="user-recordings">
@@ -111,8 +67,8 @@ class RecordingIndex extends React.Component {
                             <div className="user-hero" style={backgroundImg}></div>
                                 <div className="user-portraitandname"> 
                                     <img className="user-hero-portrait" id="user-hero-portrait"
-                                        src={this.props.currentUser.portraitUrl}/>
-                                    <h1 className="user-hero-name">{this.state.currentUser.username}</h1>
+                                        src={this.props.userOfPage.portraitUrl}/>
+                                    <h1 className="user-hero-name">{this.props.userOfPage.username}</h1>
                                 </div>
                         </div>
                         <ul className="user-recordings-list">
@@ -127,18 +83,21 @@ class RecordingIndex extends React.Component {
 
 const msp = (state, ownProps) => {
     // debugger 
+    // debugger
     return {
         recordings: state.entities.recordings,
         userId: ownProps.match.params.userId,
-        user: state.entities.users,  
-        currentUser: state.entities.users[state.session.id]
+        // user: state.entities.users,  
+        currentUser: state.entities.users[state.session.id],
+        userOfPage: state.entities.users[ownProps.match.params.userId] ? state.entities.users[ownProps.match.params.userId] : {username: "", portraitUrl: ""}
     }
     // debugger
 };
 
 const mdp = dispatch => {
     return {
-        fetchRecordings: () => dispatch(fetchRecordings())
+        fetchRecordings: () => dispatch(fetchRecordings()),
+        fetchUser: userId => dispatch(fetchUser(userId))
     }
 };
 

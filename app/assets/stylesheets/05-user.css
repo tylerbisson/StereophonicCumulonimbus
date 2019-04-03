@@ -16,7 +16,7 @@
     background-size: auto;
     /* background-position: 100; */
     /* filter: blur(200px); */
-    filter: saturate(110%) blur(200px)
+    filter: saturate(10000%) blur(200px)
 }
 
 .user-portraitandname{
