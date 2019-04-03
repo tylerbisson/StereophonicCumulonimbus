@@ -905,7 +905,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props));
     _this.state = {
       recordings: _this.props.title,
-      userId: _this.props.userId
+      userId: _this.props.userId,
+      currentUser: _this.props.currentUser
     };
     _this.playRecording = _this.playRecording.bind(_assertThisInitialized(_this));
     return _this;
@@ -921,10 +922,47 @@ function (_React$Component) {
         e.currentTarget.childNodes[0].pause();
         e.currentTarget.childNodes[0].className = "not_playing";
       }
-    }
+    } // getAverageRGB(imgEl) {
+    //     var blockSize = 5, // only visit every 5 pixels
+    //         defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
+    //         canvas = document.createElement('canvas'),
+    //         context = canvas.getContext && canvas.getContext('2d'),
+    //         data, width, height,
+    //         i = -4,
+    //         length,
+    //         rgb = { r: 0, g: 0, b: 0 },
+    //         count = 0;
+    //     if (!context) {
+    //         return defaultRGB;
+    //     }
+    //     height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+    //     width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+    //     context.drawImage(imgEl, 0, 0);
+    //     try {
+    //         data = context.getImageData(0, 0, width, height);
+    //     } catch (e) {
+    //         /* security error, img on diff domain */alert('x');
+    //         return defaultRGB;
+    //     }
+    //     length = data.data.length;
+    //     while ((i += blockSize * 4) < length) {
+    //         ++count;
+    //         rgb.r += data.data[i];
+    //         rgb.g += data.data[i + 1];
+    //         rgb.b += data.data[i + 2];
+    //     }
+    //     // ~~ used to floor values
+    //     rgb.r = ~~(rgb.r / count);
+    //     rgb.g = ~~(rgb.g / count);
+    //     rgb.b = ~~(rgb.b / count);
+    //     return rgb;
+    // }
+
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {// var rgb = this.getAverageRGB(this.props.currentUser.portraitUrl);
+      // document.body.style.backgroundColor = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')'; 
+    }
   }, {
     key: "render",
     value: function render() {
@@ -967,11 +1005,27 @@ function (_React$Component) {
             key: "recording-item-user" + recording.id
           }, recording.username));
         });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        var backgroundImg = {
+          backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
+        };
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "user-recordings"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-page-banner"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-hero",
+          style: backgroundImg
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-portraitandname"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "user-hero-portrait",
+          id: "user-hero-portrait",
+          src: this.props.currentUser.portraitUrl
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "user-hero-name"
+        }, this.state.currentUser.username))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "user-recordings-list"
-        }, recordingItems));
+        }, recordingItems)));
       }
     }
   }]);
@@ -980,12 +1034,12 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var msp = function msp(state, ownProps) {
-  // debugger
+  // debugger 
   return {
     recordings: state.entities.recordings,
-    userId: ownProps.match.params.userId // recordings: {},
-    // userId: 15
-    // debugger
+    userId: ownProps.match.params.userId,
+    user: state.entities.users,
+    currentUser: state.entities.users[state.session.id] // debugger
 
   };
 };

@@ -9,9 +9,10 @@ class RecordingIndex extends React.Component {
 
         this.state = {
             recordings: this.props.title, 
-            userId: this.props.userId
+            userId: this.props.userId,
+            currentUser: this.props.currentUser
         }
-        this.playRecording = this.playRecording.bind(this)
+        this.playRecording = this.playRecording.bind(this);
     }
     
     playRecording(e) {
@@ -24,7 +25,54 @@ class RecordingIndex extends React.Component {
         }
     } 
 
-    componentDidMount(){   
+    // getAverageRGB(imgEl) {
+
+    //     var blockSize = 5, // only visit every 5 pixels
+    //         defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
+    //         canvas = document.createElement('canvas'),
+    //         context = canvas.getContext && canvas.getContext('2d'),
+    //         data, width, height,
+    //         i = -4,
+    //         length,
+    //         rgb = { r: 0, g: 0, b: 0 },
+    //         count = 0;
+
+    //     if (!context) {
+    //         return defaultRGB;
+    //     }
+
+    //     height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+    //     width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+    //     context.drawImage(imgEl, 0, 0);
+
+    //     try {
+    //         data = context.getImageData(0, 0, width, height);
+    //     } catch (e) {
+    //         /* security error, img on diff domain */alert('x');
+    //         return defaultRGB;
+    //     }
+
+    //     length = data.data.length;
+
+    //     while ((i += blockSize * 4) < length) {
+    //         ++count;
+    //         rgb.r += data.data[i];
+    //         rgb.g += data.data[i + 1];
+    //         rgb.b += data.data[i + 2];
+    //     }
+
+    //     // ~~ used to floor values
+    //     rgb.r = ~~(rgb.r / count);
+    //     rgb.g = ~~(rgb.g / count);
+    //     rgb.b = ~~(rgb.b / count);
+
+    //     return rgb;
+    // }
+
+    componentDidMount(){ 
+        // var rgb = this.getAverageRGB(this.props.currentUser.portraitUrl);
+        // document.body.style.backgroundColor = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')'; 
     }
 
     render(){
@@ -51,25 +99,39 @@ class RecordingIndex extends React.Component {
                 <div className="recording-item-user" key={"recording-item-user" + recording.id}>
                     {recording.username}</div>
             </div>)
+
+            let backgroundImg = {
+                backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
+            };
+
             return(
-                <section className="user-recordings">
-                    <ul className="user-recordings-list">
-                        {recordingItems}
-                    </ul>
-                </section>
+                <>
+                    <section className="user-recordings">
+                        <div className="user-page-banner" >
+                            <div className="user-hero" style={backgroundImg}></div>
+                                <div className="user-portraitandname"> 
+                                    <img className="user-hero-portrait" id="user-hero-portrait"
+                                        src={this.props.currentUser.portraitUrl}/>
+                                    <h1 className="user-hero-name">{this.state.currentUser.username}</h1>
+                                </div>
+                        </div>
+                        <ul className="user-recordings-list">
+                            {recordingItems}
+                        </ul>
+                    </section>
+                </>
             )
         }
     }
 }
 
 const msp = (state, ownProps) => {
-    // debugger
-
+    // debugger 
     return {
         recordings: state.entities.recordings,
-        userId: ownProps.match.params.userId
-        // recordings: {},
-        // userId: 15
+        userId: ownProps.match.params.userId,
+        user: state.entities.users,  
+        currentUser: state.entities.users[state.session.id]
     }
     // debugger
 };
