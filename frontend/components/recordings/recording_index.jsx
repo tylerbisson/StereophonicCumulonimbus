@@ -55,7 +55,6 @@ class RecordingIndex extends React.Component {
                 <section className="user-recordings">
                     <ul className="user-recordings-list">
                         {recordingItems}
-                        {/* {"heelpp"} */}
                     </ul>
                 </section>
             )
@@ -65,7 +64,7 @@ class RecordingIndex extends React.Component {
 
 const msp = (state, ownProps) => {
     // debugger
-    
+
     return {
         recordings: state.entities.recordings,
         userId: ownProps.match.params.userId

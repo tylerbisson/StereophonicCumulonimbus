@@ -33,8 +33,8 @@ class CreateRecordingForm extends React.Component {
             data: formData,
             contentType: false,
             processData: false
-        });
-        // this.props.createRecording(formData);
+        })
+        .then(() => { this.props.history.push(`/recordings/${this.state.user_id}`)});
     }
  
     updated(field){

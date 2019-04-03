@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.getState = store.getState;
     window.dispatch = store.dispatch; // just for testing!
     window.createRecording = recordingActions.createRecording;
+    window.fetchSplashRecordings = recordingActions.fetchSplashRecordings;
     //TESTINGTESTINGTESTING
     const root = document.getElementById('root');
     ReactDOM.render(<h1>Welcome to Stereophonic Cumulonimbus</h1>, root);

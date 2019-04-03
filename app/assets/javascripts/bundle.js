@@ -119,7 +119,7 @@ var closeModal = function closeModal() {
 /*!************************************************!*\
   !*** ./frontend/actions/recordings_actions.js ***!
   \************************************************/
-/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, receiveRecording, receiveRecordings, deleteRecording, receiveRecordingErrors, createRecording, fetchRecordings */
+/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, receiveRecording, receiveRecordings, deleteRecording, receiveRecordingErrors, createRecording, fetchRecordings, fetchSplashRecordings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -134,6 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecordingErrors", function() { return receiveRecordingErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRecording", function() { return createRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordings", function() { return fetchRecordings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashRecordings", function() { return fetchSplashRecordings; });
 /* harmony import */ var _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/recordings_util */ "./frontend/util/recordings_util.js");
 
 var RECEIVE_RECORDING = 'RECEIVE_RECORDING';
@@ -178,6 +179,15 @@ var fetchRecordings = function fetchRecordings() {
   return function (dispatch) {
     // debugger
     return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["fetchRecordings"]().then(function (recordings) {
+      return dispatch(receiveRecordings(recordings)) // , err => (
+      // dispatch(receiveErrors(err.responseJSON))
+      ;
+    });
+  };
+};
+var fetchSplashRecordings = function fetchSplashRecordings() {
+  return function (dispatch) {
+    return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["fetchSplashRecordings"]().then(function (recordings) {
       return dispatch(receiveRecordings(recordings)) // , err => (
       // dispatch(receiveErrors(err.responseJSON))
       ;
@@ -345,10 +355,22 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Greeting).call(this, props));
     _this.handleDemoLogin = _this.handleDemoLogin.bind(_assertThisInitialized(_this));
+    _this.playRecording = _this.playRecording.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Greeting, [{
+    key: "playRecording",
+    value: function playRecording(e) {
+      if (e.currentTarget.childNodes[0].className === "not_playing") {
+        e.currentTarget.childNodes[0].play();
+        e.currentTarget.childNodes[0].className = "playing";
+      } else {
+        e.currentTarget.childNodes[0].pause();
+        e.currentTarget.childNodes[0].className = "not_playing";
+      }
+    }
+  }, {
     key: "handleDemoLogin",
     value: function handleDemoLogin() {
       var _this2 = this;
@@ -362,11 +384,51 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchSplashRecordings();
+    }
+  }, {
     key: "sessionLinks",
     value: function sessionLinks() {
       var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      var recordingItems = Object.values(this.props.recordings);
+
+      if (Object.keys(this.props.recordings).length < 1) {
+        recordingItems = null;
+      } else {
+        var recordings = Object.values(this.props.recordings);
+        recordingItems = recordings.map(function (recording) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item",
+            key: "recording-item" + recording.id,
+            onClick: _this3.playRecording
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+            className: "not_playing"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+            src: recording.audioUrl,
+            type: "audio/mpeg"
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-img",
+            key: "recording-item-img" + recording.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "recording-art",
+            src: recording.artUrl
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "recording-item-play-button",
+            src: window.playButtonURL
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-title",
+            key: "recording-item-title" + recording.id
+          }, recording.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "recording-item-user",
+            key: "recording-item-user" + recording.id
+          }, recording.username));
+        });
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "greeting-hero"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "login-signup"
@@ -392,7 +454,13 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "What's next in music is first on Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "demo-button",
         onClick: this.handleDemoLogin
-      }, "Login as Demo User")));
+      }, "Login as Demo User"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "user-recordings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "user-recordings-header"
+      }, "Hear what\u2019s trending for free in the cult of Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "user-recordings-list"
+      }, recordingItems)));
     }
   }, {
     key: "personalGreeting",
@@ -432,11 +500,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
-      // if (this.props.currentUser) {
-      //     this.props.closeModal()
-      // }
-      // debugger
       return this.props.currentUser ? this.personalGreeting() : this.sessionLinks();
     }
   }]);
@@ -462,6 +525,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _greeting__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./greeting */ "./frontend/components/greeting/greeting.jsx");
+/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+
 
 
 
@@ -469,9 +534,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var session = _ref.session,
-      users = _ref.entities.users;
+      _ref$entities = _ref.entities,
+      users = _ref$entities.users,
+      recordings = _ref$entities.recordings;
   // debugger
   return {
+    recordings: recordings,
     currentUser: users[session.id]
   };
 };
@@ -489,6 +557,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     demoLogin: function demoLogin(demoUser) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["login"])(demoUser));
+    },
+    fetchSplashRecordings: function fetchSplashRecordings() {
+      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["fetchSplashRecordings"])());
     }
   };
 };
@@ -635,6 +706,8 @@ function (_React$Component) {
   _createClass(CreateRecordingForm, [{
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       var formData = new FormData();
       formData.append('recording[audio]', this.state.audioFile);
@@ -647,27 +720,29 @@ function (_React$Component) {
         data: formData,
         contentType: false,
         processData: false
-      }); // this.props.createRecording(formData);
+      }).then(function () {
+        _this2.props.history.push("/recordings/".concat(_this2.state.user_id));
+      });
     }
   }, {
     key: "updated",
     value: function updated(field) {
-      var _this2 = this;
+      var _this3 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.target.value));
+        return _this3.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {
     key: "handleAudioFile",
     value: function handleAudioFile(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
 
       fileReader.onloadend = function () {
-        _this3.setState({
+        _this4.setState({
           audioFile: file,
           audioUrl: fileReader.result
         });
@@ -682,13 +757,13 @@ function (_React$Component) {
   }, {
     key: "handleImgFile",
     value: function handleImgFile(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
 
       fileReader.onloadend = function () {
-        _this4.setState({
+        _this5.setState({
           artFile: file,
           artUrl: fileReader.result
         });
@@ -981,8 +1056,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var errors = _ref.errors;
+  var errors = _ref.errors,
+      session = _ref.session;
+  // let id = session.id;
+  // if (!id){
+  //     id = null;
+  // }
   return {
+    currentUserId: session,
     errors: errors.session,
     formType: 'login' // navLink: <Link to="/signup">sign up instead</Link>,
 
@@ -1076,19 +1157,13 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      // debugger
-      // this.props.closeModal();
-      e.preventDefault(); // debugger
-      // if (this.props.errors.length === 0){
-      //     this.props.closeModal();
-      // } 
+      var _this3 = this;
 
+      e.preventDefault();
       var user = Object.assign({}, this.state);
-      this.props.processForm(user); // .then(() => console.log("buttass"));
-
-      this.props.history.push("/recordings/15"); // debugger
-      // debugger;
-      // .then(data => {this.props.history.push(`/recordings/${data.currentUser.user.id}`)});;
+      this.props.processForm(user).then(function (data) {
+        return _this3.props.history.push("/recordings/".concat(data.currentUser.user.id));
+      });
 
       if (this.props.errors.length === 0) {
         this.props.closeModal();
@@ -1547,7 +1622,8 @@ document.addEventListener('DOMContentLoaded', function () {
   window.getState = store.getState;
   window.dispatch = store.dispatch; // just for testing!
 
-  window.createRecording = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["createRecording"]; //TESTINGTESTINGTESTING
+  window.createRecording = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["createRecording"];
+  window.fetchSplashRecordings = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["fetchSplashRecordings"]; //TESTINGTESTINGTESTING
 
   var root = document.getElementById('root');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Stereophonic Cumulonimbus"), root);
@@ -1590,7 +1666,7 @@ var configureStore = function configureStore() {
 /*!******************************************!*\
   !*** ./frontend/util/recordings_util.js ***!
   \******************************************/
-/*! exports provided: createRecording, fetchRecording, fetchRecordings, updateRecording, destroyRecording */
+/*! exports provided: createRecording, fetchRecording, fetchRecordings, updateRecording, destroyRecording, fetchSplashRecordings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1600,6 +1676,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordings", function() { return fetchRecordings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRecording", function() { return updateRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyRecording", function() { return destroyRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashRecordings", function() { return fetchSplashRecordings; });
 var createRecording = function createRecording(recording) {
   return $.ajax({
     method: 'post',
@@ -1636,6 +1713,12 @@ var destroyRecording = function destroyRecording(id) {
     url: "api/recordings/".concat(recording.id)
   });
 };
+var fetchSplashRecordings = function fetchSplashRecordings() {
+  return $.ajax({
+    method: "GET",
+    url: "/api/splash_recordings/"
+  });
+};
 
 /***/ }),
 
@@ -1668,7 +1751,7 @@ var Auth = function Auth(_ref) {
     exact: exact,
     render: function render(props) {
       return !loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-        to: "/"
+        to: "/recordings/new"
       });
     }
   });

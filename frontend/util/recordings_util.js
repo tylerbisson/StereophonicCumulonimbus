@@ -36,3 +36,10 @@ export const destroyRecording = id => {
         url: `api/recordings/${recording.id}`
     });
 };
+
+export const fetchSplashRecordings = () => {
+    return $.ajax({
+        method: "GET",
+        url: `/api/splash_recordings/`,
+    });
+};

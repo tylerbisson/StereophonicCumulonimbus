@@ -7,17 +7,18 @@
     width: 1240px;
     margin: auto;
 }
+
 .user-recordings-list{
     height: 100%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    align-content: flex-start;
     font-family: 'Quicksand', sans-serif;
 }
 
 .recording-item {
     width: 180px;
-    height: 100%;
     overflow-wrap: break-word;
     margin-left: 10px;
     margin-right: 10px;
@@ -57,4 +58,12 @@
     margin-bottom: 5px;    
     color: grey;
     font-size: 12px;
+}
+
+.user-recordings-header{
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 10px;
+    padding-top: 10px;
 }

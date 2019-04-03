@@ -47,3 +47,13 @@ export const fetchRecordings = () => dispatch => {
         ))
     );
 };
+
+export const fetchSplashRecordings = () => dispatch => {
+    return (
+        RecordingsUtil.fetchSplashRecordings().then(recordings => (
+            dispatch(receiveRecordings(recordings))
+            // , err => (
+            // dispatch(receiveErrors(err.responseJSON))
+        ))
+    );
+}

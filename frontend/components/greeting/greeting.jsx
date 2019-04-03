@@ -7,7 +7,19 @@ class Greeting extends React.Component {
         super(props);
 
         this.handleDemoLogin = this.handleDemoLogin.bind(this);
+        this.playRecording = this.playRecording.bind(this)
     }
+
+    playRecording(e) {
+        if (e.currentTarget.childNodes[0].className === "not_playing") {
+            e.currentTarget.childNodes[0].play();
+            e.currentTarget.childNodes[0].className = "playing"
+        } else {
+            e.currentTarget.childNodes[0].pause();
+            e.currentTarget.childNodes[0].className = "not_playing"
+        }
+    } 
+
 
     handleDemoLogin(){
         // debugger 
@@ -17,8 +29,36 @@ class Greeting extends React.Component {
             });
     }
 
+    componentDidMount() {
+        this.props.fetchSplashRecordings();
+    }
+
     sessionLinks(){
+        let recordingItems = Object.values(this.props.recordings);
+        if (Object.keys(this.props.recordings).length < 1) {
+            recordingItems = null;
+        } else {
+            let recordings = Object.values(this.props.recordings);
+
+            recordingItems = recordings.map(recording =>
+                <div className="recording-item" key={"recording-item" + recording.id}
+                    onClick={this.playRecording}>
+                    <audio className="not_playing">
+                        <source src={recording.audioUrl} type="audio/mpeg"></source>
+                    </audio>
+                    <div className="recording-item-img" key={"recording-item-img" + recording.id}>
+                        <img className="recording-art" src={recording.artUrl} />
+                        <img className="recording-item-play-button" src={window.playButtonURL} />
+                    </div>
+                    <div className="recording-item-title" key={"recording-item-title" + recording.id}>
+                        {recording.title}</div>
+                    <div className="recording-item-user" key={"recording-item-user" + recording.id}>
+                        {recording.username}</div>
+                </div>)
+        }
+
         return(
+            <>
             <section className="greeting-hero">
                 <nav className="login-signup">
                     <div className="nav-buttonbox-left-splash">
@@ -38,6 +78,14 @@ class Greeting extends React.Component {
                     <button className="demo-button" onClick={this.handleDemoLogin}>Login as Demo User</button>
                 </div>
             </section>
+            <section className="user-recordings">
+                <h1 className="user-recordings-header">
+                    Hear what’s trending for free in the cult of Stereophonic Cumulonimbus</h1>
+                <ul className="user-recordings-list">
+                    {recordingItems}
+                </ul>
+            </section>
+            </>
         )
     };
     personalGreeting(){
@@ -67,11 +115,6 @@ class Greeting extends React.Component {
     };
 
     render(){
-        // debugger
-        // if (this.props.currentUser) {
-        //     this.props.closeModal()
-        // }
-        // debugger
         return this.props.currentUser ? this.personalGreeting() : this.sessionLinks();
     }
 };

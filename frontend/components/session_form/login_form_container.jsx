@@ -5,8 +5,13 @@ import { login } from '../../actions/session_actions';
 import { openModal, closeModal } from '../../actions/modal_actions';
 import SessionForm from './session_form';
 
-const mapStateToProps = ({ errors }) => {
+const mapStateToProps = ({ errors, session }) => {
+    // let id = session.id;
+    // if (!id){
+    //     id = null;
+    // }
     return {
+        currentUserId: session,
         errors: errors.session,
         formType: 'login'
         // navLink: <Link to="/signup">sign up instead</Link>,
