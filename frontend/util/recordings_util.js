@@ -38,6 +38,7 @@ export const destroyRecording = id => {
 };
 
 export const fetchSplashRecordings = () => {
+    // debugger
     return $.ajax({
         method: "GET",
         url: `/api/splash_recordings/`,

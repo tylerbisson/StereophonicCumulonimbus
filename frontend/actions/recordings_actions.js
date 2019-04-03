@@ -5,10 +5,16 @@ export const RECEIVE_RECORDING = 'RECEIVE_RECORDING';
 export const RECEIVE_RECORDINGS = 'RECEIVE_RECORDINGS';
 export const DELETE_RECORDING = 'DELETE_RECORDING';
 export const RECEIVE_RECORDING_ERRORS = 'RECEIVE_RECORDING_ERRORS';
+export const RECEIVE_SPLASH_RECORDINGS = 'RECEIVE_SPLASH_RECORDINGS';
 
-export const receiveRecording = recording => ({
+export const receiveRecording = recordings => ({
     type: RECEIVE_RECORDING,
-    recording
+    recordings
+});
+
+export const receiveSplashRecordings = recordings => ({
+    type: RECEIVE_SPLASH_RECORDINGS,
+    recordings
 });
 
 export const receiveRecordings = recordings => ({
@@ -51,7 +57,7 @@ export const fetchRecordings = () => dispatch => {
 export const fetchSplashRecordings = () => dispatch => {
     return (
         RecordingsUtil.fetchSplashRecordings().then(recordings => (
-            dispatch(receiveRecordings(recordings))
+            dispatch(receiveSplashRecordings(recordings))
             // , err => (
             // dispatch(receiveErrors(err.responseJSON))
         ))

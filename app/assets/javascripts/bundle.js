@@ -119,7 +119,7 @@ var closeModal = function closeModal() {
 /*!************************************************!*\
   !*** ./frontend/actions/recordings_actions.js ***!
   \************************************************/
-/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, receiveRecording, receiveRecordings, deleteRecording, receiveRecordingErrors, createRecording, fetchRecordings, fetchSplashRecordings */
+/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, RECEIVE_SPLASH_RECORDINGS, receiveRecording, receiveSplashRecordings, receiveRecordings, deleteRecording, receiveRecordingErrors, createRecording, fetchRecordings, fetchSplashRecordings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -128,7 +128,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RECORDINGS", function() { return RECEIVE_RECORDINGS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_RECORDING", function() { return DELETE_RECORDING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RECORDING_ERRORS", function() { return RECEIVE_RECORDING_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SPLASH_RECORDINGS", function() { return RECEIVE_SPLASH_RECORDINGS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecording", function() { return receiveRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveSplashRecordings", function() { return receiveSplashRecordings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecordings", function() { return receiveRecordings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteRecording", function() { return deleteRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecordingErrors", function() { return receiveRecordingErrors; });
@@ -141,10 +143,17 @@ var RECEIVE_RECORDING = 'RECEIVE_RECORDING';
 var RECEIVE_RECORDINGS = 'RECEIVE_RECORDINGS';
 var DELETE_RECORDING = 'DELETE_RECORDING';
 var RECEIVE_RECORDING_ERRORS = 'RECEIVE_RECORDING_ERRORS';
-var receiveRecording = function receiveRecording(recording) {
+var RECEIVE_SPLASH_RECORDINGS = 'RECEIVE_SPLASH_RECORDINGS';
+var receiveRecording = function receiveRecording(recordings) {
   return {
     type: RECEIVE_RECORDING,
-    recording: recording
+    recordings: recordings
+  };
+};
+var receiveSplashRecordings = function receiveSplashRecordings(recordings) {
+  return {
+    type: RECEIVE_SPLASH_RECORDINGS,
+    recordings: recordings
   };
 };
 var receiveRecordings = function receiveRecordings(recordings) {
@@ -188,7 +197,7 @@ var fetchRecordings = function fetchRecordings() {
 var fetchSplashRecordings = function fetchSplashRecordings() {
   return function (dispatch) {
     return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["fetchSplashRecordings"]().then(function (recordings) {
-      return dispatch(receiveRecordings(recordings)) // , err => (
+      return dispatch(receiveSplashRecordings(recordings)) // , err => (
       // dispatch(receiveErrors(err.responseJSON))
       ;
     });
@@ -398,6 +407,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Greeting).call(this, props));
     _this.handleDemoLogin = _this.handleDemoLogin.bind(_assertThisInitialized(_this));
     _this.playRecording = _this.playRecording.bind(_assertThisInitialized(_this));
+    _this.redirectToUserPage = _this.redirectToUserPage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -426,9 +436,24 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "redirectToUserPage",
+    value: function redirectToUserPage() {
+      // debugger
+      this.props.history.push("/recordings/".concat(this.props.currentUser.id));
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchSplashRecordings();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // debugger
+      if (prevProps.currentUser !== this.props.currentUser && !this.props.currentUser) {
+        // debugger
+        this.props.fetchSplashRecordings();
+      }
     }
   }, {
     key: "sessionLinks",
@@ -440,7 +465,8 @@ function (_React$Component) {
       if (Object.keys(this.props.recordings).length < 1) {
         recordingItems = null;
       } else {
-        var recordings = Object.values(this.props.recordings);
+        var recordings = Object.values(this.props.recordings); // recordings = recordings.slice(8);
+
         recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "recording-item",
@@ -530,7 +556,8 @@ function (_React$Component) {
           return _this4.props.history.push("/recordings/new");
         }
       }, "Upload"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "nav-greetingmessage"
+        className: "nav-greetingmessage",
+        onClick: this.redirectToUserPage
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "user-portrait",
         src: this.props.currentUser.portraitUrl
@@ -946,7 +973,8 @@ function (_React$Component) {
 
     _classCallCheck(this, RecordingIndex);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props)); // debugger
+
     _this.state = {
       recordings: _this.props.title,
       userId: _this.props.userId,
@@ -971,7 +999,21 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      // debugger
       this.props.fetchUser(this.props.userId);
+      this.props.fetchRecordings(); // this.setState.userId = this.props.match.params.userId;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // debugger
+      if (prevProps.match.params.userId !== this.props.match.params.userId) {
+        this.setState({
+          userId: this.props.match.params.userId
+        });
+        this.props.fetchUser(this.props.match.params.userId);
+        this.props.fetchRecordings();
+      }
     }
   }, {
     key: "render",
@@ -979,10 +1021,10 @@ function (_React$Component) {
       var _this2 = this;
 
       if (Object.keys(this.props.recordings).length < 1) {
-        // debugger
         // this.props.fetchRecordings()
         return null;
       } else {
+        // debugger
         var recordings = Object.values(this.props.recordings);
         recordings = recordings.filter(function (recording) {
           return recording["user_id"] === parseInt(_this2.state.userId);
@@ -1046,7 +1088,6 @@ function (_React$Component) {
 
 var msp = function msp(state, ownProps) {
   // debugger 
-  // debugger
   return {
     recordings: state.entities.recordings,
     userId: ownProps.match.params.userId,
@@ -1055,8 +1096,7 @@ var msp = function msp(state, ownProps) {
     userOfPage: state.entities.users[ownProps.match.params.userId] ? state.entities.users[ownProps.match.params.userId] : {
       username: "",
       portraitUrl: ""
-    } // debugger
-
+    }
   };
 };
 
@@ -1469,6 +1509,9 @@ var sessionReducer = function sessionReducer() {
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RECORDINGS"]:
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, action.recordings);
 
+    case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SPLASH_RECORDINGS"]:
+      return action.recordings;
+
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["DELETE_RECORDING"]:
       var newState = Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState);
       delete newState[action.recordingId];
@@ -1796,6 +1839,7 @@ var destroyRecording = function destroyRecording(id) {
   });
 };
 var fetchSplashRecordings = function fetchSplashRecordings() {
+  // debugger
   return $.ajax({
     method: "GET",
     url: "/api/splash_recordings/"

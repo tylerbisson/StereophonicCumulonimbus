@@ -1,7 +1,8 @@
 import {
     RECEIVE_RECORDING,
     RECEIVE_RECORDINGS,
-    DELETE_RECORDING
+    DELETE_RECORDING,
+    RECEIVE_SPLASH_RECORDINGS
 } from '../actions/recordings_actions';
 import { merge } from "lodash";
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
@@ -19,6 +20,8 @@ const sessionReducer = (oldState = {}, action) => {
             return merge({}, oldState, {[action.recording.id]: action.recording})
         case RECEIVE_RECORDINGS:
             return merge({}, oldState, action.recordings);
+        case RECEIVE_SPLASH_RECORDINGS: 
+            return action.recordings;
         case DELETE_RECORDING: 
             let newState = merge({}, oldState);
             delete newState[action.recordingId];

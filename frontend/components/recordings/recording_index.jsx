@@ -8,6 +8,7 @@ class RecordingIndex extends React.Component {
     constructor(props) {
         super(props);
 
+        // debugger
         this.state = {
             recordings: this.props.title, 
             userId: this.props.userId,
@@ -28,15 +29,29 @@ class RecordingIndex extends React.Component {
     } 
 
     componentDidMount(){ 
-        this.props.fetchUser(this.props.userId)
+        // debugger
+        this.props.fetchUser(this.props.userId);
+        this.props.fetchRecordings();
+        // this.setState.userId = this.props.match.params.userId;
+    }
+
+    componentDidUpdate(prevProps){
+        // debugger
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.setState({
+                userId: this.props.match.params.userId
+            });
+            this.props.fetchUser(this.props.match.params.userId);
+            this.props.fetchRecordings();
+        }
     }
 
     render(){
     if(Object.keys(this.props.recordings).length < 1){
-        // debugger
         // this.props.fetchRecordings()
         return(null)
     } else {
+        // debugger
         let recordings = Object.values(this.props.recordings);
         recordings = recordings.filter(recording => recording["user_id"] === parseInt(this.state.userId));
         // debugger 
@@ -83,7 +98,6 @@ class RecordingIndex extends React.Component {
 
 const msp = (state, ownProps) => {
     // debugger 
-    // debugger
     return {
         recordings: state.entities.recordings,
         userId: ownProps.match.params.userId,
@@ -91,7 +105,6 @@ const msp = (state, ownProps) => {
         currentUser: state.entities.users[state.session.id],
         userOfPage: state.entities.users[ownProps.match.params.userId] ? state.entities.users[ownProps.match.params.userId] : {username: "", portraitUrl: ""}
     }
-    // debugger
 };
 
 const mdp = dispatch => {

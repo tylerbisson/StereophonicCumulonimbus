@@ -8,6 +8,7 @@ class Greeting extends React.Component {
 
         this.handleDemoLogin = this.handleDemoLogin.bind(this);
         this.playRecording = this.playRecording.bind(this)
+        this.redirectToUserPage = this.redirectToUserPage.bind(this)
     }
 
     playRecording(e) {
@@ -20,7 +21,6 @@ class Greeting extends React.Component {
         }
     } 
 
-
     handleDemoLogin(){
         // debugger 
         this.props.demoLogin({ username: "Tyler Bisson", password: 'password' })
@@ -29,8 +29,21 @@ class Greeting extends React.Component {
             });
     }
 
+    redirectToUserPage(){
+        // debugger
+        this.props.history.push(`/recordings/${this.props.currentUser.id}`)
+    }
+
     componentDidMount() {
         this.props.fetchSplashRecordings();
+    }
+
+    componentDidUpdate(prevProps) {
+        // debugger
+        if (prevProps.currentUser !== this.props.currentUser && !this.props.currentUser) {
+            // debugger
+            this.props.fetchSplashRecordings();
+        }
     }
 
     sessionLinks(){
@@ -39,6 +52,7 @@ class Greeting extends React.Component {
             recordingItems = null;
         } else {
             let recordings = Object.values(this.props.recordings);
+            // recordings = recordings.slice(8);
 
             recordingItems = recordings.map(recording =>
                 <div className="recording-item" key={"recording-item" + recording.id}
@@ -102,7 +116,7 @@ class Greeting extends React.Component {
                         <button className="nav-upload" 
                             onClick={() => this.props.history.push(`/recordings/new`)} 
                             >Upload</button>
-                            <button className={"nav-greetingmessage"}>
+                            <button className={"nav-greetingmessage"} onClick={this.redirectToUserPage}>
                                 <img className="user-portrait" 
                                     src={this.props.currentUser.portraitUrl} />
                                 {this.props.currentUser.username}</button>
