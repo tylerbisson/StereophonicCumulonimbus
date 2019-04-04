@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 class SessionForm extends React.Component {
     constructor(props) {
-        console.log(props);
+        // console.log(props);
         super(props);
         this.state = {
             username: '',

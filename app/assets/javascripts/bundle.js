@@ -1252,7 +1252,7 @@ function (_React$Component) {
 
     _classCallCheck(this, SessionForm);
 
-    console.log(props);
+    // console.log(props);
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SessionForm).call(this, props));
     _this.state = {
       username: '',
