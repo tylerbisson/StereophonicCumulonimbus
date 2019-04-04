@@ -32,16 +32,26 @@ export const receiveRecordingErrors = errors => ({
     errors
 });
 
-export const createRecording = recording => dispatch => {
-    debugger
+export const fetchRecording = recording => dispatch => {
     return (
-        RecordingsUtil.createRecording(recording).then(recording => (
-            dispatch(receiveRecording(recording))
+        RecordingsUtil.fetchRecording(recording).then(recording => (
+            dispatch(fetchRecording(recording))
             // , err => (
             // dispatch(receiveErrors(err.responseJSON))
         ))
     );
 };
+
+// export const createRecording = recording => dispatch => {
+//     // debugger
+//     return (
+//         RecordingsUtil.createRecording(recording).then(recording => (
+//             dispatch(receiveRecording(recording))
+//             // , err => (
+//             // dispatch(receiveErrors(err.responseJSON))
+//         ))
+//     );
+// };
 
 export const fetchRecordings = () => dispatch => {
     // debugger

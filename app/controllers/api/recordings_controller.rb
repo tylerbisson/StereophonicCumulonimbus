@@ -1,15 +1,17 @@
 class Api::RecordingsController < ApplicationController 
+
+    # def show 
+    #     @recording = Recording.find_by(id: params[:id])
+    #     render "api/recordings/show"
+    # end
     
     def create 
-        # debugger
         @recording = Recording.new(recording_params)
         if (current_user)
             @recording.user_id = current_user.id;
-        # debugger
         end
 
         if @recording.save
-            # debugger
             render :show
         else 
             render json: @recording.errors.full_messages, status: 422 
