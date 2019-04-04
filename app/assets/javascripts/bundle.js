@@ -1002,6 +1002,11 @@ function (_React$Component) {
       // debugger
       this.props.fetchUser(this.props.userId);
       this.props.fetchRecordings(); // this.setState.userId = this.props.match.params.userId;
+      // wavesurfer = WaveSurfer.create({
+      //     container: '#waveform',
+      //     waveColor: 'violet',
+      //     progressColor: 'purple'
+      // });
     }
   }, {
     key: "componentDidUpdate",
@@ -1024,11 +1029,10 @@ function (_React$Component) {
         // this.props.fetchRecordings()
         return null;
       } else {
-        // debugger
         var recordings = Object.values(this.props.recordings);
         recordings = recordings.filter(function (recording) {
           return recording["user_id"] === parseInt(_this2.state.userId);
-        }); // debugger 
+        }); // wavesurfer.load(recordings[0].audioUrl);
 
         var recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
