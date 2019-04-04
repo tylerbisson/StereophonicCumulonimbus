@@ -788,8 +788,6 @@ function (_React$Component) {
   }, {
     key: "navLoggedOut",
     value: function navLoggedOut() {
-      var _this3 = this;
-
       return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
         className: "nav-bar"
       }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("nav", {
@@ -804,17 +802,10 @@ function (_React$Component) {
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
         className: "nav-buttonbox-right-loggedin"
       }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-upload",
-        onClick: function onClick() {
-          return _this3.props.history.push("/recordings/new");
-        }
-      }, "Upload"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-greetingmessage",
-        onClick: this.redirectToUserPage
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-logout",
-        onClick: this.props.logout
-      }, "Log Out"))));
+        className: "nav-loggedout-login"
+      }, "Log In"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+        className: "nav-loggedout-signup"
+      }, "Sign Up"))));
     }
   }, {
     key: "render",

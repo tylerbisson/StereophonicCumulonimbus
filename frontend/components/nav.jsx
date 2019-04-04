@@ -54,14 +54,11 @@ class Nav extends React.Component {
                         </button>
                     </div>
                     <div className="nav-buttonbox-right-loggedin">
-                        <button className="nav-upload"
-                            onClick={() => this.props.history.push(`/recordings/new`)}>
-                            Upload
+                        <button className="nav-loggedout-login">
+                            Log In
                         </button>
-                        <button className={"nav-greetingmessage"} onClick={this.redirectToUserPage}>
-                        </button>
-                        <button className="nav-logout" onClick={this.props.logout}>
-                            Log Out
+                        <button className="nav-loggedout-signup">
+                            Sign Up 
                         </button>
                     </div>
                 </nav>

@@ -75,3 +75,82 @@ nav .nav-login{
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.nav-bar{
+  height: 50px;
+  width: 100%;
+  background-color:#3e4042;
+}
+
+.nav-loggedin{
+  margin: auto;
+  height: 50px;
+  width: 1240px;
+  background-color:#3e4042;
+  border-left: solid;
+  border-width: 1px;
+  border-color: black;
+}
+
+
+.nav-buttonbox-right-loggedin{
+  height: 100%;
+  display: flex;
+}
+
+nav .nav-home {
+  height: 100%;
+  margin-left: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: black;
+}
+
+.nav-logout {
+  // margin-left: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-right: solid;
+  border-color: black;
+  border-width: 1px;
+}
+
+.nav-greetingmessage{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-color: black;
+  border-width: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-upload{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-color: black;
+  border-width: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-loggedout-login{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-color: black;
+  border-width: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-loggedout-signup{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: solid;
+  border-right: solid;
+  border-color: black;
+  border-width: 1px;
+}
