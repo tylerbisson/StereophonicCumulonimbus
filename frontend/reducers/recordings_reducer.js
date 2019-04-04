@@ -12,10 +12,7 @@ const sessionReducer = (oldState = {}, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-        // debugger
             return Object.assign({}, oldState, action.currentUser.recordings);
-        //     // return Object.assign({}, oldState, action.currentUser.recordings)
-        //     return Object.assign({}, oldState, "ppop")
         case RECEIVE_RECORDING:
             return merge({}, oldState, {[action.recording.id]: action.recording})
         case RECEIVE_RECORDINGS:

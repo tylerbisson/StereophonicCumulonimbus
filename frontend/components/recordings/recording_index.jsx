@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {fetchRecordings} from '../../actions/recordings_actions';
 import {fetchUser} from '../../actions/user_actions';
 import RecordingItem from '../recordings/recording_item';
-import UserBanner from '../user/user_banner'
+import UserBanner from '../user/user_banner';
+import Nav from '../nav';
 
 class RecordingIndex extends React.Component {
     constructor(props) {
@@ -15,19 +16,7 @@ class RecordingIndex extends React.Component {
             currentUser: this.props.currentUser,
             userOfPage: this.props.userOfPage
         }
-
-        this.playRecording = this.playRecording.bind(this);
     }
-    
-    playRecording(e) {
-        if (e.currentTarget.childNodes[0].className === "not_playing"){
-            e.currentTarget.childNodes[0].play();
-            e.currentTarget.childNodes[0].className = "playing"
-        } else {
-            e.currentTarget.childNodes[0].pause();
-            e.currentTarget.childNodes[0].className = "not_playing"
-        }
-    } 
 
     componentDidMount(){ 
         this.props.fetchUser(this.props.userId);
@@ -53,16 +42,18 @@ class RecordingIndex extends React.Component {
             recordings = recordings.filter(recording => recording["user_id"] === parseInt(this.state.userId));
 
             let recordingItems = recordings.map(recording => 
-                <RecordingItem recording={recording} key={recording.id}
-                    playRecording={this.playRecording}/>
+                <RecordingItem recording={recording} key={recording.id}/>
             )
 
             let backgroundImg = {
                 backgroundImage: 'url(' + this.props.userOfPage.portraitUrl + ')'
             };
                 return(
-                    <UserBanner recordingItems={recordingItems} backgroundImg={backgroundImg}
-                        userOfPage={this.props.userOfPage} />
+                    <>
+                        <Nav/>
+                        <UserBanner recordingItems={recordingItems} backgroundImg={backgroundImg}
+                            userOfPage={this.props.userOfPage} />
+                    </>
                 )
             }
         }

@@ -34,7 +34,7 @@ class CreateRecordingForm extends React.Component {
             contentType: false,
             processData: false
         })
-        .then(() => { this.props.history.push(`/recordings/${this.state.user_id}`)});
+        .then(() => { this.props.history.push(`/users/${this.state.user_id}`)});
     }
  
     updated(field){

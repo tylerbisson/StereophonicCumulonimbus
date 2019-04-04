@@ -5,7 +5,6 @@ import Greeting from './greeting';
 import { fetchSplashRecordings } from '../../actions/recordings_actions';
 
 const mapStateToProps = ({ session, entities: { users, recordings } }) => {
-    // debugger
     return {
         recordings: recordings,
         currentUser: users[session.id]

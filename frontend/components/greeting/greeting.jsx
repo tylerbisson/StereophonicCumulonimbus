@@ -1,37 +1,24 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import RecordingItem from '../recordings/recording_item';
 
 class Greeting extends React.Component {
     constructor(props){
         super(props);
 
         this.handleDemoLogin = this.handleDemoLogin.bind(this);
-        this.playRecording = this.playRecording.bind(this)
         this.redirectToUserPage = this.redirectToUserPage.bind(this)
     }
 
-    playRecording(e) {
-        if (e.currentTarget.childNodes[0].className === "not_playing") {
-            e.currentTarget.childNodes[0].play();
-            e.currentTarget.childNodes[0].className = "playing"
-        } else {
-            e.currentTarget.childNodes[0].pause();
-            e.currentTarget.childNodes[0].className = "not_playing"
-        }
-    } 
-
     handleDemoLogin(){
-        // debugger 
         this.props.demoLogin({ username: "Tyler Bisson", password: 'password' })
             .then(data => {
-                this.props.history.push(`/recordings/${data.currentUser.user.id}`)
+                this.props.history.push(`/users/${data.currentUser.user.id}`)
             });
     }
 
     redirectToUserPage(){
-        // debugger
-        this.props.history.push(`/recordings/${this.props.currentUser.id}`)
+        this.props.history.push(`/users/${this.props.currentUser.id}`)
     }
 
     componentDidMount() {
@@ -39,9 +26,7 @@ class Greeting extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        // debugger
         if (prevProps.currentUser !== this.props.currentUser && !this.props.currentUser) {
-            // debugger
             this.props.fetchSplashRecordings();
         }
     }
@@ -52,23 +37,9 @@ class Greeting extends React.Component {
             recordingItems = null;
         } else {
             let recordings = Object.values(this.props.recordings);
-            // recordings = recordings.slice(8);
 
             recordingItems = recordings.map(recording =>
-                <div className="recording-item" key={"recording-item" + recording.id}
-                    onClick={this.playRecording}>
-                    <audio className="not_playing">
-                        <source src={recording.audioUrl} type="audio/mpeg"></source>
-                    </audio>
-                    <div className="recording-item-img" key={"recording-item-img" + recording.id}>
-                        <img className="recording-art" src={recording.artUrl} />
-                        <img className="recording-item-play-button" src={window.playButtonURL} />
-                    </div>
-                    <div className="recording-item-title" key={"recording-item-title" + recording.id}>
-                        {recording.title}</div>
-                    <div className="recording-item-user" key={"recording-item-user" + recording.id}>
-                        {recording.username}</div>
-                </div>)
+                <RecordingItem recording={recording} key={recording.id}/>)
         }
 
         return(
@@ -103,8 +74,6 @@ class Greeting extends React.Component {
         )
     };
     personalGreeting(){
-        // console.log("this.props.currentUser");
-        // console.log(this.props.currentUser);
         return(
             <div className="nav-bar"> 
                 <nav className="nav-loggedin">
