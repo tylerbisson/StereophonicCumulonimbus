@@ -1,9 +1,10 @@
 class Api::RecordingsController < ApplicationController 
 
-    # def show 
-    #     @recording = Recording.find_by(id: params[:id])
-    #     render "api/recordings/show"
-    # end
+    def show 
+        # debugger 
+        @recording = Recording.find(params[:id])
+        render "api/recordings/show"
+    end
     
     def create 
         @recording = Recording.new(recording_params)

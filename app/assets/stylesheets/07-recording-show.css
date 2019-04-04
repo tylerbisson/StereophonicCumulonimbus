@@ -1,29 +1,27 @@
-.user-page-banner{
-    overflow: hidden;
+.recording-show-section{
     font-family: 'Quicksand', sans-serif;
+    width: 1240px;
+    height: 380px;
+    margin: auto;
 }
 
-.user-hero{
+.recording-show-banner{
+    /* overflow: hidden; */
+    position: relative;
+}
+
+.recording-hero{
     background-color: white;
-    width: 1240px;
     text-align: center;
     font-size: 24px;
     margin: auto;
     height: 240px;
-    position: relative;
+    position: absolute;
     background-size: auto;
     filter: saturate(10000%) blur(200px)
 }
 
-.user-portraitandname{
-    width: 1240px;
-    height: 240px;
-    position: absolute;
-    margin: auto;
-    top: 7%;
-}
-
-.user-hero-name{
+.recording-hero-name{
     position: absolute;
     padding: 10px;
     top: 11%;
@@ -33,13 +31,10 @@
     filter: blur(0px);
 }
 
-.user-hero-portrait{
-    border-radius: 100%;
+.recording-art-show{
+    width: 340px;
+    height: 340px;
     position: absolute;
-    height: 180px;
-    width: 180px;
-    top: 8%;
-    left: 2%;
-    /* filter: blur(8px); */
-    filter: blur(0px);
+    /* position: absolute; */
+    /* right: 10%; */
 }
