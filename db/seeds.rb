@@ -17,7 +17,9 @@ demo_user2 = User.new({username:"DJ Deeon", password:'password'})
 demo_user2.save 
 demo_user2.portrait.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/artists/deeon.png"),
     filename: "deeon.png")
-demo_user2_r = Recording.new({title:"2 B Free", description:"cool beat", user_id: demo_user2.id})
+demo_user2_r = Recording.new({title:"2 B Free", 
+    description:"Numbers tick one off the booty bucket list with this invaluable set of ghetto house classixxx by the original DJ Deeon. Almost as well appreciated in Glasgow as they are in Chicago, they include the awesome Arthur Russell-sampling freak of '2 B Free', the irresistible 'House-O-Matic', a ruff-ass R&B throw-down in 'Freak Like Me', plus a proper pounding in 'The 604'. For the strippers, for the street.", 
+    user_id: demo_user2.id})
 demo_user2_r.save! 
 demo_user2_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/2+B+free.png"),
     filename: "2+B+free.png")
