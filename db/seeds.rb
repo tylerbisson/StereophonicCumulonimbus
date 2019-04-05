@@ -15,14 +15,14 @@ Recording.destroy_all
 
 demo_user2 = User.new({username:"DJ Deeon", password:'password'})
 demo_user2.save 
-demo_user2.portrait.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/artists/deeon.png"),
-    filename: "deeon.png")
-demo_user2_r = Recording.new({title:"2 B Free", description:"cool beat", user_id: demo_user2.id})
-demo_user2_r.save! 
-demo_user2_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/2+B+free.png"),
-    filename: "2+B+free.png")
-demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+2+B+Free.mp3"),
-    filename: "01+2+B+Free.mp3")
+demo_user2.portrait.attach(io: open("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Monasterio_Khor_Virap%2C_Armenia%2C_2016-10-01%2C_DD_25.jpg/1920px-Monasterio_Khor_Virap%2C_Armenia%2C_2016-10-01%2C_DD_25.jpg"),
+    filename: "deeon.jpg")
+# demo_user2_r = Recording.new({title:"2 B Free", description:"cool beat", user_id: demo_user2.id})
+# demo_user2_r.save! 
+# demo_user2_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/2+B+free.png"),
+#     filename: "2+B+free.png")
+# demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+2+B+Free.mp3"),
+#     filename: "01+2+B+Free.mp3")
 
 # demo_user3 = User.new({username:"Music 4 Dogs", password:'password'})
 # demo_user3.save 
