@@ -357,7 +357,7 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     id: "header"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
     exact: true,
@@ -375,7 +375,7 @@ var App = function App() {
     exact: true,
     path: "/recordings/:recordingId",
     component: _components_recordings_recording_show__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }))));
+  })))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -1406,6 +1406,10 @@ function (_React$Component) {
       var backgroundImg = {
         backgroundImage: 'url(' + this.props.recording.artUrl + ')'
       };
+      var userImg = {
+        backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
+      }; // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1425,7 +1429,16 @@ function (_React$Component) {
         className: "recording-hero-name"
       }, this.props.recording.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-info"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recording-comment-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recording-comment-userportrait",
+        style: userImg
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "recording-comment-input",
+        type: "text",
+        placeholder: "Write a comment"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -1441,6 +1454,9 @@ var msp = function msp(state, ownprops) {
   var recordingId = parseInt(ownprops.match.params.recordingId); // debugger
 
   return {
+    currentUser: state.entities.users[state.session.id] ? state.entities.users[state.session.id] : {
+      portraitUrl: ""
+    },
     recording: state.entities.recordings[recordingId] ? state.entities.recordings[recordingId] : {
       recording: {
         artUrl: "",

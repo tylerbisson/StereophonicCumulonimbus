@@ -16,15 +16,17 @@ import Splash from '../components/splash';
 
 const App = () => (
     <div id="app">
-        <Modal />
-        <header id="header">
-            <Switch>
-                <AuthRoute exact path='/' component={Splash}/>
-                <ProtectedRoute exact path='/recordings/new' component={CreateRecordingForm}/>
-                <ProtectedRoute exact path='/users/:userId' component={RecordingIndex}/>
-                <Route exact path='/recordings/:recordingId' component={RecordingShow}/>
-            </Switch>
-        </header>
+        <div> 
+            <Modal />
+            <header id="header">
+                <Switch>
+                    <AuthRoute exact path='/' component={Splash}/>
+                    <ProtectedRoute exact path='/recordings/new' component={CreateRecordingForm}/>
+                    <ProtectedRoute exact path='/users/:userId' component={RecordingIndex}/>
+                    <Route exact path='/recordings/:recordingId' component={RecordingShow}/>
+                </Switch>
+            </header>
+        </div>
     </div>
 );
 

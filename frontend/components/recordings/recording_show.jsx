@@ -22,6 +22,11 @@ class RecordingShow extends React.Component {
         let backgroundImg = {
             backgroundImage: 'url(' + this.props.recording.artUrl + ')'
         };
+
+        let userImg = {
+            backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
+        };
+        // debugger
         
         return(
             <>
@@ -37,6 +42,10 @@ class RecordingShow extends React.Component {
                         </div>
                     </div>
                     <div className="recording-info" >
+                        <div className="recording-comment-div" >
+                            <div className="recording-comment-userportrait" style={userImg}/>
+                            <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
+                        </div>
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
                     </div>
@@ -51,6 +60,7 @@ const msp = (state, ownprops) => {
     let recordingId = parseInt(ownprops.match.params.recordingId);
     // debugger
     return {
+        currentUser: state.entities.users[state.session.id] ? state.entities.users[state.session.id] : {portraitUrl: ""},
         recording: state.entities.recordings[recordingId] ? state.entities.recordings[recordingId] : {recording: {artUrl: "", id: "", title: ""}}
     }
 }
