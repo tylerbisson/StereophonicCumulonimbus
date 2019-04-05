@@ -13,7 +13,7 @@ class RecordingShow extends React.Component {
     }
 
     componentDidMount(){
-        debugger
+        // debugger
         this.props.fetchRecording(this.props.match.params.recordingId);
     }
 

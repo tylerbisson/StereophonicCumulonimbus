@@ -1386,7 +1386,7 @@ function (_React$Component) {
   _createClass(RecordingShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
+      // debugger
       this.props.fetchRecording(this.props.match.params.recordingId);
     }
   }, {
