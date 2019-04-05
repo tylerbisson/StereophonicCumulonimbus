@@ -3,6 +3,7 @@ class Api::RecordingsController < ApplicationController
     def show 
         # debugger 
         @recording = Recording.find(params[:id])
+        @user = User.find_by(id: @recording.user_id)
         render "api/recordings/show"
     end
     

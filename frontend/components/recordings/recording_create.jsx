@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {createRecording} from '../../actions/recordings_actions';
+import Nav from '../nav';
 
 class CreateRecordingForm extends React.Component {
     constructor(props){
@@ -69,44 +70,50 @@ class CreateRecordingForm extends React.Component {
     render(){
         if (this.audio_selected === false) {
             return( 
-                <section className="recording-create">
-                    <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
-                        <div className="recording-create-audio-file"> Choose Track To Upload
-                            <input className="recording-create-audio-file-input"
-                                type="file" onChange={this.handleAudioFile.bind(this)}/>
-                        </div>
-                    </form>
-                </section>
+                <>
+                    <Nav/>
+                    <section className="recording-create">
+                        <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
+                            <div className="recording-create-audio-file"> Choose Track To Upload
+                                <input className="recording-create-audio-file-input"
+                                    type="file" onChange={this.handleAudioFile.bind(this)}/>
+                            </div>
+                        </form>
+                    </section>
+                </>
             )
         } else {
             return ( 
-                <section className="recording-create">
-                    <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
-                        <div className="recording-create-audio-file"> 
-                            Choose Track To Upload
-                                <input className="recording-create-audio-file-input"
-                                type="file" onChange={this.handleAudioFile.bind(this)} />
-                        </div>
-                        <div className="recording-create-artandtitle">
-                            <div className="recording-create-img-file"> 
-                                <label>Update Image</label>
-                                <input className="recording-create-img-input"
-                                        type="file" onChange={this.handleImgFile.bind(this)} />
+                <>
+                    <Nav/>
+                    <section className="recording-create">
+                        <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
+                            <div className="recording-create-audio-file"> 
+                                Choose Track To Upload
+                                    <input className="recording-create-audio-file-input"
+                                    type="file" onChange={this.handleAudioFile.bind(this)} />
                             </div>
-                            <div className="recording-title">
-                                    <label>Title 
-                                        <input className="recording-title-input" type="text" onChange={this.updated('title')}/>
-                                    </label>
+                            <div className="recording-create-artandtitle">
+                                <div className="recording-create-img-file"> 
+                                    <label>Update Image</label>
+                                    <input className="recording-create-img-input"
+                                            type="file" onChange={this.handleImgFile.bind(this)} />
+                                </div>
+                                <div className="recording-title">
+                                        <label>Title 
+                                            <input className="recording-title-input" type="text" onChange={this.updated('title')}/>
+                                        </label>
+                                </div>
+                                <div className="recording-description">
+                                        <label>Description
+                                            <textarea className="recording-title-input"             onChange={this.updated('description')}></textarea>
+                                        </label>
+                                </div>
+                                <input className="submit-recording-form" type="submit" value="Save" />
                             </div>
-                            <div className="recording-description">
-                                    <label>Description
-                                        <textarea className="recording-title-input"             onChange={this.updated('description')}></textarea>
-                                    </label>
-                            </div>
-                            <input className="submit-recording-form" type="submit" value="Save" />
-                        </div>
-                    </form>
-                </section>
+                        </form>
+                    </section>
+                </>
             )
         }
     }

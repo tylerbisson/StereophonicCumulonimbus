@@ -3,16 +3,22 @@ import { logout, login } from '../actions/session_actions';
 import { openModal, closeModal } from '../actions/modal_actions';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Nav extends React.Component {
     constructor(props) {
         super(props);
 
         this.redirectToUserPage = this.redirectToUserPage.bind(this);
+        this.redirectToHome = this.redirectToHome.bind(this);
     }
 
-    redirectToUserPage() {
+    redirectToUserPage(){
         this.props.history.push(`/users/${this.props.currentUser.id}`)
+    }
+
+    redirectToHome(){
+        this.props.history.push(`/`)
     }
 
     navLoggedIn(){
@@ -30,7 +36,7 @@ class Nav extends React.Component {
                         onClick={() => this.props.history.push(`/recordings/new`)}>
                             Upload
                         </button>
-                        <button className={"nav-greetingmessage"} onClick={this.redirectToUserPage}>
+                        <button className={"nav-greetingmessage"} onClick={this.redirectToHome}>
                             <img className="user-portrait" src={this.props.currentUser.portraitUrl} />
                             {this.props.currentUser.username}
                         </button>
@@ -49,7 +55,7 @@ class Nav extends React.Component {
                 <nav className="nav-loggedin">
                     <div className="nav-buttonbox-left">
                         <img className="nav-loggedin-logo" src={window.logoURL} />
-                        <button className="nav-home">
+                        <button className="nav-home" onClick={this.redirectToHome}>
                             Home
                         </button>
                     </div>
