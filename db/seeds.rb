@@ -134,6 +134,16 @@ demo_user12_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulon
 demo_user12_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+Submit-X.mp3"),
     filename: "03+Submit-X.mp3")
 
+demo_user13 = User.new({username:"The Coneheads", password:'password'})
+demo_user13.save 
+demo_user13.portrait.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/artists/coneheadsprofile.png"),
+    filename: "coneheadsprofile.png")
+demo_user13_r = Recording.new({title:"OUT OF CONETROL", description:"cool beat", user_id: demo_user13.id})
+demo_user13_r.save! 
+demo_user13_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/coneheads.png"),
+    filename: "coneheads.png")
+demo_user13_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+OUT+OF+CONETROL.mp3"),
+    filename: "01+OUT+OF+CONETROL.mp3")
 
 # DEMO USER 
 demo_user = User.new({username:"Tyler Bisson", password:'password'})

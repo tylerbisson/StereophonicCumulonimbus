@@ -52,8 +52,15 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
                         </div>
-                        <button>Edit</button>
-                        <button onClick={() => this.handleDelete(this.props.recording.id)}>Delete</button>
+                        <div className="recording-buttons">
+                            <button className="recording-button">
+                                Edit
+                            </button>
+                            <button className="recording-button"
+                                onClick={() => this.handleDelete(this.props.recording.id)}>
+                                Delete
+                            </button>
+                        </div>
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
                     </div>

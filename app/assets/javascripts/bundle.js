@@ -793,7 +793,7 @@ function (_React$Component) {
         }
       }, "Upload"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
         className: "nav-greetingmessage",
-        onClick: this.redirectToHome
+        onClick: this.redirectToUserPage
       }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
         className: "user-portrait",
         src: this.props.currentUser.portraitUrl
@@ -954,7 +954,8 @@ function (_React$Component) {
       var formData = new FormData();
       formData.append('recording[audio]', this.state.audioFile);
       formData.append('recording[title]', this.state.title);
-      formData.append('recording[art]', this.state.artFile); // debugger
+      formData.append('recording[art]', this.state.artFile);
+      formData.append('recording[description]', this.state.description); // debugger
 
       $.ajax({
         url: '/api/recordings',
@@ -1460,11 +1461,16 @@ function (_React$Component) {
         className: "recording-comment-input",
         type: "text",
         placeholder: "Write a comment"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recording-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "recording-button"
+      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "recording-button",
         onClick: function onClick() {
           return _this3.handleDelete(_this3.props.recording.id);
         }
-      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, "Delete")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {

@@ -24,9 +24,10 @@ class CreateRecordingForm extends React.Component {
     handleSubmit(e){
         e.preventDefault();
         const formData = new FormData();
-        formData.append('recording[audio]', this.state.audioFile)
+        formData.append('recording[audio]', this.state.audioFile);
         formData.append('recording[title]', this.state.title);
         formData.append('recording[art]', this.state.artFile);
+        formData.append('recording[description]', this.state.description);
         // debugger
         $.ajax({
             url: '/api/recordings',
@@ -105,7 +106,8 @@ class CreateRecordingForm extends React.Component {
                                 </div>
                                 <div className="recording-description">
                                         <label>Description
-                                            <textarea className="recording-title-input"             onChange={this.updated('description')}></textarea>
+                                            <textarea className="recording-title-input" onChange={this.updated('description')}>
+                                            </textarea>
                                         </label>
                                 </div>
                                 <input className="submit-recording-form" type="submit" value="Save" />
