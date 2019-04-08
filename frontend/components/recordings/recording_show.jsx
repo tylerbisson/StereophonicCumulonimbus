@@ -3,13 +3,19 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RecordingItem from '../recordings/recording_item';
 import Nav from '../nav';
-import {fetchRecording} from '../../actions/recordings_actions';
+import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 
 class RecordingShow extends React.Component {
     constructor(props){
         super(props);
 
         this.state = this.props.recording;
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleDelete(recordingId){
+        this.props.destroyRecording(recordingId)
+            .then(() => this.props.history.push(`/users/${this.props.currentUser.id}`));
     }
 
     componentDidMount(){
@@ -46,6 +52,8 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
                         </div>
+                        <button>Edit</button>
+                        <button onClick={() => this.handleDelete(this.props.recording.id)}>Delete</button>
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
                     </div>
@@ -67,7 +75,8 @@ const msp = (state, ownprops) => {
 
 const mdp = dispatch => {
     return {
-        fetchRecording: id => dispatch(fetchRecording(id))
+        fetchRecording: id => dispatch(fetchRecording(id)),
+        destroyRecording: id => dispatch(destroyRecording(id))
     }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {createRecording} from '../../actions/recordings_actions';
+// import {createRecording} from '../../actions/recordings_actions';
 import Nav from '../nav';
 
 class CreateRecordingForm extends React.Component {
@@ -34,8 +34,7 @@ class CreateRecordingForm extends React.Component {
             data: formData,
             contentType: false,
             processData: false
-        })
-        .then(() => { this.props.history.push(`/users/${this.state.user_id}`)});
+        }).then(data => {this.props.history.push(`/users/${data.user_id}`)});
     }
  
     updated(field){
@@ -128,7 +127,7 @@ const msp = state => {
 
 const mdp = dispatch => {
     return {
-        createRecording: recording => dispatch(createRecording(recording))
+        // createRecording: recording => dispatch(createRecording(recording))
     }
 }
 

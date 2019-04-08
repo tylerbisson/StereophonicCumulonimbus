@@ -119,7 +119,7 @@ var closeModal = function closeModal() {
 /*!************************************************!*\
   !*** ./frontend/actions/recordings_actions.js ***!
   \************************************************/
-/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, RECEIVE_SPLASH_RECORDINGS, receiveRecording, receiveSplashRecordings, receiveRecordings, deleteRecording, receiveRecordingErrors, fetchRecording, fetchRecordings, fetchSplashRecordings */
+/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, RECEIVE_SPLASH_RECORDINGS, receiveRecording, receiveSplashRecordings, receiveRecordings, deleteRecording, receiveRecordingErrors, fetchRecording, destroyRecording, fetchRecordings, fetchSplashRecordings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteRecording", function() { return deleteRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecordingErrors", function() { return receiveRecordingErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecording", function() { return fetchRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyRecording", function() { return destroyRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordings", function() { return fetchRecordings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashRecordings", function() { return fetchSplashRecordings; });
 /* harmony import */ var _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/recordings_util */ "./frontend/util/recordings_util.js");
@@ -178,6 +179,15 @@ var fetchRecording = function fetchRecording(recording) {
   return function (dispatch) {
     return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["fetchRecording"](recording).then(function (recording) {
       return dispatch(receiveRecording(recording)) // , err => (
+      // dispatch(receiveErrors(err.responseJSON))
+      ;
+    });
+  };
+};
+var destroyRecording = function destroyRecording(recordingId) {
+  return function (dispatch) {
+    return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["destroyRecording"](recordingId).then(function (recording) {
+      return dispatch(deleteRecording(recording)) // , err => (
       // dispatch(receiveErrors(err.responseJSON))
       ;
     });
@@ -884,8 +894,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
-/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -907,7 +916,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-
+ // import {createRecording} from '../../actions/recordings_actions';
 
 
 
@@ -953,8 +962,8 @@ function (_React$Component) {
         data: formData,
         contentType: false,
         processData: false
-      }).then(function () {
-        _this2.props.history.push("/users/".concat(_this2.state.user_id));
+      }).then(function (data) {
+        _this2.props.history.push("/users/".concat(data.user_id));
       });
     }
   }, {
@@ -1010,7 +1019,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.audio_selected === false) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "recording-create"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "recording-create-form",
@@ -1023,7 +1032,7 @@ function (_React$Component) {
           onChange: this.handleAudioFile.bind(this)
         })))));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "recording-create"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "recording-create-form",
@@ -1076,10 +1085,7 @@ var msp = function msp(state) {
 };
 
 var mdp = function mdp(dispatch) {
-  return {
-    createRecording: function createRecording(recording) {
-      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__["createRecording"])(recording));
-    }
+  return {// createRecording: recording => dispatch(createRecording(recording))
   };
 };
 
@@ -1142,10 +1148,11 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingIndex).call(this, props));
     _this.state = {
-      recordings: _this.props.title,
+      recordings: _this.props.recordings,
       userId: _this.props.userId,
       currentUser: _this.props.currentUser,
-      userOfPage: _this.props.userOfPage
+      userOfPage: _this.props.userOfPage // debugger
+
     };
     return _this;
   }
@@ -1153,8 +1160,9 @@ function (_React$Component) {
   _createClass(RecordingIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUser(this.props.userId);
-      this.props.fetchRecordings();
+      // debugger
+      this.props.fetchUser(this.props.userId); // this.props.fetchRecordings();
+      // debugger
     }
   }, {
     key: "componentDidUpdate",
@@ -1163,9 +1171,11 @@ function (_React$Component) {
         this.setState({
           userId: this.props.match.params.userId
         });
-        this.props.fetchUser(this.props.match.params.userId);
-        this.props.fetchRecordings();
-      }
+        this.props.fetchUser(this.props.match.params.userId); // this.props.fetchRecordings();
+      } // if (prevProps.recordings !== this.props.recordings) {
+      //     this.props.fetchRecordings();
+      // }
+
     }
   }, {
     key: "render",
@@ -1363,9 +1373,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1390,10 +1400,20 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
     _this.state = _this.props.recording;
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(RecordingShow, [{
+    key: "handleDelete",
+    value: function handleDelete(recordingId) {
+      var _this2 = this;
+
+      this.props.destroyRecording(recordingId).then(function () {
+        return _this2.props.history.push("/users/".concat(_this2.props.currentUser.id));
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       // debugger
@@ -1402,6 +1422,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       // debugger
       var backgroundImg = {
         backgroundImage: 'url(' + this.props.recording.artUrl + ')'
@@ -1438,7 +1460,11 @@ function (_React$Component) {
         className: "recording-comment-input",
         type: "text",
         placeholder: "Write a comment"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this3.handleDelete(_this3.props.recording.id);
+        }
+      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -1471,6 +1497,9 @@ var mdp = function mdp(dispatch) {
   return {
     fetchRecording: function fetchRecording(id) {
       return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__["fetchRecording"])(id));
+    },
+    destroyRecording: function destroyRecording(id) {
+      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__["destroyRecording"])(id));
     }
   };
 };
@@ -2068,7 +2097,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2081,6 +2112,11 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_CURRENT_USER"]:
+      // debugger
+      return Object.assign({}, oldState, action.currentUser.recordings);
+
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["ADD_USER"]:
+      // debugger
       return Object.assign({}, oldState, action.currentUser.recordings);
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RECORDING"]:
@@ -2412,10 +2448,10 @@ var updateRecording = function updateRecording(recording) {
     }
   });
 };
-var destroyRecording = function destroyRecording(id) {
+var destroyRecording = function destroyRecording(recordingId) {
   return $.ajax({
     method: 'delete',
-    url: "api/recordings/".concat(recording.id)
+    url: "api/recordings/".concat(recordingId)
   });
 };
 var fetchSplashRecordings = function fetchSplashRecordings() {
@@ -48554,7 +48590,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

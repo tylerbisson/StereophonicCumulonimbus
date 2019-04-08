@@ -30,10 +30,10 @@ export const updateRecording = recording => {
     });
 };
 
-export const destroyRecording = id => {
+export const destroyRecording = recordingId => {
     return $.ajax({
         method: 'delete',
-        url: `api/recordings/${recording.id}`
+        url: `api/recordings/${recordingId}`
     });
 };
 
