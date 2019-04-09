@@ -36,7 +36,7 @@ class Nav extends React.Component {
                         onClick={() => this.props.history.push(`/recordings/new`)}>
                             Upload
                         </button>
-                        <button className={"nav-greetingmessage"} onClick={this.redirectToHome}>
+                        <button className={"nav-greetingmessage"} onClick={this.redirectToUserPage}>
                             <img className="user-portrait" src={this.props.currentUser.portraitUrl} />
                             {this.props.currentUser.username}
                         </button>

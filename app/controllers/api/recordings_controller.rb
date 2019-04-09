@@ -10,6 +10,7 @@ class Api::RecordingsController < ApplicationController
     def create 
         @recording = Recording.new(recording_params)
         if (current_user)
+            @user = current_user;
             @recording.user_id = current_user.id;
         end
 
@@ -38,6 +39,23 @@ class Api::RecordingsController < ApplicationController
             User.find_by(id: recording.user_id)
         end
         render "api/recordings/splash_recordings"
+    end
+
+    def destroy 
+        @recording = Recording.find(params[:id])
+        @user = User.find_by(id: @recording.user_id)
+        @recording.destroy
+        render "api/recordings/show"
+    end
+
+    def update 
+        @recording = Recording.find(params[:id])
+        @user = current_user;
+        # debugger
+        if @recording.update(recording_params)
+            render "api/recordings/show"
+        else 
+        end 
     end
 
     def recording_params 

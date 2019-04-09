@@ -11,16 +11,19 @@ class RecordingIndex extends React.Component {
         super(props);
 
         this.state = {
-            recordings: this.props.title, 
+            recordings: this.props.recordings, 
             userId: this.props.userId,
             currentUser: this.props.currentUser,
             userOfPage: this.props.userOfPage
         }
+        // debugger
     }
 
     componentDidMount(){ 
+        // debugger
         this.props.fetchUser(this.props.userId);
-        this.props.fetchRecordings();
+        // this.props.fetchRecordings();
+        // debugger
     }
 
     componentDidUpdate(prevProps){
@@ -29,8 +32,11 @@ class RecordingIndex extends React.Component {
                 userId: this.props.match.params.userId
             });
             this.props.fetchUser(this.props.match.params.userId);
-            this.props.fetchRecordings();
+            // this.props.fetchRecordings();
         }
+        // if (prevProps.recordings !== this.props.recordings) {
+        //     this.props.fetchRecordings();
+        // }
     }
 
     render(){

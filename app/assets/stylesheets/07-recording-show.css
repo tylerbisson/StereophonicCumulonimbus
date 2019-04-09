@@ -113,13 +113,13 @@
     border-radius: 100%;
     position: absolute;
     left: 1.5%;
-    top: 25%;
+    top: 35%;
 }
 
 .recording-info-description{
     position: absolute;
-    top: 25%;
-    left: 15%;
+    top: 35%;
+    left: 14%;
 }
 
 .recording-comment-userportrait{
@@ -127,4 +127,26 @@
     height: 40px;    
     width:  40px;
     background-size: contain;
+}
+
+.recording-buttons{
+    /* display: flex; */
+    position: absolute;
+    width: 1217px;
+    left: 1%;
+    top: 20%;
+    border-bottom: solid rgb(237, 238, 239);
+    border-width: 1px;
+    padding-bottom: 10px;
+}
+
+.recording-button{
+    border: solid lightgrey; 
+    border-radius: 5px;
+    border-width: 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
 }

@@ -1,6 +1,5 @@
 import * as RecordingsUtil from '../util/recordings_util';
 
-
 export const RECEIVE_RECORDING = 'RECEIVE_RECORDING';
 export const RECEIVE_RECORDINGS = 'RECEIVE_RECORDINGS';
 export const DELETE_RECORDING = 'DELETE_RECORDING';
@@ -35,6 +34,26 @@ export const receiveRecordingErrors = errors => ({
 export const fetchRecording = recording => dispatch => {
     return (
         RecordingsUtil.fetchRecording(recording).then(recording => (
+            dispatch(receiveRecording(recording))
+            // , err => (
+            // dispatch(receiveErrors(err.responseJSON))
+        ))
+    );
+};
+
+export const destroyRecording = recordingId => dispatch => {
+    return (
+        RecordingsUtil.destroyRecording(recordingId).then(recording => (
+            dispatch(deleteRecording(recording))
+            // , err => (
+            // dispatch(receiveErrors(err.responseJSON))
+        ))
+    );
+};
+
+export const updateRecording = recording => dispatch => {
+    return (
+        RecordingsUtil.updateRecording(recordingId).then(recording => (
             dispatch(receiveRecording(recording))
             // , err => (
             // dispatch(receiveErrors(err.responseJSON))
