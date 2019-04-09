@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
 // import {createRecording} from '../../actions/recordings_actions';
 import Nav from '../nav';
 
-class CreateRecordingForm extends React.Component {
+class RecordingForm extends React.Component {
     constructor(props){
         super(props);
-    
+        debugger 
         this.state = {
             title: this.props.recording.title,
             description: this.props.recording.description,
@@ -120,17 +120,17 @@ class CreateRecordingForm extends React.Component {
     }
 }
 
-const msp = state => {
-    return {
-        recording: {title: "", description: ""},
-        user_id: state.session.id
-    }
-}
+// const msp = state => {
+//     return {
+//         recording: {title: "", description: ""},
+//         user_id: state.session.id
+//     }
+// }
 
-const mdp = dispatch => {
-    return {
-        // createRecording: recording => dispatch(createRecording(recording))
-    }
-}
+// const mdp = dispatch => {
+//     return {
+//         // createRecording: recording => dispatch(createRecording(recording))
+//     }
+// }
 
-export default connect(msp, mdp)(CreateRecordingForm)
+export default RecordingForm;

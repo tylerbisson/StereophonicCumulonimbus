@@ -10,7 +10,7 @@ import {
 import Modal from '../components/modal/modal'
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import RecordingIndex from '../components/recordings/recording_index';
-import CreateRecordingForm from '../components/recordings/recording_create';
+import RecordingCreateContainer from '../components/recordings/recording_create_container'
 import RecordingShow from '../components/recordings/recording_show';
 import Splash from '../components/splash';
 
@@ -21,7 +21,7 @@ const App = () => (
             <header id="header">
                 <Switch>
                     <AuthRoute exact path='/' component={Splash}/>
-                    <ProtectedRoute exact path='/recordings/new' component={CreateRecordingForm}/>
+                    <ProtectedRoute exact path='/recordings/new' component={RecordingCreateContainer}/>
                     <ProtectedRoute exact path='/users/:userId' component={RecordingIndex}/>
                     <Route exact path='/recordings/:recordingId' component={RecordingShow}/>
                 </Switch>
