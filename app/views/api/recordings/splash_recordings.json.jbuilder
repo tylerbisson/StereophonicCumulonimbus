@@ -4,5 +4,6 @@
         json.audioUrl url_for(recording.audio)
         json.artUrl url_for(recording.art)
         json.username (@splash_recordings_users.select {|user| user.id == recording.user_id})[0].username
+        json.portraitUrl url_for((@splash_recordings_users.select {|user| user.id == recording.user_id})[0].portrait)
     end
 end

@@ -1,5 +1,5 @@
 import React from 'react';
-import GreetingContainer from './greeting/greeting_container';
+// import GreetingContainer from './greeting/greeting_container';
 import {
     Route, 
     Redirect, 
@@ -14,15 +14,17 @@ import RecordingCreateContainer from '../components/recordings/recording_create_
 import RecordingShow from '../components/recordings/recording_show';
 import Splash from '../components/splash';
 import RecordingUpdateContainer from '../components/recordings/recording_update_container';
+import Discover from './discover/discover'
 
 const App = () => (
-    <div id="app">
+    <div id="app"> 
         {/* <div>  */}
             <Modal />
             <header id="header">
                 <Switch>
                     <AuthRoute exact path='/' component={Splash}/>
                     <ProtectedRoute exact path='/recordings/new' component={RecordingCreateContainer}/>
+                    <ProtectedRoute exact path='/discover' component={Discover}/>
                     <ProtectedRoute exact path='/users/:userId' component={RecordingIndex}/>
                     <ProtectedRoute exact path='/recordings/edit/:recordingId' component={RecordingUpdateContainer}/>
                     <Route exact path='/recordings/:recordingId' component={RecordingShow}/>

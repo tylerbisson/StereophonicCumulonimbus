@@ -16,7 +16,7 @@ class Splash extends React.Component {
     handleDemoLogin() {
         this.props.demoLogin({ username: "Tyler Bisson", password: 'password' })
             .then(data => {
-                this.props.history.push(`/users/${data.currentUser.user.id}`)
+                this.props.history.push(`/discover`)
             });
     }
 
