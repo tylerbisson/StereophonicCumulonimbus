@@ -119,7 +119,7 @@ var closeModal = function closeModal() {
 /*!************************************************!*\
   !*** ./frontend/actions/recordings_actions.js ***!
   \************************************************/
-/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, RECEIVE_SPLASH_RECORDINGS, receiveRecording, receiveSplashRecordings, receiveRecordings, deleteRecording, receiveRecordingErrors, fetchRecording, destroyRecording, fetchRecordings, fetchSplashRecordings */
+/*! exports provided: RECEIVE_RECORDING, RECEIVE_RECORDINGS, DELETE_RECORDING, RECEIVE_RECORDING_ERRORS, RECEIVE_SPLASH_RECORDINGS, receiveRecording, receiveSplashRecordings, receiveRecordings, deleteRecording, receiveRecordingErrors, fetchRecording, destroyRecording, updateRecording, fetchRecordings, fetchSplashRecordings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -136,6 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRecordingErrors", function() { return receiveRecordingErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecording", function() { return fetchRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "destroyRecording", function() { return destroyRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRecording", function() { return updateRecording; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordings", function() { return fetchRecordings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSplashRecordings", function() { return fetchSplashRecordings; });
 /* harmony import */ var _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/recordings_util */ "./frontend/util/recordings_util.js");
@@ -188,6 +189,15 @@ var destroyRecording = function destroyRecording(recordingId) {
   return function (dispatch) {
     return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["destroyRecording"](recordingId).then(function (recording) {
       return dispatch(deleteRecording(recording)) // , err => (
+      // dispatch(receiveErrors(err.responseJSON))
+      ;
+    });
+  };
+};
+var updateRecording = function updateRecording(recording) {
+  return function (dispatch) {
+    return _util_recordings_util__WEBPACK_IMPORTED_MODULE_0__["updateRecording"](recordingId).then(function (recording) {
+      return dispatch(receiveRecording(recording)) // , err => (
       // dispatch(receiveErrors(err.responseJSON))
       ;
     });
@@ -354,6 +364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_recordings_recording_create_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/recordings/recording_create_container */ "./frontend/components/recordings/recording_create_container.jsx");
 /* harmony import */ var _components_recordings_recording_show__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/recordings/recording_show */ "./frontend/components/recordings/recording_show.jsx");
 /* harmony import */ var _components_splash__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/splash */ "./frontend/components/splash.jsx");
+/* harmony import */ var _components_recordings_recording_update_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/recordings/recording_update_container */ "./frontend/components/recordings/recording_update_container.jsx");
+
 
 
 
@@ -381,6 +393,10 @@ var App = function App() {
     exact: true,
     path: "/users/:userId",
     component: _components_recordings_recording_index__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/recordings/edit/:recordingId",
+    component: _components_recordings_recording_update_container__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     exact: true,
     path: "/recordings/:recordingId",
@@ -905,7 +921,10 @@ var msp = function msp(state) {
       title: "",
       description: ""
     },
-    user_id: state.session.id
+    user_id: state.session.id,
+    formType: "create",
+    artUrl: "",
+    audioUrl: ""
   };
 };
 
@@ -966,17 +985,22 @@ function (_React$Component) {
     _classCallCheck(this, RecordingForm);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingForm).call(this, props));
-    debugger;
     _this.state = {
       title: _this.props.recording.title,
       description: _this.props.recording.description,
       artFile: null,
-      artUrl: null,
-      audioUrl: null,
+      artUrl: _this.props.artUrl,
+      audioUrl: _this.props.audioUrl,
       audioFile: null,
       user_id: _this.props.user_id
     };
-    _this.audio_selected = false;
+
+    if (_this.props.formType === "create") {
+      _this.audio_selected = false;
+    } else {
+      _this.audio_selected = true;
+    }
+
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -988,20 +1012,39 @@ function (_React$Component) {
 
       e.preventDefault();
       var formData = new FormData();
-      formData.append('recording[audio]', this.state.audioFile);
-      formData.append('recording[title]', this.state.title);
-      formData.append('recording[art]', this.state.artFile);
-      formData.append('recording[description]', this.state.description); // debugger
 
-      $.ajax({
-        url: '/api/recordings',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false
-      }).then(function (data) {
-        _this2.props.history.push("/users/".concat(data.user_id));
-      });
+      if (this.props.formType === "create") {
+        formData.append('recording[audio]', this.state.audioFile);
+        formData.append('recording[title]', this.state.title);
+        formData.append('recording[art]', this.state.artFile);
+        formData.append('recording[description]', this.state.description);
+        $.ajax({
+          url: '/api/recordings',
+          method: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false
+        }).then(function (data) {
+          _this2.props.history.push("/users/".concat(data.user_id));
+        });
+      } else {
+        formData.append('recording[title]', this.state.title);
+        formData.append('recording[description]', this.state.description);
+
+        if (this.state.artFile) {
+          formData.append('recording[art]', this.state.artFile);
+        }
+
+        $.ajax({
+          url: "/api/recordings/".concat(this.props.recording.id),
+          method: 'PATCH',
+          data: formData,
+          contentType: false,
+          processData: false
+        }).then(function (data) {
+          _this2.props.history.push("/users/".concat(data.user_id));
+        });
+      }
     }
   }, {
     key: "updated",
@@ -1055,6 +1098,14 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var backgroundImg = null;
+
+      if (this.props.formType === "update") {
+        backgroundImg = {
+          backgroundImage: 'url(' + this.props.recording.artUrl + ')'
+        };
+      }
+
       if (this.audio_selected === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "recording-create"
@@ -1083,7 +1134,8 @@ function (_React$Component) {
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-create-artandtitle"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "recording-create-img-file"
+          className: "recording-create-img-file",
+          style: backgroundImg
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Update Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-create-img-input",
           type: "file",
@@ -1093,12 +1145,14 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-title-input",
           type: "text",
-          onChange: this.updated('title')
+          onChange: this.updated('title'),
+          value: this.state.title
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-description"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
           className: "recording-title-input",
-          onChange: this.updated('description')
+          onChange: this.updated('description'),
+          value: this.state.description
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "submit-recording-form",
           type: "submit",
@@ -1109,18 +1163,7 @@ function (_React$Component) {
   }]);
 
   return RecordingForm;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // const msp = state => {
-//     return {
-//         recording: {title: "", description: ""},
-//         user_id: state.session.id
-//     }
-// }
-// const mdp = dispatch => {
-//     return {
-//         // createRecording: recording => dispatch(createRecording(recording))
-//     }
-// }
-
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (RecordingForm);
 
@@ -1434,6 +1477,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
     _this.state = _this.props.recording;
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1445,6 +1489,11 @@ function (_React$Component) {
       this.props.destroyRecording(recordingId).then(function () {
         return _this2.props.history.push("/users/".concat(_this2.props.currentUser.id));
       });
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit() {
+      this.props.history.push("/recordings/edit/".concat(this.props.recording.id));
     }
   }, {
     key: "componentDidMount",
@@ -1496,7 +1545,10 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "recording-button"
+        className: "recording-button",
+        onClick: function onClick() {
+          return _this3.handleEdit();
+        }
       }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "recording-button",
         onClick: function onClick() {
@@ -1543,6 +1595,43 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(msp, mdp)(RecordingShow));
+
+/***/ }),
+
+/***/ "./frontend/components/recordings/recording_update_container.jsx":
+/*!***********************************************************************!*\
+  !*** ./frontend/components/recordings/recording_update_container.jsx ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _recording_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./recording_form */ "./frontend/components/recordings/recording_form.jsx");
+
+
+
+
+var msp = function msp(state, ownProps) {
+  var recording = state.entities.recordings[ownProps.match.params.recordingId];
+  return {
+    recording: recording,
+    user_id: state.session.id,
+    artUrl: recording.artUrl,
+    audioUrl: recording.audioUrl,
+    formType: "update"
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {// createRecording: recording => dispatch(createRecording(recording))
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_recording_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 

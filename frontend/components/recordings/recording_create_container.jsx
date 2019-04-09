@@ -5,7 +5,10 @@ import RecordingForm from './recording_form';
 const msp = state => {
     return {
         recording: { title: "", description: "" },
-        user_id: state.session.id
+        user_id: state.session.id, 
+        formType: "create",
+        artUrl: "",
+        audioUrl: "",
     }
 }
 

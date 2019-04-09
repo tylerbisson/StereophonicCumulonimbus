@@ -48,6 +48,16 @@ class Api::RecordingsController < ApplicationController
         render "api/recordings/show"
     end
 
+    def update 
+        @recording = Recording.find(params[:id])
+        @user = current_user;
+        # debugger
+        if @recording.update(recording_params)
+            render "api/recordings/show"
+        else 
+        end 
+    end
+
     def recording_params 
         params.require(:recording).permit(:title, :description, :audio, :art, :user_id)
     end

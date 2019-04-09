@@ -11,11 +11,16 @@ class RecordingShow extends React.Component {
 
         this.state = this.props.recording;
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     handleDelete(recordingId){
         this.props.destroyRecording(recordingId)
             .then(() => this.props.history.push(`/users/${this.props.currentUser.id}`));
+    }
+
+    handleEdit(){
+        this.props.history.push(`/recordings/edit/${this.props.recording.id}`)
     }
 
     componentDidMount(){
@@ -53,7 +58,8 @@ class RecordingShow extends React.Component {
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
                         </div>
                         <div className="recording-buttons">
-                            <button className="recording-button">
+                            <button className="recording-button"
+                                onClick={() => this.handleEdit()}>
                                 Edit
                             </button>
                             <button className="recording-button"

@@ -6,36 +6,52 @@ import Nav from '../nav';
 class RecordingForm extends React.Component {
     constructor(props){
         super(props);
-        debugger 
         this.state = {
             title: this.props.recording.title,
             description: this.props.recording.description,
             artFile: null,
-            artUrl: null,
-            audioUrl: null,
+            artUrl: this.props.artUrl,
+            audioUrl: this.props.audioUrl,
             audioFile: null,
             user_id: this.props.user_id
         }
-
-        this.audio_selected = false;
+        if (this.props.formType === "create") {
+            this.audio_selected = false;
+        } else {
+            this.audio_selected = true;
+        }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit(e){
         e.preventDefault();
         const formData = new FormData();
-        formData.append('recording[audio]', this.state.audioFile);
-        formData.append('recording[title]', this.state.title);
-        formData.append('recording[art]', this.state.artFile);
-        formData.append('recording[description]', this.state.description);
-        // debugger
-        $.ajax({
-            url: '/api/recordings',
-            method: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false
-        }).then(data => {this.props.history.push(`/users/${data.user_id}`)});
+        if (this.props.formType === "create") {
+            formData.append('recording[audio]', this.state.audioFile);
+            formData.append('recording[title]', this.state.title);
+            formData.append('recording[art]', this.state.artFile);
+            formData.append('recording[description]', this.state.description);
+            $.ajax({
+                url: '/api/recordings',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false
+            }).then(data => {this.props.history.push(`/users/${data.user_id}`)});
+        } else {
+            formData.append('recording[title]', this.state.title);
+            formData.append('recording[description]', this.state.description);
+            if (this.state.artFile){
+                formData.append('recording[art]', this.state.artFile);
+            }
+            $.ajax({
+                url: `/api/recordings/${this.props.recording.id}`,
+                method: 'PATCH',
+                data: formData,
+                contentType: false,
+                processData: false
+            }).then(data => { this.props.history.push(`/users/${data.user_id}`) });
+        }
     }
  
     updated(field){
@@ -68,6 +84,14 @@ class RecordingForm extends React.Component {
     }
 
     render(){
+        let backgroundImg = null;
+
+        if (this.props.formType === "update"){
+            backgroundImg = {
+                backgroundImage: 'url(' + this.props.recording.artUrl + ')'
+            };
+        }
+
         if (this.audio_selected === false) {
             return( 
                 <>
@@ -94,19 +118,21 @@ class RecordingForm extends React.Component {
                                     type="file" onChange={this.handleAudioFile.bind(this)} />
                             </div>
                             <div className="recording-create-artandtitle">
-                                <div className="recording-create-img-file"> 
+                                <div className="recording-create-img-file" style={backgroundImg}> 
                                     <label>Update Image</label>
                                     <input className="recording-create-img-input"
                                             type="file" onChange={this.handleImgFile.bind(this)} />
                                 </div>
                                 <div className="recording-title">
                                         <label>Title 
-                                            <input className="recording-title-input" type="text" onChange={this.updated('title')}/>
+                                            <input className="recording-title-input" type="text" onChange={this.updated('title')}
+                                            value={this.state.title}/>
                                         </label>
                                 </div>
                                 <div className="recording-description">
                                         <label>Description
-                                            <textarea className="recording-title-input" onChange={this.updated('description')}>
+                                            <textarea className="recording-title-input" onChange={this.updated('description')}
+                                            value={this.state.description}>
                                             </textarea>
                                         </label>
                                 </div>
@@ -119,18 +145,5 @@ class RecordingForm extends React.Component {
         }
     }
 }
-
-// const msp = state => {
-//     return {
-//         recording: {title: "", description: ""},
-//         user_id: state.session.id
-//     }
-// }
-
-// const mdp = dispatch => {
-//     return {
-//         // createRecording: recording => dispatch(createRecording(recording))
-//     }
-// }
 
 export default RecordingForm;

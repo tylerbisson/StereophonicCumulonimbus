@@ -51,6 +51,16 @@ export const destroyRecording = recordingId => dispatch => {
     );
 };
 
+export const updateRecording = recording => dispatch => {
+    return (
+        RecordingsUtil.updateRecording(recordingId).then(recording => (
+            dispatch(receiveRecording(recording))
+            // , err => (
+            // dispatch(receiveErrors(err.responseJSON))
+        ))
+    );
+};
+
 // export const createRecording = recording => dispatch => {
 //     // debugger
 //     return (
