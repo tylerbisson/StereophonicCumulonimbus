@@ -1098,13 +1098,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var backgroundImg = null;
-
-      if (this.props.formType === "update") {
-        backgroundImg = {
-          backgroundImage: 'url(' + this.props.recording.artUrl + ')'
-        };
-      }
+      var backgroundImg = {
+        backgroundImage: 'url(' + this.state.artUrl + ')'
+      }; // if (this.props.formType === "update"){
+      //     backgroundImg = {
+      //         backgroundImage: 'url(' + this.state.artUrl + ')'
+      //     };
+      // }
 
       if (this.audio_selected === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {

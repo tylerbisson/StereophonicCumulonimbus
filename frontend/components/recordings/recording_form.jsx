@@ -84,13 +84,15 @@ class RecordingForm extends React.Component {
     }
 
     render(){
-        let backgroundImg = null;
+        let backgroundImg = {
+            backgroundImage: 'url(' + this.state.artUrl + ')'
+        };
 
-        if (this.props.formType === "update"){
-            backgroundImg = {
-                backgroundImage: 'url(' + this.props.recording.artUrl + ')'
-            };
-        }
+        // if (this.props.formType === "update"){
+        //     backgroundImg = {
+        //         backgroundImage: 'url(' + this.state.artUrl + ')'
+        //     };
+        // }
 
         if (this.audio_selected === false) {
             return( 
