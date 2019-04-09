@@ -38,6 +38,28 @@ class RecordingShow extends React.Component {
             backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
         };
         // debugger
+        let recordingButtons = null;
+        // debugger
+        if (this.props.currentUser.id === this.props.recording.user_id){
+            recordingButtons = 
+                <div className="recording-buttons">
+                    <button className="recording-button"
+                        onClick={() => this.handleEdit()}>
+                        Edit
+                    </button>
+                    <button className="recording-button"
+                        onClick={() => this.handleDelete(this.props.recording.id)}>
+                        Delete
+                        </button>
+                </div>;
+        } else {
+            recordingButtons =
+                <div className="recording-buttons">
+                    <button className="recording-button">
+                        Like
+                    </button>
+                </div>;   
+        }
         
         return(
             <>
@@ -57,7 +79,7 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
                         </div>
-                        <div className="recording-buttons">
+                        {/* <div className="recording-buttons">
                             <button className="recording-button"
                                 onClick={() => this.handleEdit()}>
                                 Edit
@@ -66,7 +88,8 @@ class RecordingShow extends React.Component {
                                 onClick={() => this.handleDelete(this.props.recording.id)}>
                                 Delete
                             </button>
-                        </div>
+                        </div> */}
+                        {recordingButtons}
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
                     </div>

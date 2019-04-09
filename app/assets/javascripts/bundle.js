@@ -1510,6 +1510,30 @@ function (_React$Component) {
         backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
       }; // debugger
 
+      var recordingButtons = null; // debugger
+
+      if (this.props.currentUser.id === this.props.recording.user_id) {
+        recordingButtons = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-buttons"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "recording-button",
+          onClick: function onClick() {
+            return _this3.handleEdit();
+          }
+        }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "recording-button",
+          onClick: function onClick() {
+            return _this3.handleDelete(_this3.props.recording.id);
+          }
+        }, "Delete"));
+      } else {
+        recordingButtons = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "recording-buttons"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "recording-button"
+        }, "Like"));
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1538,19 +1562,7 @@ function (_React$Component) {
         className: "recording-comment-input",
         type: "text",
         placeholder: "Write a comment"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "recording-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "recording-button",
-        onClick: function onClick() {
-          return _this3.handleEdit();
-        }
-      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "recording-button",
-        onClick: function onClick() {
-          return _this3.handleDelete(_this3.props.recording.id);
-        }
-      }, "Delete")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      })), recordingButtons, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
