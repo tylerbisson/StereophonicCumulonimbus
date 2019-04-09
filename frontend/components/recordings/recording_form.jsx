@@ -1,6 +1,4 @@
 import React from 'react';
-// import {connect} from 'react-redux';
-// import {createRecording} from '../../actions/recordings_actions';
 import Nav from '../nav';
 
 class RecordingForm extends React.Component {
@@ -88,12 +86,6 @@ class RecordingForm extends React.Component {
             backgroundImage: 'url(' + this.state.artUrl + ')'
         };
 
-        // if (this.props.formType === "update"){
-        //     backgroundImg = {
-        //         backgroundImage: 'url(' + this.state.artUrl + ')'
-        //     };
-        // }
-
         if (this.audio_selected === false) {
             return( 
                 <>
@@ -121,7 +113,9 @@ class RecordingForm extends React.Component {
                             </div>
                             <div className="recording-create-artandtitle">
                                 <div className="recording-create-img-file" style={backgroundImg}> 
-                                    <label>Update Image</label>
+                                    <label className="update-image-label" >
+                                        Update Image
+                                    </label>
                                     <input className="recording-create-img-input"
                                             type="file" onChange={this.handleImgFile.bind(this)} />
                                 </div>

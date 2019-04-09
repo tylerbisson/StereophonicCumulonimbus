@@ -13,7 +13,7 @@
 
 .recording-create-audio-file{
     padding-top: 17px;
-    display: relative;
+    position: relative;
     background-color: rgb(255, 84, 10);
     color: white;
     cursor: pointer;
@@ -30,6 +30,9 @@
     width: 100%;
     height: 100%;
     opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .recording-create-artandtitle{
@@ -111,4 +114,19 @@
     border-width: 1px;
     margin-left: 5px;
     border-radius: 5px;
+}
+
+.update-image-label{
+    border: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    margin: auto;
+    font-size: 14px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

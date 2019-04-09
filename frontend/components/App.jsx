@@ -17,7 +17,7 @@ import RecordingUpdateContainer from '../components/recordings/recording_update_
 
 const App = () => (
     <div id="app">
-        <div> 
+        {/* <div>  */}
             <Modal />
             <header id="header">
                 <Switch>
@@ -28,7 +28,7 @@ const App = () => (
                     <Route exact path='/recordings/:recordingId' component={RecordingShow}/>
                 </Switch>
             </header>
-        </div>
+        {/* </div> */}
     </div>
 );
 

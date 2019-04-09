@@ -379,7 +379,7 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "app"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modal_modal__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     id: "header"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
     exact: true,
@@ -401,7 +401,7 @@ var App = function App() {
     exact: true,
     path: "/recordings/:recordingId",
     component: _components_recordings_recording_show__WEBPACK_IMPORTED_MODULE_7__["default"]
-  })))));
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -969,8 +969,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
- // import {connect} from 'react-redux';
-// import {createRecording} from '../../actions/recordings_actions';
 
 
 
@@ -1100,11 +1098,7 @@ function (_React$Component) {
     value: function render() {
       var backgroundImg = {
         backgroundImage: 'url(' + this.state.artUrl + ')'
-      }; // if (this.props.formType === "update"){
-      //     backgroundImg = {
-      //         backgroundImage: 'url(' + this.state.artUrl + ')'
-      //     };
-      // }
+      };
 
       if (this.audio_selected === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -1136,7 +1130,9 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-create-img-file",
           style: backgroundImg
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Update Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          className: "update-image-label"
+        }, "Update Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-create-img-input",
           type: "file",
           onChange: this.handleImgFile.bind(this)
