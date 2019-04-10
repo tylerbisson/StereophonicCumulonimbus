@@ -18,7 +18,11 @@ class Nav extends React.Component {
     }
 
     redirectToHome(){
-        this.props.history.push(`/`)
+        if(this.props.currentUser){
+            this.props.history.push(`/discover`)
+        } else {
+            this.props.history.push(`/`)
+        }
     }
 
     navLoggedIn(){
@@ -27,7 +31,7 @@ class Nav extends React.Component {
                 <nav className="nav-loggedin">
                     <div className="nav-buttonbox-left">
                         <img className="nav-loggedin-logo" src={window.logoURL} />
-                        <button className="nav-home">
+                        <button className="nav-home" onClick={this.redirectToHome}>
                             Home
                         </button>
                     </div>

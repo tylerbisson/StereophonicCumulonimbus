@@ -3,7 +3,6 @@
 }
 .user-recordings{
     background-color: white;    
-    height: 100%;
     width: 1240px;
     margin: auto;
 }
@@ -47,13 +46,11 @@
 }
 
 .recording-item-title {
-    margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 5px;
 }
 
 .recording-item-user {
-    margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 5px;    
     color: grey;

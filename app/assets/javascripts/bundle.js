@@ -765,7 +765,11 @@ function (_React$Component) {
   }, {
     key: "redirectToHome",
     value: function redirectToHome() {
-      this.props.history.push("/");
+      if (this.props.currentUser) {
+        this.props.history.push("/discover");
+      } else {
+        this.props.history.push("/");
+      }
     }
   }, {
     key: "navLoggedIn",
@@ -782,7 +786,8 @@ function (_React$Component) {
         className: "nav-loggedin-logo",
         src: window.logoURL
       }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-home"
+        className: "nav-home",
+        onClick: this.redirectToHome
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
         className: "nav-buttonbox-right-loggedin"
       }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
@@ -983,6 +988,8 @@ function (_React$Component) {
     }
 
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleAudioFile = _this.handleAudioFile.bind(_assertThisInitialized(_this));
+    _this.handleImgFile = _this.handleImgFile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1088,26 +1095,26 @@ function (_React$Component) {
           className: "recording-create"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "recording-create-form",
-          onSubmit: this.handleSubmit.bind(this)
+          onSubmit: this.handleSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-create-audio-file"
         }, " Choose Track To Upload", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-create-audio-file-input",
           type: "file",
-          onChange: this.handleAudioFile.bind(this)
+          onChange: this.handleAudioFile
         })))));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "recording-create"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "recording-create-form",
-          onSubmit: this.handleSubmit.bind(this)
+          onSubmit: this.handleSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-create-audio-file"
         }, "Choose Track To Upload", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-create-audio-file-input",
           type: "file",
-          onChange: this.handleAudioFile.bind(this)
+          onChange: this.handleAudioFile
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-create-artandtitle"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1118,7 +1125,7 @@ function (_React$Component) {
         }, "Update Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "recording-create-img-input",
           type: "file",
-          onChange: this.handleImgFile.bind(this)
+          onChange: this.handleImgFile
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recording-title"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1759,13 +1766,15 @@ function (_React$Component) {
 
     _classCallCheck(this, SessionForm);
 
-    // console.log(props);
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SessionForm).call(this, props));
     _this.state = {
       username: '',
-      password: ''
+      password: '',
+      portraitFile: null,
+      portraitUrl: null
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleImgFile = _this.handleImgFile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1784,25 +1793,59 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var user = Object.assign({}, this.state);
-      this.props.processForm(user).then(function (data) {
-        return _this3.props.history.push("/discover");
-      });
+      var formData = new FormData();
 
-      if (this.props.errors.length === 0) {
-        this.props.closeModal();
+      if (this.props.formType === 'login') {
+        var user = Object.assign({}, this.state);
+        this.props.processForm(user).then(function (data) {
+          return _this3.props.history.push("/discover");
+        });
+
+        if (this.props.errors.length === 0) {
+          this.props.closeModal();
+        }
+      } else {
+        formData.append('user[username]', this.state.username);
+        formData.append('user[password]', this.state.password);
+        formData.append('user[portrait]', this.state.portraitFile); // $.ajax({
+        //     url: '/api/users',
+        //     method: 'POST',
+        //     data: formData,
+        //     contentType: false,
+        //     processData: false
+        // }).then(data => this.props.history.push(`/discover`));
+
+        this.props.processForm(formData).then(function (data) {
+          return _this3.props.history.push("/discover");
+        });
+
+        if (this.props.errors.length === 0) {
+          this.props.closeModal();
+        }
       }
-    } // handleDemoLogin() {
-    //     this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
-    //         .then(data => {
-    //             this.props.history.push(`/recordings/${data.currentUser.user.id}`)
-    //         });
-    // }
+    }
+  }, {
+    key: "handleImgFile",
+    value: function handleImgFile(e) {
+      var _this4 = this;
 
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function () {
+        _this4.setState({
+          portraitFile: file,
+          portraitUrl: fileReader.result
+        });
+      };
+
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      // debugger
       var errorArr = Object.values(this.props.errors);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "modal-errors"
@@ -1816,6 +1859,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var modalMessage = "";
+      var portraitUpload = null;
 
       if (this.props.formType === 'login') {
         modalMessage = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -1825,12 +1869,17 @@ function (_React$Component) {
         modalMessage = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "modal-message"
         }, "Create your Stereophonic Cumulonimbus account");
+        portraitUpload = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " Upload Profile Picture", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "modal-profile-picture-file-input",
+          type: "file",
+          onChange: this.handleImgFile
+        }));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "login-form-box"
-      }, modalMessage, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, modalMessage, portraitUpload, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -1872,11 +1921,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form/session_form.jsx");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form/session_form.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 
 
 
@@ -1894,20 +1941,20 @@ var mapStateToProps = function mapStateToProps(_ref) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["signup"])(user));
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["signup"])(user));
     },
     otherForm: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       onClick: function onClick() {
-        return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])('login'));
+        return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__["openModal"])('login'));
       }
     }, "Login"),
     closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["closeModal"])());
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__["closeModal"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_session_form__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_session_form__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -2479,8 +2526,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.getState = store.getState;
   window.dispatch = store.dispatch; // just for testing!
+  // window.createRecording = recordingActions.createRecording;
 
-  window.createRecording = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["createRecording"];
   window.fetchSplashRecordings = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["fetchSplashRecordings"];
   window.fetchUser = _actions_user_actions__WEBPACK_IMPORTED_MODULE_5__["fetchUser"]; //TESTINGTESTINGTESTING
 
@@ -2662,9 +2709,9 @@ var signup = function signup(user) {
   return $.ajax({
     method: 'post',
     url: 'api/users',
-    data: {
-      user: user
-    }
+    data: user,
+    contentType: false,
+    processData: false
   });
 };
 var login = function login(user) {

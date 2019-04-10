@@ -24,8 +24,6 @@ body {
   width: 1240px;
   background-image: image-url("schero2.jpg");
   background-position: right 35% bottom 80%;
-  /* background-repeat: no-repeat; */
-  // background-position: center; 
   background-size: 100%;
   font-size: 20px;
   border-top: solid;
@@ -48,8 +46,6 @@ body {
   border-radius: 5px;
   border: 1px solid rgb(255, 84, 10);
   background-color: rgb(255, 84, 10);
-  // padding-left: 10px;
-  // padding-right: 10px;
   padding: 10px;
 }
 
@@ -78,25 +74,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // margin: 10px;
   padding: 40px;
-  // font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-family: 'Quicksand', sans-serif;
 }
 
-// .login-text{
-//   width: 100%;
-//   // margin: 10px;
-//   // padding: 10px;
-//   // display: flex;
-//   // border-radius: 5px;
-//   // border: 1px solid darkgrey;
-//   // justify-content: center;
-// }
 
 .login-input{
   width: 100%;
-  // margin: 10px;
   padding: 10px;
   display: flex;
   border-radius: 5px;
@@ -108,7 +92,6 @@ body {
 
 .session-submit{
   width: 100%;
-  // margin: 10px;
   padding: 10px;
   display: flex;
   border-radius: 5px;

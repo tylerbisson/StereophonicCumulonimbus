@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // when you shouldn't
     window.getState = store.getState;
     window.dispatch = store.dispatch; // just for testing!
-    window.createRecording = recordingActions.createRecording;
+    // window.createRecording = recordingActions.createRecording;
     window.fetchSplashRecordings = recordingActions.fetchSplashRecordings;
     window.fetchUser = userActions.fetchUser;
     //TESTINGTESTINGTESTING

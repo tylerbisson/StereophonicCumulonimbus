@@ -1,7 +1,6 @@
 class Api::RecordingsController < ApplicationController 
 
     def show 
-        # debugger 
         @recording = Recording.find(params[:id])
         @user = User.find_by(id: @recording.user_id)
         render "api/recordings/show"
@@ -51,7 +50,6 @@ class Api::RecordingsController < ApplicationController
     def update 
         @recording = Recording.find(params[:id])
         @user = current_user;
-        # debugger
         if @recording.update(recording_params)
             render "api/recordings/show"
         else 

@@ -3,13 +3,15 @@ import { withRouter } from 'react-router-dom';
 
 class SessionForm extends React.Component {
     constructor(props) {
-        // console.log(props);
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            portraitFile: null,
+            portraitUrl: null,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleImgFile = this.handleImgFile.bind(this);
     }
 
     update(field) {
@@ -20,23 +22,45 @@ class SessionForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-            const user = Object.assign({}, this.state);
-            this.props.processForm(user)
-                .then(data => this.props.history.push(`/discover`));
-            if (this.props.errors.length === 0){
-                this.props.closeModal();
-            } 
+        const formData = new FormData();
+            if (this.props.formType === 'login'){
+                const user = Object.assign({}, this.state);
+                this.props.processForm(user)
+                    .then(data => this.props.history.push(`/discover`));
+                if (this.props.errors.length === 0){
+                    this.props.closeModal();
+                } 
+            } else {
+                formData.append('user[username]', this.state.username);
+                formData.append('user[password]', this.state.password);
+                formData.append('user[portrait]', this.state.portraitFile);
+                // $.ajax({
+                //     url: '/api/users',
+                //     method: 'POST',
+                //     data: formData,
+                //     contentType: false,
+                //     processData: false
+                // }).then(data => this.props.history.push(`/discover`));
+                this.props.processForm(formData)
+                    .then(data => this.props.history.push(`/discover`));
+                if (this.props.errors.length === 0) {
+                    this.props.closeModal();
+                } 
+            }
     }
 
-    // handleDemoLogin() {
-    //     this.props.demoLogin({ username: "Demonstrational User For Your Convenience", password: 'password' })
-    //         .then(data => {
-    //             this.props.history.push(`/recordings/${data.currentUser.user.id}`)
-    //         });
-    // }
+    handleImgFile(e) {
+        const file = e.currentTarget.files[0];
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            this.setState({ portraitFile: file, portraitUrl: fileReader.result });
+        }
+        if (file) {
+            fileReader.readAsDataURL(file);
+        }
+    }
 
     renderErrors() {
-        // debugger
         let errorArr = Object.values(this.props.errors)
         return (
             <ul className="modal-errors">
@@ -50,19 +74,25 @@ class SessionForm extends React.Component {
     }
 
     render() {
-        let modalMessage =""
+        let modalMessage ="";
+        let portraitUpload = null;
         if (this.props.formType === 'login'){
             modalMessage = <h1 className="modal-message">Sign into your Stereophonic Cumulonimbus account</h1>;
         } else {
             modalMessage = <h1 className="modal-message">Create your Stereophonic Cumulonimbus account</h1>;
+            portraitUpload = 
+            <div> Upload Profile Picture
+                <input className="modal-profile-picture-file-input"
+                    type="file" onChange={this.handleImgFile} />
+            </div>
         }
 
         return (
             <>
-            {/* <div className="modal-exit" onClick={this.props.closeModal} className="close-x">X</div> */}
             <form onSubmit={this.handleSubmit} 
                 className="login-form-box">
                 {modalMessage}
+                {portraitUpload}
                 <br />
                     <br />
                     <div className="login-text"> 

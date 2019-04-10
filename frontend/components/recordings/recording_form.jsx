@@ -18,7 +18,10 @@ class RecordingForm extends React.Component {
         } else {
             this.audio_selected = true;
         }
+
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleAudioFile = this.handleAudioFile.bind(this)
+        this.handleImgFile = this.handleImgFile.bind(this)
     }
 
     handleSubmit(e){
@@ -91,10 +94,10 @@ class RecordingForm extends React.Component {
                 <>
                     <Nav/>
                     <section className="recording-create">
-                        <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
+                        <form className="recording-create-form" onSubmit={this.handleSubmit}>
                             <div className="recording-create-audio-file"> Choose Track To Upload
                                 <input className="recording-create-audio-file-input"
-                                    type="file" onChange={this.handleAudioFile.bind(this)}/>
+                                    type="file" onChange={this.handleAudioFile}/>
                             </div>
                         </form>
                     </section>
@@ -105,11 +108,11 @@ class RecordingForm extends React.Component {
                 <>
                     <Nav/>
                     <section className="recording-create">
-                        <form className="recording-create-form" onSubmit={this.handleSubmit.bind(this)}>
+                        <form className="recording-create-form" onSubmit={this.handleSubmit}>
                             <div className="recording-create-audio-file"> 
                                 Choose Track To Upload
                                     <input className="recording-create-audio-file-input"
-                                    type="file" onChange={this.handleAudioFile.bind(this)} />
+                                    type="file" onChange={this.handleAudioFile} />
                             </div>
                             <div className="recording-create-artandtitle">
                                 <div className="recording-create-img-file" style={backgroundImg}> 
@@ -117,7 +120,7 @@ class RecordingForm extends React.Component {
                                         Update Image
                                     </label>
                                     <input className="recording-create-img-input"
-                                            type="file" onChange={this.handleImgFile.bind(this)} />
+                                            type="file" onChange={this.handleImgFile} />
                                 </div>
                                 <div className="recording-title">
                                         <label>Title 
