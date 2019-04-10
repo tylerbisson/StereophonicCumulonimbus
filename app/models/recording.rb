@@ -6,4 +6,6 @@ class Recording < ApplicationRecord
 
     has_one_attached :art 
     has_one_attached :audio 
+
+    has_many :comments, as: :content 
 end

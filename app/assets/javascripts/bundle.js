@@ -535,9 +535,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchSplashRecordings();
-    } // componentDidUpdate(prevProps) {
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1216,8 +1214,7 @@ function (_React$Component) {
       recordings: _this.props.recordings,
       userId: _this.props.userId,
       currentUser: _this.props.currentUser,
-      userOfPage: _this.props.userOfPage // debugger
-
+      userOfPage: _this.props.userOfPage
     };
     return _this;
   }
@@ -1225,9 +1222,7 @@ function (_React$Component) {
   _createClass(RecordingIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
-      this.props.fetchUser(this.props.userId); // this.props.fetchRecordings();
-      // debugger
+      this.props.fetchUser(this.props.userId);
     }
   }, {
     key: "componentDidUpdate",
@@ -1236,11 +1231,8 @@ function (_React$Component) {
         this.setState({
           userId: this.props.match.params.userId
         });
-        this.props.fetchUser(this.props.match.params.userId); // this.props.fetchRecordings();
-      } // if (prevProps.recordings !== this.props.recordings) {
-      //     this.props.fetchRecordings();
-      // }
-
+        this.props.fetchUser(this.props.match.params.userId);
+      }
     }
   }, {
     key: "render",
@@ -48759,7 +48751,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

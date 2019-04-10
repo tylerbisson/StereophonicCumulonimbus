@@ -16,9 +16,6 @@ class Discover extends React.Component {
         this.props.fetchSplashRecordings();
     }
 
-    // componentDidUpdate(prevProps) {
-    // }
-
     render() {
         let recordingItems = null;
         let drOne = null;

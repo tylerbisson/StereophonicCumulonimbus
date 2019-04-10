@@ -9,6 +9,7 @@ class User < ApplicationRecord
   after_initialize :ensure_session_token
 
   has_many :recordings
+  has_many :comments 
 
   has_one_attached :portrait  
 
