@@ -34,13 +34,6 @@ class SessionForm extends React.Component {
                 formData.append('user[username]', this.state.username);
                 formData.append('user[password]', this.state.password);
                 formData.append('user[portrait]', this.state.portraitFile);
-                // $.ajax({
-                //     url: '/api/users',
-                //     method: 'POST',
-                //     data: formData,
-                //     contentType: false,
-                //     processData: false
-                // }).then(data => this.props.history.push(`/discover`));
                 this.props.processForm(formData)
                     .then(data => this.props.history.push(`/discover`));
                 if (this.props.errors.length === 0) {
@@ -74,6 +67,11 @@ class SessionForm extends React.Component {
     }
 
     render() {
+
+        let backgroundImg = {
+            backgroundImage: 'url(' + this.state.portraitUrl + ')'
+        };
+
         let modalMessage ="";
         let portraitUpload = null;
         if (this.props.formType === 'login'){
@@ -81,10 +79,15 @@ class SessionForm extends React.Component {
         } else {
             modalMessage = <h1 className="modal-message">Create your Stereophonic Cumulonimbus account</h1>;
             portraitUpload = 
-            <div> Upload Profile Picture
-                <input className="modal-profile-picture-file-input"
-                    type="file" onChange={this.handleImgFile} />
-            </div>
+            <>
+                <div className="modal-profile-picture" style={backgroundImg}> 
+                    <input className="modal-profile-picture-file-input"
+                        type="file" onChange={this.handleImgFile} />
+                </div>
+                <h2 className="modal-profile-picture-label">
+                    Upload Profile Picture
+                </h2>
+            </>
         }
 
         return (

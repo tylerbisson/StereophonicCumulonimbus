@@ -68,7 +68,8 @@ body {
 }
 
 .login-form-box{
-  height: 570px;
+  padding-top: 20px;
+  // height: 570px;
   width: 400px;
   background-color: white;
   display: flex;
@@ -113,5 +114,33 @@ body {
 
 .modal-errors{
   margin-top: 20px;
+  text-align: center;
+}
+
+.modal-profile-picture{
+  margin-top: 30px;
+  height: 150px;
+  width: 150px;
+  margin-left: 124px;
+  margin-right: 124px;
+  border-radius: 100%;
+  position: relative;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  border-radius: 100%;
+  border: 1px solid lightgray;
+}
+
+.modal-profile-picture-file-input{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+.modal-profile-picture-label{
+  margin-top: 10px;
   text-align: center;
 }

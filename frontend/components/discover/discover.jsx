@@ -21,15 +21,18 @@ class Discover extends React.Component {
 
     render() {
         let recordingItems = null;
+        let drOne = null;
+        let drTwo = null;
+        let drThree = null;
+
         if (Object.keys(this.props.recordings).length < 1 === false){
             let recordings = Object.values(this.props.recordings);
             recordingItems = recordings.map(recording =>
                 <RecordingItem recording={recording} key={recording.id} />)
+            drOne = recordingItems.slice(0, 4);
+            drTwo = recordingItems.slice(4, 8);
+            drThree = recordingItems.slice(8, 12);
         }
-
-        let drOne = recordingItems.slice(0, 4);
-        let drTwo = recordingItems.slice(4, 8);
-        let drThree = recordingItems.slice(8, 12);
 
         let recommendedArtistLinks = null;
         if (Object.keys(this.props.recordings).length < 1 === false){

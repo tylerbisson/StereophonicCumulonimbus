@@ -542,6 +542,9 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var recordingItems = null;
+      var drOne = null;
+      var drTwo = null;
+      var drThree = null;
 
       if (Object.keys(this.props.recordings).length < 1 === false) {
         var recordings = Object.values(this.props.recordings);
@@ -551,11 +554,11 @@ function (_React$Component) {
             key: recording.id
           });
         });
+        drOne = recordingItems.slice(0, 4);
+        drTwo = recordingItems.slice(4, 8);
+        drThree = recordingItems.slice(8, 12);
       }
 
-      var drOne = recordingItems.slice(0, 4);
-      var drTwo = recordingItems.slice(4, 8);
-      var drThree = recordingItems.slice(8, 12);
       var recommendedArtistLinks = null;
 
       if (Object.keys(this.props.recordings).length < 1 === false) {
@@ -1807,14 +1810,7 @@ function (_React$Component) {
       } else {
         formData.append('user[username]', this.state.username);
         formData.append('user[password]', this.state.password);
-        formData.append('user[portrait]', this.state.portraitFile); // $.ajax({
-        //     url: '/api/users',
-        //     method: 'POST',
-        //     data: formData,
-        //     contentType: false,
-        //     processData: false
-        // }).then(data => this.props.history.push(`/discover`));
-
+        formData.append('user[portrait]', this.state.portraitFile);
         this.props.processForm(formData).then(function (data) {
           return _this3.props.history.push("/discover");
         });
@@ -1858,6 +1854,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var backgroundImg = {
+        backgroundImage: 'url(' + this.state.portraitUrl + ')'
+      };
       var modalMessage = "";
       var portraitUpload = null;
 
@@ -1869,11 +1868,16 @@ function (_React$Component) {
         modalMessage = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "modal-message"
         }, "Create your Stereophonic Cumulonimbus account");
-        portraitUpload = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " Upload Profile Picture", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        portraitUpload = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-profile-picture",
+          style: backgroundImg
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "modal-profile-picture-file-input",
           type: "file",
           onChange: this.handleImgFile
-        }));
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+          className: "modal-profile-picture-label"
+        }, "Upload Profile Picture"));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
