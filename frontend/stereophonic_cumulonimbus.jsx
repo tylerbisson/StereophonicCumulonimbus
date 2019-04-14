@@ -4,6 +4,7 @@ import * as sessionActions from './actions/session_actions';
 import * as sessionAPIUtil from './util/session_api_util';
 import * as recordingActions from './actions/recordings_actions';
 import * as userActions from './actions/user_actions';
+import * as commentActions from './actions/comments_actions';
 import Root from './components/root';
 import configureStore from './store/store';
 
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.login = sessionActions.login;
     // window.signup = sessionAPIUtil.signup;
     window.logout = sessionAPIUtil.logout;
+    window.createComment = commentActions.createComment;
     // we don't put the store directly on the window because
     // it can be confusing when debugging, sometimes giving you access to state
     // when you shouldn't

@@ -8,7 +8,7 @@ import { merge } from "lodash";
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
 import {ADD_USER} from '../actions/user_actions';
 
-const sessionReducer = (oldState = {}, action) => {
+const recordingsReducer = (oldState = {}, action) => {
 
     Object.freeze(oldState);
     switch (action.type) {
@@ -33,4 +33,4 @@ const sessionReducer = (oldState = {}, action) => {
     }
 };
 
-export default sessionReducer;
+export default recordingsReducer;
