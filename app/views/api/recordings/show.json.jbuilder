@@ -9,12 +9,14 @@ end
 @recording.comments.each do |comment|
     json.comments do 
         json.set! comment.id do
-            json.extract! comment, :body
+            json.extract! comment, :body, :user_id, :content_id 
         end
     end
     json.users do 
         json.set! comment.user_id do
-            json.extract! comment, :user
+            user = comment.user 
+            json.extract! user, :id, :username 
+            json.portraitUrl url_for(user.portrait)
         end
     end
 end

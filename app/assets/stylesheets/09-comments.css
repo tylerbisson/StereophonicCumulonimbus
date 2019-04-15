@@ -1,0 +1,40 @@
+.comments-index{
+    width: 1057px;
+    /* height: 60px; */
+    border-top: solid rgb(237, 238, 239); 
+    border-width: 1px;
+    position: absolute;
+    top: 23%;
+    left: 14%;
+}
+
+.comment-item{
+    position: relative;
+    width: 1057px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.comment-user-username{
+    position: absolute;
+    top: 0%;
+    left: 5%;
+    color: lightgrey;
+}
+
+.comment-body{
+    position: absolute;
+    top: 40%;
+    left: 5%;
+    color: black;
+}
+
+.comment-user-portrait{
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}

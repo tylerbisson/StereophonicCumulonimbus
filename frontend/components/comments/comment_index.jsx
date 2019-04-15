@@ -11,12 +11,28 @@ class CommentIndex extends React.Component{
     render(){
         if (this.props.comments){
             let comments = Object.values(this.props.comments);
-            let commentBodies = comments.map(comment => 
-                <h1 key={comment.id}>{comment.body}</h1>
+            let commentItems = comments.map(comment => {
+                let users = Object.values(this.props.users);
+                let user = users.filter(user => user["id"] === parseInt(comment.user_id))[0];
+                let userInfo = <></>
+                if (user){
+                    userInfo =
+                        <>
+                            <h2 className="comment-user-username">{user.username ? user.username : ""}</h2>
+                            <img className="comment-user-portrait" src={user.portraitUrl} />
+                        </>
+                }
+                return(
+                    <div className="comment-item" key={comment.id}>
+                        <h1 className="comment-body">{comment.body}</h1>
+                        {userInfo}
+                    </div>
+                )
+            }
             )
             return (
-                <ul>
-                    {commentBodies}
+                <ul className="comments-index">
+                    {commentItems}
                 </ul>
             )
         } else {
@@ -25,8 +41,10 @@ class CommentIndex extends React.Component{
     }
 }
 
-const msp = (state, ownProps) => {
+const msp = state => {
+    let users = state.entities.users;
     return {
+        users: users ? users : { users: "" }
     }
 }
 

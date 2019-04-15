@@ -514,14 +514,36 @@ function (_React$Component) {
   _createClass(CommentIndex, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       if (this.props.comments) {
         var comments = Object.values(this.props.comments);
-        var commentBodies = comments.map(function (comment) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        var commentItems = comments.map(function (comment) {
+          var users = Object.values(_this2.props.users);
+          var user = users.filter(function (user) {
+            return user["id"] === parseInt(comment.user_id);
+          })[0];
+          var userInfo = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null);
+
+          if (user) {
+            userInfo = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+              className: "comment-user-username"
+            }, user.username ? user.username : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              className: "comment-user-portrait",
+              src: user.portraitUrl
+            }));
+          }
+
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "comment-item",
             key: comment.id
-          }, comment.body);
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+            className: "comment-body"
+          }, comment.body), userInfo);
         });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, commentBodies);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "comments-index"
+        }, commentItems);
       } else {
         return null;
       }
@@ -531,8 +553,13 @@ function (_React$Component) {
   return CommentIndex;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var msp = function msp(state, ownProps) {
-  return {};
+var msp = function msp(state) {
+  var users = state.entities.users;
+  return {
+    users: users ? users : {
+      users: ""
+    }
+  };
 };
 
 var mdp = function mdp(dispatch) {
@@ -1549,13 +1576,15 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _recordings_recording_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
-/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
-/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
-/* harmony import */ var _comments_comment_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../comments/comment_index */ "./frontend/components/comments/comment_index.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _recordings_recording_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
+/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+/* harmony import */ var _comments_comment_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../comments/comment_index */ "./frontend/components/comments/comment_index.jsx");
+/* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1573,6 +1602,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+ // import { withRouter } from 'react-router-dom';
 
 
 
@@ -1592,19 +1622,50 @@ function (_React$Component) {
     _classCallCheck(this, RecordingShow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
-    _this.state = _this.props.recording;
+    _this.state = {
+      recording: _this.props.recording,
+      comments: _this.props.comments,
+      comment: ""
+    };
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
+    _this.handleCommentSubmt = _this.handleCommentSubmt.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(RecordingShow, [{
-    key: "handleDelete",
-    value: function handleDelete(recordingId) {
+    key: "updated",
+    value: function updated(field) {
       var _this2 = this;
 
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleCommentSubmt",
+    value: function handleCommentSubmt(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.props.createComment({
+        comment: {
+          body: this.state.comment,
+          user_id: this.props.currentUser.id,
+          content_type: "Recording",
+          content_id: this.props.recording.id
+        }
+      }).then(function () {
+        return _this3.props.fetchRecording(_this3.props.match.params.recordingId);
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(recordingId) {
+      var _this4 = this;
+
       this.props.destroyRecording(recordingId).then(function () {
-        return _this2.props.history.push("/users/".concat(_this2.props.currentUser.id));
+        return _this4.props.history.push("/users/".concat(_this4.props.currentUser.id));
       });
     }
   }, {
@@ -1619,19 +1680,28 @@ function (_React$Component) {
       this.props.fetchRecording(this.props.match.params.recordingId);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // debugger
+      if (prevProps.comments !== this.props.comments) {
+        // debugger
+        this.setState({
+          comments: this.props.comments
+        }); // this.props.fetchRecording(this.props.match.params.recordingId);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
-      // debugger
       var backgroundImg = {
         backgroundImage: 'url(' + this.props.recording.artUrl + ')'
       };
       var userImg = {
         backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
-      }; // debugger
-
-      var recordingButtons = null; // debugger
+      };
+      var recordingButtons = null;
 
       if (this.props.currentUser.id === this.props.recording.user_id) {
         recordingButtons = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1639,12 +1709,12 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this3.handleEdit();
+            return _this5.handleEdit();
           }
         }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this3.handleDelete(_this3.props.recording.id);
+            return _this5.handleDelete(_this5.props.recording.id);
           }
         }, "Delete"));
       } else {
@@ -1655,7 +1725,11 @@ function (_React$Component) {
         }, "Like"));
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      var comments = Object.values(this.state.comments);
+      comments = comments.filter(function (comment) {
+        return comment["content_id"] === parseInt(_this5.props.recording.id);
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-show-banner"
@@ -1664,7 +1738,7 @@ function (_React$Component) {
         style: backgroundImg
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-audioandtitle"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_recordings_recording_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_recordings_recording_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
         recording: this.props.recording,
         key: this.props.recording.id,
         recordingShow: true
@@ -1674,23 +1748,27 @@ function (_React$Component) {
         className: "recording-hero-name"
       }, this.props.recording.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-info"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "recording-comment-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "recording-comment-div",
+        onSubmit: this.handleCommentSubmt
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-comment-userportrait",
         style: userImg
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "recording-comment-input",
         type: "text",
-        placeholder: "Write a comment"
+        placeholder: "Write a comment",
+        onChange: this.updated("comment")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit"
       })), recordingButtons, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "recording-info-description"
-      }, this.props.recording.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comments_comment_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        comments: this.props.comments
-      })));
+      }, this.props.recording.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comments_comment_index__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        comments: comments
+      }))));
     }
   }]);
 
@@ -1717,15 +1795,18 @@ var msp = function msp(state, ownprops) {
 var mdp = function mdp(dispatch) {
   return {
     fetchRecording: function fetchRecording(id) {
-      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__["fetchRecording"])(id));
+      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["fetchRecording"])(id));
     },
     destroyRecording: function destroyRecording(id) {
-      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__["destroyRecording"])(id));
+      return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["destroyRecording"])(id));
+    },
+    createComment: function createComment(comment) {
+      return dispatch(Object(_actions_comments_actions__WEBPACK_IMPORTED_MODULE_6__["createComment"])(comment));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(msp, mdp)(RecordingShow));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(RecordingShow));
 
 /***/ }),
 
@@ -2612,7 +2693,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+/* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/comments_actions */ "./frontend/actions/comments_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2637,6 +2720,9 @@ var usersReducer = function usersReducer() {
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_RECORDING"]:
       return Object.assign({}, state, action.recording.users);
+
+    case _actions_comments_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_COMMENT"]:
+      return Object.assign({}, state, action.comment.user);
 
     default:
       return state;
