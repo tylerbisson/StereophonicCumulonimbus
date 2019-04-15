@@ -1,6 +1,7 @@
 import merge from 'lodash/merge';
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
 import { ADD_USER } from '../actions/user_actions';
+import {RECEIVE_RECORDING} from '../actions/recordings_actions';
 
 const usersReducer = (state = {}, action) => {
     // debugger
@@ -13,6 +14,8 @@ const usersReducer = (state = {}, action) => {
             // return action.currentUser.user.id;
         case ADD_USER:
             return Object.assign({}, state, { [action.currentUser.user.id]: action.currentUser.user })
+        case RECEIVE_RECORDING: 
+            return Object.assign({}, state, action.recording.users)
         default:
             return state;
     }

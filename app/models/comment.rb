@@ -6,5 +6,5 @@ class Comment < ApplicationRecord
 
     belongs_to :content, polymorphic: true 
 
-    # has_many :comments, as: :content 
+    has_many :comments, as: :content 
 end

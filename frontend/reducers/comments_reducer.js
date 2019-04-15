@@ -1,16 +1,19 @@
 import {
-    RECEIVE_COMMENT
+    RECEIVE_COMMENT,
+    RECEIVE_COMMENTS
 } from '../actions/comments_actions';
-import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
-import { ADD_USER } from '../actions/user_actions';
+import {RECEIVE_RECORDING} from '../actions/recordings_actions';
 
 const commentsReducer = (oldState = {}, action) => {
-
+    // debugger
     Object.freeze(oldState);
     switch (action.type) {
+        case RECEIVE_RECORDING:
+            return Object.assign({}, oldState, action.recording.comments);
         case RECEIVE_COMMENT:
-            // debugger
             return Object.assign({}, oldState, action.comment);
+        case RECEIVE_COMMENTS:
+            return Object.assign({}, oldState, action.comments);
         default:
             return oldState;
     }

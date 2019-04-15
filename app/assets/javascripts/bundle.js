@@ -90,27 +90,44 @@
 /*!**********************************************!*\
   !*** ./frontend/actions/comments_actions.js ***!
   \**********************************************/
-/*! exports provided: RECEIVE_COMMENT, receiveComment, createComment */
+/*! exports provided: RECEIVE_COMMENT, RECEIVE_COMMENTS, receiveComment, receiveComments, createComment, fetchRecordingComments */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_COMMENT", function() { return RECEIVE_COMMENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_COMMENTS", function() { return RECEIVE_COMMENTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveComment", function() { return receiveComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveComments", function() { return receiveComments; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createComment", function() { return createComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordingComments", function() { return fetchRecordingComments; });
 /* harmony import */ var _util_comments_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/comments_util */ "./frontend/util/comments_util.js");
 
 var RECEIVE_COMMENT = 'RECEIVE_COMMENT';
+var RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 var receiveComment = function receiveComment(comment) {
   return {
     type: RECEIVE_COMMENT,
     comment: comment
   };
 };
+var receiveComments = function receiveComments(comments) {
+  return {
+    type: RECEIVE_COMMENTS,
+    comments: comments
+  };
+};
 var createComment = function createComment(comment) {
   return function (dispatch) {
     return _util_comments_util__WEBPACK_IMPORTED_MODULE_0__["createComment"](comment).then(function (comment) {
       return dispatch(receiveComment(comment));
+    });
+  };
+};
+var fetchRecordingComments = function fetchRecordingComments(recordingId) {
+  return function (dispatch) {
+    return _util_comments_util__WEBPACK_IMPORTED_MODULE_0__["fetchRecordingComments"](recordingId).then(function (comments) {
+      return dispatch(receiveComments(comments));
     });
   };
 };
@@ -441,6 +458,92 @@ var App = function App() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/comments/comment_index.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/comments/comment_index.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comments_actions */ "./frontend/actions/comments_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var CommentIndex =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CommentIndex, _React$Component);
+
+  function CommentIndex(props) {
+    var _this;
+
+    _classCallCheck(this, CommentIndex);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentIndex).call(this, props));
+    _this.state = _this.props.comments;
+    return _this;
+  }
+
+  _createClass(CommentIndex, [{
+    key: "render",
+    value: function render() {
+      if (this.props.comments) {
+        var comments = Object.values(this.props.comments);
+        var commentBodies = comments.map(function (comment) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+            key: comment.id
+          }, comment.body);
+        });
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, commentBodies);
+      } else {
+        return null;
+      }
+    }
+  }]);
+
+  return CommentIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var msp = function msp(state, ownProps) {
+  return {};
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    createComment: function createComment(comment) {
+      return dispatch(Object(_actions_comments_actions__WEBPACK_IMPORTED_MODULE_2__["createComment"])(comment));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(CommentIndex));
 
 /***/ }),
 
@@ -1451,6 +1554,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _recordings_recording_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
 /* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+/* harmony import */ var _comments_comment_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../comments/comment_index */ "./frontend/components/comments/comment_index.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1468,6 +1572,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1583,7 +1688,9 @@ function (_React$Component) {
         src: this.props.recording.portraitUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "recording-info-description"
-      }, this.props.recording.description))));
+      }, this.props.recording.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comments_comment_index__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        comments: this.props.comments
+      })));
     }
   }]);
 
@@ -1591,8 +1698,7 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var msp = function msp(state, ownprops) {
-  var recordingId = parseInt(ownprops.match.params.recordingId); // debugger
-
+  var recordingId = parseInt(ownprops.match.params.recordingId);
   return {
     currentUser: state.entities.users[state.session.id] ? state.entities.users[state.session.id] : {
       portraitUrl: ""
@@ -1603,7 +1709,8 @@ var msp = function msp(state, ownprops) {
         id: "",
         title: ""
       }
-    }
+    },
+    comments: state.entities.comments
   };
 };
 
@@ -2215,21 +2322,25 @@ var UserBanner = function UserBanner(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/comments_actions */ "./frontend/actions/comments_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
-
+/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
 
 
 
 var commentsReducer = function commentsReducer() {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  // debugger
   Object.freeze(oldState);
 
   switch (action.type) {
+    case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_RECORDING"]:
+      return Object.assign({}, oldState, action.recording.comments);
+
     case _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_COMMENT"]:
-      // debugger
       return Object.assign({}, oldState, action.comment);
+
+    case _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_COMMENTS"]:
+      return Object.assign({}, oldState, action.comments);
 
     default:
       return oldState;
@@ -2342,15 +2453,13 @@ var recordingsReducer = function recordingsReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_CURRENT_USER"]:
-      // debugger
       return Object.assign({}, oldState, action.currentUser.recordings);
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["ADD_USER"]:
-      // debugger
       return Object.assign({}, oldState, action.currentUser.recordings);
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RECORDING"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, _defineProperty({}, action.recording.id, action.recording));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, _defineProperty({}, action.recording.recording.id, action.recording.recording));
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RECORDINGS"]:
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, action.recordings);
@@ -2502,7 +2611,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2523,6 +2634,9 @@ var usersReducer = function usersReducer() {
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["ADD_USER"]:
       return Object.assign({}, state, _defineProperty({}, action.currentUser.user.id, action.currentUser.user));
+
+    case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_RECORDING"]:
+      return Object.assign({}, state, action.recording.users);
 
     default:
       return state;
@@ -2640,17 +2754,26 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/comments_util.js ***!
   \****************************************/
-/*! exports provided: createComment */
+/*! exports provided: createComment, fetchRecordingComments */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createComment", function() { return createComment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecordingComments", function() { return fetchRecordingComments; });
 var createComment = function createComment(comment) {
   return $.ajax({
     method: 'post',
     url: "api/comments",
     data: comment
+  });
+};
+var fetchRecordingComments = function fetchRecordingComments(recordingId) {
+  // debugger
+  return $.ajax({
+    method: "GET",
+    url: "/api/recording_comments",
+    data: recordingId
   });
 };
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import RecordingItem from '../recordings/recording_item';
 import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
+import CommentIndex from '../comments/comment_index';
 
 class RecordingShow extends React.Component {
     constructor(props){
@@ -79,20 +80,11 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"/>
                         </div>
-                        {/* <div className="recording-buttons">
-                            <button className="recording-button"
-                                onClick={() => this.handleEdit()}>
-                                Edit
-                            </button>
-                            <button className="recording-button"
-                                onClick={() => this.handleDelete(this.props.recording.id)}>
-                                Delete
-                            </button>
-                        </div> */}
                         {recordingButtons}
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
                     </div>
+                <CommentIndex comments={this.props.comments} />
                 </section>
             </>
         )
@@ -102,10 +94,10 @@ class RecordingShow extends React.Component {
 
 const msp = (state, ownprops) => {
     let recordingId = parseInt(ownprops.match.params.recordingId);
-    // debugger
     return {
         currentUser: state.entities.users[state.session.id] ? state.entities.users[state.session.id] : {portraitUrl: ""},
-        recording: state.entities.recordings[recordingId] ? state.entities.recordings[recordingId] : {recording: {artUrl: "", id: "", title: ""}}
+        recording: state.entities.recordings[recordingId] ? state.entities.recordings[recordingId] : {recording: {artUrl: "", id: "", title: ""}},
+        comments: state.entities.comments 
     }
 }
 

@@ -5,3 +5,12 @@ export const createComment = comment => {
         data: comment
     });
 };
+
+export const fetchRecordingComments = recordingId => {
+    // debugger
+    return $.ajax({
+        method: "GET",
+        url: `/api/recording_comments`,
+        data: recordingId
+    });
+};
