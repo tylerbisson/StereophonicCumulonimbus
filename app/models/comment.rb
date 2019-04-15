@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord 
 
-    validates :body, presence: true 
+    validates :body, :content_type, presence: true 
 
     belongs_to :user 
 

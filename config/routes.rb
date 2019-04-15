@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :index, :show, :update, :destroy]
     resource :session, only: [:create, :destroy, :show]
     get '/splash_recordings', to: 'recordings#splash_recordings'
+    get '/recording_comments', to: 'comments#recording_comments'
   end
   root "static_pages#root"
 end
