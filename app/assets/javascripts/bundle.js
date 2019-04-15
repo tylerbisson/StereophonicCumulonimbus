@@ -1602,7 +1602,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
- // import { withRouter } from 'react-router-dom';
 
 
 
@@ -1677,6 +1676,21 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchRecording(this.props.match.params.recordingId);
+      this.spectrum = WaveSurfer.create({
+        container: '#audio-spectrum',
+        waveColor: '#F2F2F2',
+        progressColor: '#F65502',
+        barWidth: 2,
+        height: 100,
+        fillParent: true,
+        cursorWidth: 0,
+        interact: true,
+        autoCenter: true,
+        closeAudioContext: true,
+        hideScrollbar: true,
+        partialRender: true,
+        removeMediaElementOnDestroy: true
+      });
     }
   }, {
     key: "componentDidUpdate",
@@ -1685,6 +1699,10 @@ function (_React$Component) {
         this.setState({
           comments: this.props.comments
         });
+      }
+
+      if (prevProps.recording !== this.props.recording) {
+        this.spectrum.load(this.props.recording.audioUrl);
       }
     }
   }, {
@@ -1739,11 +1757,24 @@ function (_React$Component) {
         recording: this.props.recording,
         key: this.props.recording.id,
         recordingShow: true
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "waveform-play-button",
+        src: window.playButtonURL,
+        onClick: function onClick() {
+          return _this5.spectrum.playPause();
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "recording-hero-artist"
       }, this.props.recording.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "recording-hero-name"
-      }, this.props.recording.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.recording.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "audio-spectrum-div",
+        onClick: function onClick() {
+          return _this5.spectrum.playPause();
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "audio-spectrum"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "recording-comment-div",

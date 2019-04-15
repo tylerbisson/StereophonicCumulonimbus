@@ -1,5 +1,4 @@
 import React from 'react';
-// import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RecordingItem from '../recordings/recording_item';
 import Nav from '../nav';
@@ -46,6 +45,21 @@ class RecordingShow extends React.Component {
 
     componentDidMount(){
         this.props.fetchRecording(this.props.match.params.recordingId);
+        this.spectrum = WaveSurfer.create({
+            container: '#audio-spectrum',
+            waveColor: '#F2F2F2',
+            progressColor: '#F65502',
+            barWidth: 2,
+            height: 100,
+            fillParent: true,
+            cursorWidth: 0,
+            interact: true,
+            autoCenter: true,
+            closeAudioContext: true,
+            hideScrollbar: true,
+            partialRender: true,
+            removeMediaElementOnDestroy: true,
+        });   
     }
 
     componentDidUpdate(prevProps) {
@@ -54,9 +68,13 @@ class RecordingShow extends React.Component {
                 comments: this.props.comments
             });
         }
+        
+        if (prevProps.recording !== this.props.recording) {
+            this.spectrum.load(this.props.recording.audioUrl);
+        }
     }
 
-    render(){
+    render() {        
         let backgroundImg = {
             backgroundImage: 'url(' + this.props.recording.artUrl + ')'
         };
@@ -64,6 +82,7 @@ class RecordingShow extends React.Component {
             backgroundImage: 'url(' + this.props.currentUser.portraitUrl + ')'
         };
         let recordingButtons = null;
+        
         if (this.props.currentUser.id === this.props.recording.user_id){
             recordingButtons = 
                 <div className="recording-buttons">
@@ -84,8 +103,10 @@ class RecordingShow extends React.Component {
                     </button>
                 </div>;   
         }
+
         let comments = Object.values(this.state.comments);
         comments = comments.filter(comment => comment["content_id"] === parseInt(this.props.recording.id));
+
         return(
             <>
                 <Nav/>
@@ -95,10 +116,15 @@ class RecordingShow extends React.Component {
                         <div className="recording-audioandtitle">
                             <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
                                 recordingShow = {true}/>
+                            <img className="waveform-play-button" src={window.playButtonURL} onClick={() => this.spectrum.playPause()}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
+                            <div className="audio-spectrum-div" onClick={() => this.spectrum.playPause()}>
+                                <div id="audio-spectrum"></div>
+                            </div>
                         </div>
                     </div>
+                    
                     <div className="recording-info" >
                         <form className="recording-comment-div" onSubmit={this.handleCommentSubmt}>
                             <div className="recording-comment-userportrait" style={userImg}/>
