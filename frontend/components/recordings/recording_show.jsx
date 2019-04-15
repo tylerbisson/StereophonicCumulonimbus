@@ -45,18 +45,14 @@ class RecordingShow extends React.Component {
     }
 
     componentDidMount(){
-        // debugger
         this.props.fetchRecording(this.props.match.params.recordingId);
     }
 
     componentDidUpdate(prevProps) {
-        // debugger
         if (prevProps.comments !== this.props.comments) {
-            // debugger
             this.setState({
                 comments: this.props.comments
             });
-            // this.props.fetchRecording(this.props.match.params.recordingId);
         }
     }
 
@@ -98,7 +94,7 @@ class RecordingShow extends React.Component {
                         <div className="recording-hero" style={backgroundImg}></div>
                         <div className="recording-audioandtitle">
                             <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
-                            recordingShow = {true}/>
+                                recordingShow = {true}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
                         </div>
@@ -108,12 +104,11 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"
                                 onChange={this.updated("comment")}/>
-                            <input type="submit" />
+                            {/* <input type="submit" /> */}
                         </form>
                         {recordingButtons}
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
                         <p className="recording-info-description" >{this.props.recording.description}</p>
-                        
                         <CommentIndex comments={comments} />
                     </div>
                 </section>

@@ -1676,18 +1676,15 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
       this.props.fetchRecording(this.props.match.params.recordingId);
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      // debugger
       if (prevProps.comments !== this.props.comments) {
-        // debugger
         this.setState({
           comments: this.props.comments
-        }); // this.props.fetchRecording(this.props.match.params.recordingId);
+        });
       }
     }
   }, {
@@ -1759,8 +1756,6 @@ function (_React$Component) {
         type: "text",
         placeholder: "Write a comment",
         onChange: this.updated("comment")
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit"
       })), recordingButtons, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl
