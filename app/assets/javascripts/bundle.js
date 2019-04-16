@@ -1101,7 +1101,16 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("section", {
         class: "playbar"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "hey there mr"));
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        class: "playbar-controlls"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+        class: "playbar-time"
+      }, "0:00"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        className: "playbar-progress-timeline",
+        type: "range"
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+        class: "playbar-time"
+      }, "0:00")));
     }
   }]);
 

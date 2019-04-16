@@ -10,7 +10,11 @@ class PlayBar extends React.Component {
     render() {
         return(
             <section class="playbar">
-                <h1>hey there mr</h1>
+                <div class="playbar-controlls">
+                    <h1 class="playbar-time">0:00</h1>
+                    <input className="playbar-progress-timeline" type="range"/>
+                    <h1 class="playbar-time">0:00</h1>
+                </div>
             </section>
         )
     };
