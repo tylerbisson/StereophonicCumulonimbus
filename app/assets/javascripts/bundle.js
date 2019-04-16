@@ -98,10 +98,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVE_RECORDING", function() { return RECEIVE_ACTIVE_RECORDING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveActiveRecording", function() { return receiveActiveRecording; });
 var RECEIVE_ACTIVE_RECORDING = 'RECEIVE_ACTIVE_RECORDING';
-var receiveActiveRecording = function receiveActiveRecording(recordingId) {
+var receiveActiveRecording = function receiveActiveRecording(args) {
   return {
     type: RECEIVE_ACTIVE_RECORDING,
-    recordingId: recordingId
+    recordingId: args[0],
+    recordingDuration: args[1],
+    currentTime: args[2]
   };
 };
 
@@ -1083,7 +1085,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1105,19 +1106,62 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var PlayBar =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(PlayBar, _React$Component);
 
   function PlayBar(props) {
+    var _this;
+
     _classCallCheck(this, PlayBar);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(PlayBar).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PlayBar).call(this, props));
+    _this.state = {
+      currentTime: _this.props.activeRecording.currentTime
+    };
+    return _this;
   }
 
   _createClass(PlayBar, [{
+    key: "formatTime",
+    value: function formatTime(raw) {
+      if (raw) {
+        var minutes = Math.floor(raw / 100);
+        var seconds = Math.floor(raw % 100);
+        return "".concat(minutes, ":").concat(seconds);
+      } else {
+        return "0:00";
+      }
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // debugger 
+      this.setState({
+        currentTime: this.props.activeRecording.currentTime
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // debugger
+      if (prevProps.activeRecording !== this.props.activeRecording) {
+        this.setState({
+          currentTime: this.props.activeRecording.currentTime
+        });
+      }
+    }
+  }, {
+    key: "progress",
+    value: function progress() {
+      // debugger
+      var progressPercent = Math.floor(this.state.currentTime / this.props.activeRecording.recordingDuration * 100);
+      return {
+        width: "".concat(progressPercent, "%")
+      };
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("section", {
@@ -1126,12 +1170,18 @@ function (_React$Component) {
         className: "playbar-controlls"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
         className: "playbar-time"
-      }, "0:00"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-        className: "playbar-progress-timeline",
+      }, this.formatTime(this.state.currentTime)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "playbar-progress-timelines"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        className: "playbar-progress-timeline-background",
         type: "range"
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        className: "playbar-progress-timeline-foreground",
+        type: "range",
+        style: this.progress()
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
         className: "playbar-time"
-      }, "0:00")));
+      }, this.formatTime(this.props.activeRecording.recordingDuration))));
     }
   }]);
 
@@ -1141,7 +1191,9 @@ function (_React$Component) {
 ;
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    activeRecording: state.ui.activeRecording
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -1739,6 +1791,7 @@ function (_React$Component) {
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
     _this.handleCommentSubmt = _this.handleCommentSubmt.bind(_assertThisInitialized(_this));
     _this.handlePlay = _this.handlePlay.bind(_assertThisInitialized(_this));
+    _this.handlePlayPause = _this.handlePlayPause.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1754,13 +1807,38 @@ function (_React$Component) {
   }, {
     key: "handlePlay",
     value: function handlePlay() {
+      var _this3 = this;
+
       this.waveForm.play();
-      this.props.receiveActiveRecording(this.props.recording.id);
+
+      if (this.progress === null) {
+        this.progress = setInterval(function () {
+          return _this3.props.receiveActiveRecording([_this3.props.recording.id, _this3.waveForm.getDuration(), _this3.waveForm.getCurrentTime()]);
+        }, 500);
+      }
+    }
+  }, {
+    key: "handlePlayPause",
+    value: function handlePlayPause() {
+      var _this4 = this;
+
+      this.waveForm.playPause();
+
+      if (this.progress) {
+        console.log("if");
+        clearInterval(this.progress);
+        this.progress = null;
+      } else {
+        console.log("else");
+        this.progress = setInterval(function () {
+          return _this4.props.receiveActiveRecording([_this4.props.recording.id, _this4.waveForm.getDuration(), _this4.waveForm.getCurrentTime()]);
+        }, 500);
+      }
     }
   }, {
     key: "handleCommentSubmt",
     value: function handleCommentSubmt(e) {
-      var _this3 = this;
+      var _this5 = this;
 
       e.preventDefault();
       this.props.createComment({
@@ -1771,16 +1849,16 @@ function (_React$Component) {
           content_id: this.props.recording.id
         }
       }).then(function () {
-        return _this3.props.fetchRecording(_this3.props.match.params.recordingId);
+        return _this5.props.fetchRecording(_this5.props.match.params.recordingId);
       });
     }
   }, {
     key: "handleDelete",
     value: function handleDelete(recordingId) {
-      var _this4 = this;
+      var _this6 = this;
 
       this.props.destroyRecording(recordingId).then(function () {
-        return _this4.props.history.push("/users/".concat(_this4.props.currentUser.id));
+        return _this6.props.history.push("/users/".concat(_this6.props.currentUser.id));
       });
     }
   }, {
@@ -1802,6 +1880,7 @@ function (_React$Component) {
         normalize: true,
         cursorWidth: 0
       });
+      this.props.receiveActiveRecording([this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
   }, {
     key: "componentDidUpdate",
@@ -1819,7 +1898,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this7 = this;
 
       var backgroundImg = {
         backgroundImage: 'url(' + this.props.recording.artUrl + ')'
@@ -1835,12 +1914,12 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this5.handleEdit();
+            return _this7.handleEdit();
           }
         }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this5.handleDelete(_this5.props.recording.id);
+            return _this7.handleDelete(_this7.props.recording.id);
           }
         }, "Delete"));
       } else {
@@ -1853,7 +1932,7 @@ function (_React$Component) {
 
       var comments = Object.values(this.state.comments);
       comments = comments.filter(function (comment) {
-        return comment["content_id"] === parseInt(_this5.props.recording.id);
+        return comment["content_id"] === parseInt(_this7.props.recording.id);
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
@@ -1871,9 +1950,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "waveform-play-button",
         src: window.playButtonURL,
-        onClick: function onClick() {
-          return _this5.waveForm.playPause();
-        }
+        onClick: this.handlePlayPause
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "recording-hero-artist"
       }, this.props.recording.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -1938,8 +2015,8 @@ var mdp = function mdp(dispatch) {
     createComment: function createComment(comment) {
       return dispatch(Object(_actions_comments_actions__WEBPACK_IMPORTED_MODULE_6__["createComment"])(comment));
     },
-    receiveActiveRecording: function receiveActiveRecording(recordingId) {
-      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(recordingId));
+    receiveActiveRecording: function receiveActiveRecording(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(args));
     }
   };
 };
@@ -2546,13 +2623,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var activeRecordingReducer = function activeRecordingReducer() {
+  var _Object$assign;
+
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(oldState);
 
   switch (action.type) {
     case _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ACTIVE_RECORDING"]:
-      return Object.assign({}, oldState, _defineProperty({}, "recordingId", action.recordingId));
+      return Object.assign({}, oldState, (_Object$assign = {}, _defineProperty(_Object$assign, "recordingId", action.recordingId), _defineProperty(_Object$assign, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign, "currentTime", action.currentTime), _Object$assign));
     // return action.recordingId;
 
     default:

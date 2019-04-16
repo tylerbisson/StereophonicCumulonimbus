@@ -6,7 +6,11 @@ const activeRecordingReducer = (oldState = {}, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_ACTIVE_RECORDING:
-            return Object.assign({}, oldState, {["recordingId"]: action.recordingId});
+            return Object.assign({}, oldState, 
+                {["recordingId"]: action.recordingId, 
+                ["recordingDuration"]: action.recordingDuration,
+                ["currentTime"]: action.currentTime
+                });
             // return action.recordingId;
         default:
             return oldState;

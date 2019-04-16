@@ -21,6 +21,7 @@ class RecordingShow extends React.Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.handleCommentSubmt = this.handleCommentSubmt.bind(this);
         this.handlePlay = this.handlePlay.bind(this);
+        this.handlePlayPause = this.handlePlayPause.bind(this);
     }
 
     updated(field) {
@@ -31,7 +32,31 @@ class RecordingShow extends React.Component {
 
     handlePlay(){
         this.waveForm.play();
-        this.props.receiveActiveRecording(this.props.recording.id);
+        if (this.progress === null){
+            this.progress = setInterval(() => 
+                this.props.receiveActiveRecording(
+                    [this.props.recording.id, 
+                    this.waveForm.getDuration(), 
+                    this.waveForm.getCurrentTime()]), 
+                        500);
+        }
+    }
+
+    handlePlayPause() {
+        this.waveForm.playPause();
+        if (this.progress) {
+            console.log("if");
+            clearInterval(this.progress);
+            this.progress = null;
+        } else {
+            console.log("else");
+            this.progress = setInterval(() =>
+                this.props.receiveActiveRecording(
+                    [this.props.recording.id,
+                    this.waveForm.getDuration(),
+                    this.waveForm.getCurrentTime()]),
+                500);
+        }
     }
 
     handleCommentSubmt(e){
@@ -63,6 +88,7 @@ class RecordingShow extends React.Component {
             normalize: true,
             cursorWidth: 0
         });   
+        this.props.receiveActiveRecording([this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
 
     componentDidUpdate(prevProps) {
@@ -119,7 +145,7 @@ class RecordingShow extends React.Component {
                         <div className="recording-audioandtitle">
                             <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
                                 recordingShow = {true}/>
-                            <img className="waveform-play-button" src={window.playButtonURL} onClick={() => this.waveForm.playPause()}/>
+                            <img className="waveform-play-button" src={window.playButtonURL} onClick={this.handlePlayPause}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
                             <div className="audio-waveForm-div" onClick={this.handlePlay}>
@@ -160,7 +186,7 @@ const mdp = dispatch => {
         fetchRecording: id => dispatch(fetchRecording(id)),
         destroyRecording: id => dispatch(destroyRecording(id)), 
         createComment: comment => dispatch(createComment(comment)),
-        receiveActiveRecording: recordingId => dispatch(receiveActiveRecording(recordingId))
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
     }
 }
 

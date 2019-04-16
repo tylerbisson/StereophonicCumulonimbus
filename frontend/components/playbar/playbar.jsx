@@ -1,19 +1,57 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 class PlayBar extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            currentTime: this.props.activeRecording.currentTime
+        }
+    }
+
+    formatTime(raw){
+        if(raw){
+            let minutes = Math.floor(raw / 100)
+            let seconds = Math.floor(raw % 100)
+            return `${minutes}:${seconds}`
+        } else{
+            return "0:00"
+        }
+    }
+
+    componentDidMount(){
+        // debugger 
+        this.setState({
+            currentTime: this.props.activeRecording.currentTime
+        });
+    }
+
+    componentDidUpdate(prevProps) {
+        // debugger
+        if (prevProps.activeRecording !== this.props.activeRecording) {
+            this.setState({
+                currentTime: this.props.activeRecording.currentTime
+            });
+        }
+    }
+
+    progress(){
+        // debugger
+        let progressPercent = Math.floor((this.state.currentTime / this.props.activeRecording.recordingDuration) * 100);
+        return { width: `${progressPercent}%` }
     }
 
     render() {
         return(
             <section className="playbar">
                 <div className="playbar-controlls">
-                    <h1 className="playbar-time">0:00</h1>
-                    <input className="playbar-progress-timeline" type="range"/>
-                    <h1 className="playbar-time">0:00</h1>
+                    <h1 className="playbar-time">{this.formatTime(this.state.currentTime)}</h1>
+                    <div className="playbar-progress-timelines">
+                        <input className="playbar-progress-timeline-background" type="range"/>
+                        <input className="playbar-progress-timeline-foreground" type="range" style={this.progress()}/>
+                    </div>
+                    <h1 className="playbar-time">{this.formatTime(this.props.activeRecording.recordingDuration)}</h1>
                 </div>
             </section>
         )
@@ -22,6 +60,7 @@ class PlayBar extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        activeRecording: state.ui.activeRecording
     };
 };
 
