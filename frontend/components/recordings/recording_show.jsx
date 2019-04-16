@@ -5,6 +5,7 @@ import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 import CommentIndex from '../comments/comment_index';
 import {createComment} from '../../actions/comments_actions';
+import WaveSurfer from 'wavesurfer.js';
 
 class RecordingShow extends React.Component {
     constructor(props){
