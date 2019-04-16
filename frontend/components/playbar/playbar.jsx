@@ -14,6 +14,9 @@ class PlayBar extends React.Component {
         if(raw){
             let minutes = Math.floor(raw / 100)
             let seconds = Math.floor(raw % 100)
+            if (seconds < 10){
+                seconds = `0${seconds.toString()}`
+            }
             return `${minutes}:${seconds}`
         } else{
             return "0:00"

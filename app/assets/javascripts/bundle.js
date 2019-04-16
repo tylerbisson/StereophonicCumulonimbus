@@ -1129,6 +1129,11 @@ function (_React$Component) {
       if (raw) {
         var minutes = Math.floor(raw / 100);
         var seconds = Math.floor(raw % 100);
+
+        if (seconds < 10) {
+          seconds = "0".concat(seconds.toString());
+        }
+
         return "".concat(minutes, ":").concat(seconds);
       } else {
         return "0:00";
@@ -1822,17 +1827,18 @@ function (_React$Component) {
     value: function handlePlayPause() {
       var _this4 = this;
 
-      this.waveForm.playPause();
+      //tests if waveForm is loaded 
+      if (this.waveForm.getDuration()) {
+        this.waveForm.playPause();
 
-      if (this.progress) {
-        console.log("if");
-        clearInterval(this.progress);
-        this.progress = null;
-      } else {
-        console.log("else");
-        this.progress = setInterval(function () {
-          return _this4.props.receiveActiveRecording([_this4.props.recording.id, _this4.waveForm.getDuration(), _this4.waveForm.getCurrentTime()]);
-        }, 500);
+        if (this.progress) {
+          clearInterval(this.progress);
+          this.progress = null;
+        } else {
+          this.progress = setInterval(function () {
+            return _this4.props.receiveActiveRecording([_this4.props.recording.id, _this4.waveForm.getDuration(), _this4.waveForm.getCurrentTime()]);
+          }, 500);
+        }
       }
     }
   }, {

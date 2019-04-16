@@ -43,19 +43,20 @@ class RecordingShow extends React.Component {
     }
 
     handlePlayPause() {
-        this.waveForm.playPause();
-        if (this.progress) {
-            console.log("if");
-            clearInterval(this.progress);
-            this.progress = null;
-        } else {
-            console.log("else");
-            this.progress = setInterval(() =>
-                this.props.receiveActiveRecording(
-                    [this.props.recording.id,
-                    this.waveForm.getDuration(),
-                    this.waveForm.getCurrentTime()]),
-                500);
+        //tests if waveForm is loaded 
+        if (this.waveForm.getDuration()){
+            this.waveForm.playPause();
+            if (this.progress) {
+                clearInterval(this.progress);
+                this.progress = null;
+            } else {
+                this.progress = setInterval(() =>
+                    this.props.receiveActiveRecording(
+                        [this.props.recording.id,
+                        this.waveForm.getDuration(),
+                        this.waveForm.getCurrentTime()]),
+                    500);
+            }
         }
     }
 
