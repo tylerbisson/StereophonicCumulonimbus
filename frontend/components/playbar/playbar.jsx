@@ -9,18 +9,18 @@ class PlayBar extends React.Component {
 
     render() {
         return(
-            <section class="playbar">
-                <div class="playbar-controlls">
-                    <h1 class="playbar-time">0:00</h1>
+            <section className="playbar">
+                <div className="playbar-controlls">
+                    <h1 className="playbar-time">0:00</h1>
                     <input className="playbar-progress-timeline" type="range"/>
-                    <h1 class="playbar-time">0:00</h1>
+                    <h1 className="playbar-time">0:00</h1>
                 </div>
             </section>
         )
     };
 };
 
-const mapStateToProps = ({ session, entities: { users, recordings } }) => {
+const mapStateToProps = state => {
     return {
     };
 };

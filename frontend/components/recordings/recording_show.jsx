@@ -4,7 +4,8 @@ import RecordingItem from '../recordings/recording_item';
 import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 import CommentIndex from '../comments/comment_index';
-import {createComment} from '../../actions/comments_actions';
+import { createComment } from '../../actions/comments_actions';
+import { receiveActiveRecording } from '../../actions/active_recording_actions';
 import WaveSurfer from 'wavesurfer.js';
 
 class RecordingShow extends React.Component {
@@ -19,12 +20,18 @@ class RecordingShow extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleCommentSubmt = this.handleCommentSubmt.bind(this);
+        this.handlePlay = this.handlePlay.bind(this);
     }
 
     updated(field) {
         return e => this.setState({
             [field]: e.target.value
         })
+    }
+
+    handlePlay(){
+        this.waveForm.play();
+        this.props.receiveActiveRecording(this.props.recording.id);
     }
 
     handleCommentSubmt(e){
@@ -115,7 +122,7 @@ class RecordingShow extends React.Component {
                             <img className="waveform-play-button" src={window.playButtonURL} onClick={() => this.waveForm.playPause()}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
-                            <div className="audio-waveForm-div" onClick={() => this.waveForm.play()}>
+                            <div className="audio-waveForm-div" onClick={this.handlePlay}>
                                 <div id="audio-waveForm"></div>
                             </div>
                         </div>
@@ -152,7 +159,8 @@ const mdp = dispatch => {
     return {
         fetchRecording: id => dispatch(fetchRecording(id)),
         destroyRecording: id => dispatch(destroyRecording(id)), 
-        createComment: comment => dispatch(createComment(comment))
+        createComment: comment => dispatch(createComment(comment)),
+        receiveActiveRecording: recordingId => dispatch(receiveActiveRecording(recordingId))
     }
 }
 
