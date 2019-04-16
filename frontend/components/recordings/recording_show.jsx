@@ -45,20 +45,15 @@ class RecordingShow extends React.Component {
 
     componentDidMount(){
         this.props.fetchRecording(this.props.match.params.recordingId);
-        this.spectrum = WaveSurfer.create({
-            container: '#audio-spectrum',
-            waveColor: '#F2F2F2',
-            progressColor: '#F65502',
+        this.waveForm = WaveSurfer.create({
+            container: '#audio-waveForm',
+            waveColor: '#f2f2f2',
+            progressColor: '#ff540a',
             barWidth: 2,
             height: 100,
             fillParent: true,
-            cursorWidth: 0,
-            interact: true,
-            autoCenter: true,
-            closeAudioContext: true,
-            hideScrollbar: true,
-            partialRender: true,
-            removeMediaElementOnDestroy: true,
+            normalize: true,
+            cursorWidth: 0
         });   
     }
 
@@ -70,7 +65,7 @@ class RecordingShow extends React.Component {
         }
         
         if (prevProps.recording !== this.props.recording) {
-            this.spectrum.load(this.props.recording.audioUrl);
+            this.waveForm.load(this.props.recording.audioUrl);
         }
     }
 
@@ -116,11 +111,11 @@ class RecordingShow extends React.Component {
                         <div className="recording-audioandtitle">
                             <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
                                 recordingShow = {true}/>
-                            <img className="waveform-play-button" src={window.playButtonURL} onClick={() => this.spectrum.playPause()}/>
+                            <img className="waveform-play-button" src={window.playButtonURL} onClick={() => this.waveForm.playPause()}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
-                            <div className="audio-spectrum-div" onClick={() => this.spectrum.playPause()}>
-                                <div id="audio-spectrum"></div>
+                            <div className="audio-waveForm-div" onClick={() => this.waveForm.play()}>
+                                <div id="audio-waveForm"></div>
                             </div>
                         </div>
                     </div>
@@ -130,7 +125,6 @@ class RecordingShow extends React.Component {
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"
                                 onChange={this.updated("comment")}/>
-                            {/* <input type="submit" /> */}
                         </form>
                         {recordingButtons}
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>

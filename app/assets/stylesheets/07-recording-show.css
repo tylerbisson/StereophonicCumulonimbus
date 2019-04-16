@@ -155,12 +155,12 @@
     left: .6%;
 }
 
-.audio-spectrum-div{
+.audio-waveForm-div{
     width: 66.5%;
     margin-left: 2%;
     padding-top: 20%;
 }
 
-#audio-spectrum{
+#audio-waveForm{
     /* width: 500px; */
 }

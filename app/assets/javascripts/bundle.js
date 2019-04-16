@@ -1676,20 +1676,15 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchRecording(this.props.match.params.recordingId);
-      this.spectrum = WaveSurfer.create({
-        container: '#audio-spectrum',
-        waveColor: '#F2F2F2',
-        progressColor: '#F65502',
+      this.waveForm = WaveSurfer.create({
+        container: '#audio-waveForm',
+        waveColor: '#f2f2f2',
+        progressColor: '#ff540a',
         barWidth: 2,
         height: 100,
         fillParent: true,
-        cursorWidth: 0,
-        interact: true,
-        autoCenter: true,
-        closeAudioContext: true,
-        hideScrollbar: true,
-        partialRender: true,
-        removeMediaElementOnDestroy: true
+        normalize: true,
+        cursorWidth: 0
       });
     }
   }, {
@@ -1702,7 +1697,7 @@ function (_React$Component) {
       }
 
       if (prevProps.recording !== this.props.recording) {
-        this.spectrum.load(this.props.recording.audioUrl);
+        this.waveForm.load(this.props.recording.audioUrl);
       }
     }
   }, {
@@ -1761,19 +1756,19 @@ function (_React$Component) {
         className: "waveform-play-button",
         src: window.playButtonURL,
         onClick: function onClick() {
-          return _this5.spectrum.playPause();
+          return _this5.waveForm.playPause();
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "recording-hero-artist"
       }, this.props.recording.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "recording-hero-name"
       }, this.props.recording.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "audio-spectrum-div",
+        className: "audio-waveForm-div",
         onClick: function onClick() {
-          return _this5.spectrum.playPause();
+          return _this5.waveForm.play();
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "audio-spectrum"
+        id: "audio-waveForm"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
