@@ -62,10 +62,10 @@ class Splash extends React.Component {
                         <button className="demo-button" onClick={this.handleDemoLogin}>Login as Demo User</button>
                     </div>
                 </section>
-                <section className="user-recordings">
-                    <h1 className="user-recordings-header">
+                <section className="splash-recordings">
+                    <h1 className="splash-recordings-header">
                         Hear what’s trending for free in the cult of Stereophonic Cumulonimbus</h1>
-                    <ul className="user-recordings-list">
+                    <ul className="splash-recordings-list">
                         {recordingItems}
                     </ul>
                 </section>

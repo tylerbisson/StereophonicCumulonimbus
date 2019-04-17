@@ -2,9 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchRecordings} from '../../actions/recordings_actions';
 import {fetchUser} from '../../actions/user_actions';
-import RecordingItem from '../recordings/recording_item';
+import UserRecordingItem from '../recordings/user_recording_item';
 import UserBanner from '../user/user_banner';
 import Nav from '../nav';
+import { receiveNewActiveRecording, receiveActiveRecording } from '../../actions/active_recording_actions';
 
 class RecordingIndex extends React.Component {
     constructor(props) {
@@ -40,7 +41,10 @@ class RecordingIndex extends React.Component {
             recordings = recordings.filter(recording => recording["user_id"] === parseInt(this.state.userId));
 
             let recordingItems = recordings.map(recording => 
-                <RecordingItem recording={recording} key={recording.id}/>
+                <div className="user-recording-item-div">
+                    <UserRecordingItem recording={recording} key={recording.id} 
+                        receiveActiveRecording={this.props.receiveActiveRecording} receiveNewActiveRecording={this.props.receiveNewActiveRecording}/>
+                </div>
             )
 
             let backgroundImg = {
@@ -69,7 +73,9 @@ const msp = (state, ownProps) => {
 const mdp = dispatch => {
     return {
         fetchRecordings: () => dispatch(fetchRecordings()),
-        fetchUser: userId => dispatch(fetchUser(userId))
+        fetchUser: userId => dispatch(fetchUser(userId)),
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
+        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
     }
 };
 

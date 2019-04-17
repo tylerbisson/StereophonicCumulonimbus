@@ -1502,9 +1502,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var _recordings_recording_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
+/* harmony import */ var _recordings_user_recording_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recordings/user_recording_item */ "./frontend/components/recordings/user_recording_item.jsx");
 /* harmony import */ var _user_user_banner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../user/user_banner */ "./frontend/components/user/user_banner.jsx");
 /* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../nav */ "./frontend/components/nav.jsx");
+/* harmony import */ var _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/active_recording_actions */ "./frontend/actions/active_recording_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1522,6 +1523,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1579,10 +1581,14 @@ function (_React$Component) {
           return recording["user_id"] === parseInt(_this2.state.userId);
         });
         var recordingItems = recordings.map(function (recording) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_recordings_recording_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "user-recording-item-div"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_recordings_user_recording_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
             recording: recording,
-            key: recording.id
-          });
+            key: recording.id,
+            receiveActiveRecording: _this2.props.receiveActiveRecording,
+            receiveNewActiveRecording: _this2.props.receiveNewActiveRecording
+          }));
         });
         var backgroundImg = {
           backgroundImage: 'url(' + this.props.userOfPage.portraitUrl + ')'
@@ -1618,6 +1624,12 @@ var mdp = function mdp(dispatch) {
     },
     fetchUser: function fetchUser(userId) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])(userId));
+    },
+    receiveActiveRecording: function receiveActiveRecording(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(args));
+    },
+    receiveNewActiveRecording: function receiveNewActiveRecording(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveNewActiveRecording"])(args));
     }
   };
 };
@@ -1671,24 +1683,13 @@ function (_React$Component) {
   }
 
   _createClass(RecordingItem, [{
-    key: "playRecording",
-    value: function playRecording(e) {
-      if (e.currentTarget.childNodes[0].className === "not_playing") {
-        e.currentTarget.childNodes[0].play();
-        e.currentTarget.childNodes[0].className = "playing";
-      } else {
-        e.currentTarget.childNodes[0].pause();
-        e.currentTarget.childNodes[0].className = "not_playing";
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       var art = "";
       var test = null;
       var playbutton = null;
       var link = null;
-      var username = null; // debugger
+      var username = null;
 
       if (this.props.recordingShow) {
         art = "recording-art-show";
@@ -1712,8 +1713,7 @@ function (_React$Component) {
       ;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-item",
-        key: "recording-item" + this.props.recording.id,
-        onClick: this.playRecording
+        key: "recording-item" + this.props.recording.id
       }, test, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
         className: "not_playing"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
@@ -2083,6 +2083,192 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_recording_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/recordings/user_recording_item.jsx":
+/*!****************************************************************!*\
+  !*** ./frontend/components/recordings/user_recording_item.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var wavesurfer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! wavesurfer.js */ "./node_modules/wavesurfer.js/dist/wavesurfer.min.js");
+/* harmony import */ var wavesurfer_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(wavesurfer_js__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var UserRecordingItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UserRecordingItem, _React$Component);
+
+  function UserRecordingItem(props) {
+    _classCallCheck(this, UserRecordingItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserRecordingItem).call(this, props));
+  }
+
+  _createClass(UserRecordingItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.waveForm = wavesurfer_js__WEBPACK_IMPORTED_MODULE_2___default.a.create({
+        container: "#user-audio-waveForm".concat(this.props.recording.id),
+        waveColor: '#b2b4b7',
+        progressColor: '#ff540a',
+        barWidth: 2,
+        height: 60,
+        fillParent: true,
+        normalize: true,
+        cursorWidth: 0
+      });
+      this.waveForm.load(this.props.recording.audioUrl);
+      this.handlePlay = this.handlePlay.bind(this);
+      this.handlePlayPause = this.handlePlayPause.bind(this);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // debugger
+      if (prevProps.recording !== this.props.recording) {
+        this.waveForm.load(this.props.recording.audioUrl);
+      }
+
+      if (this.waveForm.getCurrentTime() >= this.waveForm.getDuration()) {
+        clearInterval(this.progress);
+        this.progress = null;
+      }
+    }
+  }, {
+    key: "handlePlay",
+    value: function handlePlay() {
+      var _this = this;
+
+      this.waveForm.play();
+
+      if (this.progress === null) {
+        this.progress = setInterval(function () {
+          return _this.props.receiveActiveRecording([_this.waveForm, _this.props.recording.id, _this.waveForm.getDuration(), _this.waveForm.getCurrentTime(), _this.progress]);
+        }, 500);
+      }
+    }
+  }, {
+    key: "handlePlayPause",
+    value: function handlePlayPause() {
+      var _this2 = this;
+
+      //tests if waveForm is loaded 
+      if (this.waveForm.getDuration()) {
+        this.waveForm.playPause();
+
+        if (this.progress) {
+          clearInterval(this.progress);
+          this.progress = null;
+        } else {
+          this.progress = setInterval(function () {
+            return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress]);
+          }, 500);
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var art = "";
+      var test = null;
+      var playbutton = null;
+      var link = null;
+      var username = null;
+      var wave;
+      var durationTag;
+
+      if (this.props.recordingShow) {
+        art = "recording-art-show";
+      } else {
+        art = "recording-art";
+        link = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          to: "/recordings/".concat(this.props.recording.id),
+          className: "user-recording-item-title",
+          key: "user-recording-item-title" + this.props.recording.id
+        }, this.props.recording.title);
+        username = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-recording-item-user",
+          key: "user-recording-item-user" + this.props.recording.id
+        }, this.props.recording.username);
+        wave = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-audio-waveForm-div",
+          onClick: this.handlePlay
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "user-audio-waveForm",
+          id: "user-audio-waveForm".concat(this.props.recording.id),
+          onClick: this.handlePlay
+        }));
+      }
+
+      ;
+
+      if (this.waveForm) {
+        if (this.waveForm.getDuration() !== 0) {
+          durationTag = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+            className: "user-recording-duration-tag"
+          }, this.waveForm.getDuration());
+        }
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-recording-item",
+        key: "recording-item" + this.props.recording.id
+      }, test, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+        className: "not_playing"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: this.props.recording.audioUrl,
+        type: "audio/mpeg"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recording-item-img",
+        key: "recording-item-img" + this.props.recording.id
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: art,
+        src: this.props.recording.artUrl
+      }), playbutton)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-recording-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-recording-playbuttonandnameandtitle"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "user-waveform-play-button",
+        src: window.playButtonURL,
+        onClick: this.handlePlayPause
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, link, username)), wave, durationTag));
+    }
+  }]);
+
+  return UserRecordingItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (UserRecordingItem);
 
 /***/ }),
 
@@ -2540,11 +2726,11 @@ function (_React$Component) {
         className: "demo-button",
         onClick: this.handleDemoLogin
       }, "Login as Demo User"))), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("section", {
-        className: "user-recordings"
+        className: "splash-recordings"
       }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", {
-        className: "user-recordings-header"
+        className: "splash-recordings-header"
       }, "Hear what\u2019s trending for free in the cult of Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("ul", {
-        className: "user-recordings-list"
+        className: "splash-recordings-list"
       }, recordingItems)));
     }
   }]);
@@ -2654,7 +2840,7 @@ var activeRecordingReducer = function activeRecordingReducer() {
   switch (action.type) {
     case _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ACTIVE_RECORDING"]:
       if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()) {
-        oldState.recordingElement.destroy();
+        oldState.recordingElement.stop();
         clearInterval(oldState.progressTimer);
       }
 

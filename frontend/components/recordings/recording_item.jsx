@@ -6,16 +6,6 @@ class RecordingItem extends React.Component {
         super(props);
     }
 
-    playRecording(e) {
-        if (e.currentTarget.childNodes[0].className === "not_playing") {
-            e.currentTarget.childNodes[0].play();
-            e.currentTarget.childNodes[0].className = "playing"
-        } else {
-            e.currentTarget.childNodes[0].pause();
-            e.currentTarget.childNodes[0].className = "not_playing"
-        }
-    } 
-
     render(){
 
         let art = "";
@@ -24,8 +14,6 @@ class RecordingItem extends React.Component {
         let link = null;
         let username = null;
 
-
-        // debugger
         if(this.props.recordingShow){
             art = "recording-art-show";
         } else {
@@ -44,8 +32,7 @@ class RecordingItem extends React.Component {
         };
 
         return (
-            <div className="recording-item" key={"recording-item" + this.props.recording.id} 
-                onClick={this.playRecording}>
+            <div className="recording-item" key={"recording-item" + this.props.recording.id}>
                 
                 {test}
                 

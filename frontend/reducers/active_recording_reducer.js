@@ -7,7 +7,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
     switch (action.type) {
         case RECEIVE_ACTIVE_RECORDING:
         if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()){
-            oldState.recordingElement.destroy();
+            oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
         }
         if (action.recordingElement.isPlaying()){
