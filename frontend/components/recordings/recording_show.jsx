@@ -5,7 +5,7 @@ import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 import CommentIndex from '../comments/comment_index';
 import { createComment } from '../../actions/comments_actions';
-import { receiveActiveRecording } from '../../actions/active_recording_actions';
+import { receiveNewActiveRecording, receiveActiveRecording } from '../../actions/active_recording_actions';
 import WaveSurfer from 'wavesurfer.js';
 
 class RecordingShow extends React.Component {
@@ -35,9 +35,11 @@ class RecordingShow extends React.Component {
         if (this.progress === null){
             this.progress = setInterval(() => 
                 this.props.receiveActiveRecording(
-                    [this.props.recording.id, 
+                    [this.waveForm, 
+                    this.props.recording.id, 
                     this.waveForm.getDuration(), 
-                    this.waveForm.getCurrentTime()]), 
+                    this.waveForm.getCurrentTime(),
+                    this.progress]), 
                         500);
         }
     }
@@ -52,9 +54,11 @@ class RecordingShow extends React.Component {
             } else {
                 this.progress = setInterval(() =>
                     this.props.receiveActiveRecording(
-                        [this.props.recording.id,
+                        [this.waveForm, 
+                        this.props.recording.id,
                         this.waveForm.getDuration(),
-                        this.waveForm.getCurrentTime()]),
+                        this.waveForm.getCurrentTime(),
+                        this.progress]),
                     500);
             }
         }
@@ -89,7 +93,7 @@ class RecordingShow extends React.Component {
             normalize: true,
             cursorWidth: 0
         });   
-        this.props.receiveActiveRecording([this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
+        this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
 
     componentDidUpdate(prevProps) {
@@ -101,6 +105,11 @@ class RecordingShow extends React.Component {
         
         if (prevProps.recording !== this.props.recording) {
             this.waveForm.load(this.props.recording.audioUrl);
+        }
+
+        if (this.waveForm.getCurrentTime() >= this.waveForm.getDuration()){
+            clearInterval(this.progress);
+            this.progress = null;
         }
     }
 
@@ -187,7 +196,8 @@ const mdp = dispatch => {
         fetchRecording: id => dispatch(fetchRecording(id)),
         destroyRecording: id => dispatch(destroyRecording(id)), 
         createComment: comment => dispatch(createComment(comment)),
-        receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
+        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
     }
 }
 
