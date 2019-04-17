@@ -113,7 +113,7 @@ class RecordingShow extends React.Component {
         }
     }
 
-    render() {        
+    render() {      
         let backgroundImg = {
             backgroundImage: 'url(' + this.props.recording.artUrl + ')'
         };
