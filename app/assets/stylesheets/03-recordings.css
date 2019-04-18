@@ -7,6 +7,8 @@
     width: 1240px;
     margin: auto;
     height: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
 }
 
 .splash-recordings{
@@ -30,6 +32,8 @@
     flex-direction: column;
     align-content: flex-start;
     font-family: 'Quicksand', sans-serif;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
 }
 
 .recording-item {

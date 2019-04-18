@@ -49,6 +49,12 @@ class PlayBar extends React.Component {
         return(
             <section className="playbar">
                 <div className="playbar-controlls">
+                    <div className="playbar-playpausenext">
+                        <img className="playbar-next-button-rev" src={window.nextButtonUrl} />
+                        <img className="playbar-play-button" src={window.littlePlayButtonUrl}/>
+                        {/* <img className="playbar-pause-button" src={window.pauseButtonUrl}/> */}
+                        <img className="playbar-next-button" src={window.nextButtonUrl}/>
+                    </div>
                     <h1 className="playbar-time">{this.formatTime(this.state.currentTime)}</h1>
                     <div className="playbar-progress-timelines">
                         <input className="playbar-progress-timeline-background" type="range"/>

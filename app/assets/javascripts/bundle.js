@@ -1183,7 +1183,18 @@ function (_React$Component) {
         className: "playbar"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "playbar-controlls"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "playbar-playpausenext"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+        className: "playbar-next-button-rev",
+        src: window.nextButtonUrl
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+        className: "playbar-play-button",
+        src: window.littlePlayButtonUrl
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+        className: "playbar-next-button",
+        src: window.nextButtonUrl
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
         className: "playbar-time"
       }, this.formatTime(this.state.currentTime)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "playbar-progress-timelines"
