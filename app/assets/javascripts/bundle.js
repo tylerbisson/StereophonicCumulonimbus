@@ -90,14 +90,22 @@
 /*!******************************************************!*\
   !*** ./frontend/actions/active_recording_actions.js ***!
   \******************************************************/
-/*! exports provided: RECEIVE_ACTIVE_RECORDING, receiveActiveRecording */
+/*! exports provided: RECEIVE_ACTIVE_RECORDING, PLAY_ACTIVE_RECORDING, UPDATE_ACTIVE_RECORDING_PROGRESS, receiveActiveRecording, playActiveRecording, updateActiveRecordingProgress */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVE_RECORDING", function() { return RECEIVE_ACTIVE_RECORDING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PLAY_ACTIVE_RECORDING", function() { return PLAY_ACTIVE_RECORDING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ACTIVE_RECORDING_PROGRESS", function() { return UPDATE_ACTIVE_RECORDING_PROGRESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveActiveRecording", function() { return receiveActiveRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playActiveRecording", function() { return playActiveRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateActiveRecordingProgress", function() { return updateActiveRecordingProgress; });
+var _this = undefined;
+
 var RECEIVE_ACTIVE_RECORDING = 'RECEIVE_ACTIVE_RECORDING';
+var PLAY_ACTIVE_RECORDING = 'PLAY_ACTIVE_RECORDING';
+var UPDATE_ACTIVE_RECORDING_PROGRESS = 'UPDATE_ACTIVE_RECORDING_PROGRESS';
 var receiveActiveRecording = function receiveActiveRecording(args) {
   return {
     type: RECEIVE_ACTIVE_RECORDING,
@@ -107,6 +115,18 @@ var receiveActiveRecording = function receiveActiveRecording(args) {
     currentTime: args[3],
     progressTimer: args[4]
   };
+};
+var playActiveRecording = function playActiveRecording() {
+  return {
+    type: PLAY_ACTIVE_RECORDING
+  };
+};
+var updateActiveRecordingProgress = function updateActiveRecordingProgress(recordingElement) {
+  if (_this.progress === null) {
+    _this.progress = setInterval(function () {
+      return _this.props.receiveActiveRecording([_this.waveForm, _this.props.recording.id, _this.waveForm.getDuration(), _this.waveForm.getCurrentTime(), _this.progress]);
+    }, 500);
+  }
 }; // export const receiveNewActiveRecording = args => {
 //     return {
 //         type: RECEIVE_ACTIVE_RECORDING,
@@ -1095,6 +1115,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/active_recording_actions */ "./frontend/actions/active_recording_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1105,13 +1126,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1130,10 +1152,35 @@ function (_React$Component) {
     _this.state = {
       currentTime: _this.props.activeRecording.currentTime
     };
+    _this.handlePlayPause = _this.handlePlayPause.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PlayBar, [{
+    key: "handlePlayPause",
+    value: function handlePlayPause() {
+      var _this2 = this;
+
+      // tests if waveForm is loaded 
+      // debugger
+      if (this.props.activeRecording.recordingElement.getDuration()) {
+        this.props.activeRecording.recordingElement.playPause();
+        console.log(1);
+
+        if (this.progressInt) {
+          // debugger
+          clearInterval(this.progressInt);
+          this.progressInt = null;
+          console.log(2);
+        } else {
+          console.log(3);
+          this.progressInt = setInterval(function () {
+            return _this2.props.receiveActiveRecording([_this2.props.activeRecording.recordingElement, _this2.props.activeRecording.recordingId, _this2.props.activeRecording.recordingElement.getDuration(), _this2.props.activeRecording.recordingElement.getCurrentTime(), _this2.progressInt]);
+          }, 500);
+        }
+      }
+    }
+  }, {
     key: "formatTime",
     value: function formatTime(raw) {
       if (raw) {
@@ -1190,7 +1237,8 @@ function (_React$Component) {
         src: window.nextButtonUrl
       }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
         className: "playbar-play-button",
-        src: window.littlePlayButtonUrl
+        src: window.littlePlayButtonUrl,
+        onClick: this.handlePlayPause
       }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
         className: "playbar-next-button",
         src: window.nextButtonUrl
@@ -1223,7 +1271,14 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    playActiveRecording: function playActiveRecording() {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_2__["playActiveRecording"])());
+    },
+    receiveActiveRecording: function receiveActiveRecording(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_2__["receiveActiveRecording"])(args));
+    }
+  };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(PlayBar));
@@ -2052,6 +2107,9 @@ var mdp = function mdp(dispatch) {
     },
     receiveNewActiveRecording: function receiveNewActiveRecording(args) {
       return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveNewActiveRecording"])(args));
+    },
+    playActiveRecording: function playActiveRecording() {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["playActiveRecording"])());
     }
   };
 };
@@ -2859,6 +2917,14 @@ var activeRecordingReducer = function activeRecordingReducer() {
         var _Object$assign;
 
         return Object.assign({}, oldState, (_Object$assign = {}, _defineProperty(_Object$assign, "recordingElement", action.recordingElement), _defineProperty(_Object$assign, "recordingId", action.recordingId), _defineProperty(_Object$assign, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign, "currentTime", action.currentTime), _defineProperty(_Object$assign, "progressTimer", action.progressTimer), _Object$assign));
+      }
+
+    case _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_0__["PLAY_ACTIVE_RECORDING"]:
+      if (oldState.recordingElement && !oldState.recordingElement.isPlaying()) {
+        oldState.recordingElement.play();
+      } else if (oldState.recordingElement && oldState.recordingElement.isPlaying()) {
+        oldState.recordingElement.stop();
+        clearInterval(oldState.progressTimer);
       }
 
     default:

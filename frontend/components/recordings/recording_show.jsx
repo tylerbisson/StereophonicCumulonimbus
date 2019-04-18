@@ -5,7 +5,7 @@ import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 import CommentIndex from '../comments/comment_index';
 import { createComment } from '../../actions/comments_actions';
-import { receiveNewActiveRecording, receiveActiveRecording } from '../../actions/active_recording_actions';
+import { receiveNewActiveRecording, receiveActiveRecording, playActiveRecording} from '../../actions/active_recording_actions';
 import WaveSurfer from 'wavesurfer.js';
 
 class RecordingShow extends React.Component {
@@ -197,7 +197,8 @@ const mdp = dispatch => {
         destroyRecording: id => dispatch(destroyRecording(id)), 
         createComment: comment => dispatch(createComment(comment)),
         receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
-        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
+        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args)),
+        playActiveRecording: () => dispatch(playActiveRecording())
     }
 }
 
