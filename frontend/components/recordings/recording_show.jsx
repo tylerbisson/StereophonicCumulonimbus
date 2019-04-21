@@ -15,7 +15,8 @@ class RecordingShow extends React.Component {
         this.state = {
             recording: this.props.recording,
             comments: this.props.comments,
-            comment: ""
+            comment: "",
+            playButtonImg: window.playButtonURL
         }
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -42,6 +43,18 @@ class RecordingShow extends React.Component {
                     this.progress]), 
                         500);
         }
+
+        if (this.waveForm && this.waveForm.isPlaying()) {
+            this.setState(() => {
+                return ({playButtonImg: window.bigPauseButtonUrl})
+            })
+            // this.state.playButtonImg = window.bigPauseButtonUrl;
+        } else {
+            // this.state.playButtonImg = window.playButtonURL;
+            this.setState(() => {
+                return ({ playButtonImg: window.playButtonURL })
+            })
+        }
     }
 
     handlePlayPause() {
@@ -61,6 +74,18 @@ class RecordingShow extends React.Component {
                         this.progress]),
                     500);
             }
+        }
+
+        if (this.waveForm && this.waveForm.isPlaying()) {
+            this.setState(() => {
+                return ({ playButtonImg: window.bigPauseButtonUrl })
+            })
+            // this.state.playButtonImg = window.bigPauseButtonUrl;
+        } else {
+            // this.state.playButtonImg = window.playButtonURL;
+            this.setState(() => {
+                return ({ playButtonImg: window.playButtonURL })
+            })
         }
     }
 
@@ -155,7 +180,7 @@ class RecordingShow extends React.Component {
                         <div className="recording-audioandtitle">
                             <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
                                 recordingShow = {true}/>
-                            <img className="waveform-play-button" src={window.playButtonURL} onClick={this.handlePlayPause}/>
+                            <img id="waveform-play-button" className="waveform-play-button" src={this.state.playButtonImg} onClick={this.handlePlayPause}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>
                             <div className="audio-waveForm-div" onClick={this.handlePlay}>

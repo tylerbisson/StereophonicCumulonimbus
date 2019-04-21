@@ -1866,7 +1866,8 @@ function (_React$Component) {
     _this.state = {
       recording: _this.props.recording,
       comments: _this.props.comments,
-      comment: ""
+      comment: "",
+      playButtonImg: window.playButtonURL
     };
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
@@ -1897,6 +1898,21 @@ function (_React$Component) {
           return _this3.props.receiveActiveRecording([_this3.waveForm, _this3.props.recording.id, _this3.waveForm.getDuration(), _this3.waveForm.getCurrentTime(), _this3.progress]);
         }, 500);
       }
+
+      if (this.waveForm && this.waveForm.isPlaying()) {
+        this.setState(function () {
+          return {
+            playButtonImg: window.bigPauseButtonUrl
+          };
+        }); // this.state.playButtonImg = window.bigPauseButtonUrl;
+      } else {
+        // this.state.playButtonImg = window.playButtonURL;
+        this.setState(function () {
+          return {
+            playButtonImg: window.playButtonURL
+          };
+        });
+      }
     }
   }, {
     key: "handlePlayPause",
@@ -1915,6 +1931,21 @@ function (_React$Component) {
             return _this4.props.receiveActiveRecording([_this4.waveForm, _this4.props.recording.id, _this4.waveForm.getDuration(), _this4.waveForm.getCurrentTime(), _this4.progress]);
           }, 500);
         }
+      }
+
+      if (this.waveForm && this.waveForm.isPlaying()) {
+        this.setState(function () {
+          return {
+            playButtonImg: window.bigPauseButtonUrl
+          };
+        }); // this.state.playButtonImg = window.bigPauseButtonUrl;
+      } else {
+        // this.state.playButtonImg = window.playButtonURL;
+        this.setState(function () {
+          return {
+            playButtonImg: window.playButtonURL
+          };
+        });
       }
     }
   }, {
@@ -2035,8 +2066,9 @@ function (_React$Component) {
         key: this.props.recording.id,
         recordingShow: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        id: "waveform-play-button",
         className: "waveform-play-button",
-        src: window.playButtonURL,
+        src: this.state.playButtonImg,
         onClick: this.handlePlayPause
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "recording-hero-artist"
@@ -49598,7 +49630,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
