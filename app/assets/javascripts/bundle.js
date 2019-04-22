@@ -1210,6 +1210,18 @@ function (_React$Component) {
           currentTime: this.props.activeRecording.currentTime
         });
       }
+
+      if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
+        if (this.props.activeRecording.progressTimer) {
+          this.setState({
+            playPauseButton: window.pauseButtonUrl
+          });
+        } else {
+          this.setState({
+            playPauseButton: window.littlePlayButtonUrl
+          });
+        }
+      }
     }
   }, {
     key: "progress",
