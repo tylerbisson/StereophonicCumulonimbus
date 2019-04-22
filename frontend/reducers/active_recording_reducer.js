@@ -6,15 +6,12 @@ const activeRecordingReducer = (oldState = {}, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_ACTIVE_RECORDING:
-        console.log("in receive active recording")
         if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()){
-            console.log("in stop of reducer")
             oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
         }
 
         if (!action.recordingElement.isPlaying() && action.play) {
-            // debugger
             action.recordingElement.play();
             return Object.assign({}, oldState,
                 {
@@ -27,7 +24,6 @@ const activeRecordingReducer = (oldState = {}, action) => {
         }
 
         if (action.recordingElement.isPlaying() && action.play){
-            // debugger
             return Object.assign({}, oldState, 
                 {["recordingElement"]: action.recordingElement,
                 ["recordingId"]: action.recordingId, 
@@ -37,7 +33,6 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 });
 
         } else if (action.recordingElement.isPlaying() && action.play === false){
-            // debugger
             action.recordingElement.pause();
             return Object.assign({}, oldState,
                 {

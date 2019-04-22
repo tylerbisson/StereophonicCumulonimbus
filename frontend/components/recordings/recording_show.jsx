@@ -32,7 +32,19 @@ class RecordingShow extends React.Component {
     }
 
     handlePlay(){
-        // this.waveForm.play();
+        if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+            clearInterval(this.progress);
+            clearInterval(this.props.activeRecording.progressTimer);
+
+            this.props.receiveActiveRecording([
+                this.props.activeRecording.recordingElement,
+                this.props.activeRecording.recordingId,
+                this.props.activeRecording.recordingDuration,
+                this.props.activeRecording.currentTime,
+                this.props.activeRecording.progressTimer,
+                false]);
+        }
+
         if (this.progress === null){
             this.progress = setInterval(() => 
                 this.props.receiveActiveRecording(
@@ -53,15 +65,12 @@ class RecordingShow extends React.Component {
     handlePlayPause() {
         //tests if waveForm is loaded 
         if (this.waveForm.getDuration()){
-            // debugger
             if (this.progress || this.props.activeRecording.progressTimer) {
-                // debugger
                 clearInterval(this.progress);
                 clearInterval(this.props.activeRecording.progressTimer)
                 this.progress = null;
                 if (this.props.recording.id !== this.props.activeRecording.recordingId) {
-                    // debugger
-                    this.props.receiveActiveRecording([
+                        this.props.receiveActiveRecording([
                         this.props.activeRecording.recordingElement,
                         this.props.activeRecording.recordingId,
                         this.props.activeRecording.recordingDuration,
@@ -83,8 +92,7 @@ class RecordingShow extends React.Component {
                         return ({ playButtonImg: window.bigPauseButtonUrl })
                     })
                 } else {
-                    // debugger
-                    this.props.receiveActiveRecording([
+                        this.props.receiveActiveRecording([
                         this.waveForm,
                         this.props.recording.id,
                         this.waveForm.getDuration(),
@@ -92,14 +100,11 @@ class RecordingShow extends React.Component {
                         this.progress,
                         false]);
                 
-                    // debugger
-                    this.setState(() => {
+                        this.setState(() => {
                         return ({ playButtonImg: window.playButtonURL })
                     })
                 }
-            // debugger
             } else {
-                debugger
                 this.progress = setInterval(() =>
                     this.props.receiveActiveRecording(
                         [this.waveForm, 
@@ -138,7 +143,7 @@ class RecordingShow extends React.Component {
         this.props.fetchRecording(this.props.match.params.recordingId);
         this.waveForm = WaveSurfer.create({
             container: '#audio-waveForm',
-            waveColor: '#f2f2f2',
+            waveColor: '#b2b4b7',
             progressColor: '#ff540a',
             barWidth: 2,
             height: 100,
@@ -167,12 +172,10 @@ class RecordingShow extends React.Component {
 
         if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
             if (this.props.activeRecording.progressTimer && this.props.recording.id === this.props.activeRecording.recordingId) {
-                // debugger
                 this.setState({
                     playButtonImg: window.bigPauseButtonUrl
                 });
             } else {
-                // debugger
                 this.setState({
                     playButtonImg: window.playButtonURL
                 });
