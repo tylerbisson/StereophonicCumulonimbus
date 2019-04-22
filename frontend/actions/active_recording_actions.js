@@ -15,19 +15,6 @@ export const receiveActiveRecording = args => {
     }
 };
 
-export const updateActiveRecordingProgress = recordingElement => {
-    if (this.progress === null) {
-        this.progress = setInterval(() =>
-            this.props.receiveActiveRecording(
-                [this.waveForm,
-                this.props.recording.id,
-                this.waveForm.getDuration(),
-                this.waveForm.getCurrentTime(),
-                this.progress]),
-            500);
-    }
-}; 
-
 // export const receiveNewActiveRecording = args => {
 //     return {
 //         type: RECEIVE_ACTIVE_RECORDING,

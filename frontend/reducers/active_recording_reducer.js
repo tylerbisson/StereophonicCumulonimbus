@@ -12,7 +12,9 @@ const activeRecordingReducer = (oldState = {}, action) => {
             oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
         }
-        if (!action.recordingElement.isPlaying()) {
+
+        if (!action.recordingElement.isPlaying() && action.play) {
+            // debugger
             action.recordingElement.play();
             return Object.assign({}, oldState,
                 {
@@ -23,7 +25,9 @@ const activeRecordingReducer = (oldState = {}, action) => {
                     ["progressTimer"]: action.progressTimer
                 });
         }
+
         if (action.recordingElement.isPlaying() && action.play){
+            // debugger
             return Object.assign({}, oldState, 
                 {["recordingElement"]: action.recordingElement,
                 ["recordingId"]: action.recordingId, 
@@ -31,7 +35,9 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 ["currentTime"]: action.currentTime,
                 ["progressTimer"]: action.progressTimer
                 });
+
         } else if (action.recordingElement.isPlaying() && action.play === false){
+            // debugger
             action.recordingElement.pause();
             return Object.assign({}, oldState,
                 {
