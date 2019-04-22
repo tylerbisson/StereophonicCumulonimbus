@@ -16,8 +16,9 @@ class PlayBar extends React.Component {
 
     handlePlayPause() {
         if (this.props.activeRecording.recordingElement.getDuration()) {
-            if (this.progressInt) {
+            if (this.progressInt || this.props.activeRecording.progressTimer) {
                 clearInterval(this.progressInt);
+                clearInterval(this.props.activeRecording.progressTimer)
                 this.progressInt = null;
                 this.props.receiveActiveRecording(
                     [this.props.activeRecording.recordingElement,

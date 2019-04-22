@@ -1158,8 +1158,9 @@ function (_React$Component) {
       var _this2 = this;
 
       if (this.props.activeRecording.recordingElement.getDuration()) {
-        if (this.progressInt) {
+        if (this.progressInt || this.props.activeRecording.progressTimer) {
           clearInterval(this.progressInt);
+          clearInterval(this.props.activeRecording.progressTimer);
           this.progressInt = null;
           this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingElement.getDuration(), this.props.activeRecording.recordingElement.getCurrentTime(), this.progressInt, false]);
           this.setState(function () {
@@ -1915,8 +1916,9 @@ function (_React$Component) {
 
       //tests if waveForm is loaded 
       if (this.waveForm.getDuration()) {
-        if (this.progress) {
+        if (this.progress || this.props.activeRecording.progressTimer) {
           clearInterval(this.progress);
+          clearInterval(this.props.activeRecording.progressTimer);
           this.progress = null;
           this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime(), this.progress, false]);
           this.setState(function () {

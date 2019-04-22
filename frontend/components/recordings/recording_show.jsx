@@ -53,8 +53,9 @@ class RecordingShow extends React.Component {
     handlePlayPause() {
         //tests if waveForm is loaded 
         if (this.waveForm.getDuration()){
-            if (this.progress) {
+            if (this.progress || this.props.activeRecording.progressTimer) {
                 clearInterval(this.progress);
+                clearInterval(this.props.activeRecording.progressTimer)
                 this.progress = null;
                 this.props.receiveActiveRecording(
                     [this.waveForm,
