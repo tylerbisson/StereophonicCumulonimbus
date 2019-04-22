@@ -2000,6 +2000,18 @@ function (_React$Component) {
         clearInterval(this.progress);
         this.progress = null;
       }
+
+      if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
+        if (this.props.activeRecording.progressTimer) {
+          this.setState({
+            playButtonImg: window.bigPauseButtonUrl
+          });
+        } else {
+          this.setState({
+            playButtonImg: window.playButtonURL
+          });
+        }
+      }
     }
   }, {
     key: "render",
@@ -2107,7 +2119,8 @@ var msp = function msp(state, ownprops) {
         title: ""
       }
     },
-    comments: state.entities.comments
+    comments: state.entities.comments,
+    activeRecording: state.ui.activeRecording
   };
 };
 

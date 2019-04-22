@@ -133,6 +133,18 @@ class RecordingShow extends React.Component {
             clearInterval(this.progress);
             this.progress = null;
         }
+
+        if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
+            if (this.props.activeRecording.progressTimer) {
+                this.setState({
+                    playButtonImg: window.bigPauseButtonUrl
+                });
+            } else {
+                this.setState({
+                    playButtonImg: window.playButtonURL
+                });
+            }
+        }
     }
 
     render() {      
@@ -209,7 +221,8 @@ const msp = (state, ownprops) => {
     return {
         currentUser: state.entities.users[state.session.id] ? state.entities.users[state.session.id] : {portraitUrl: ""},
         recording: state.entities.recordings[recordingId] ? state.entities.recordings[recordingId] : {recording: {artUrl: "", id: "", title: ""}},
-        comments: state.entities.comments 
+        comments: state.entities.comments,
+        activeRecording: state.ui.activeRecording
     }
 }
 
