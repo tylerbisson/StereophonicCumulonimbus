@@ -10,13 +10,8 @@ export const receiveActiveRecording = args => {
         recordingId: args[1],
         recordingDuration: args[2],
         currentTime: args[3],
-        progressTimer: args[4]
-    }
-};
-
-export const playActiveRecording = () => {
-    return {
-        type: PLAY_ACTIVE_RECORDING
+        progressTimer: args[4],
+        play: args[5]
     }
 };
 

@@ -5,7 +5,7 @@ import Nav from '../nav';
 import {fetchRecording, destroyRecording} from '../../actions/recordings_actions';
 import CommentIndex from '../comments/comment_index';
 import { createComment } from '../../actions/comments_actions';
-import { receiveNewActiveRecording, receiveActiveRecording, playActiveRecording} from '../../actions/active_recording_actions';
+import { receiveNewActiveRecording, receiveActiveRecording} from '../../actions/active_recording_actions';
 import WaveSurfer from 'wavesurfer.js';
 
 class RecordingShow extends React.Component {
@@ -32,7 +32,7 @@ class RecordingShow extends React.Component {
     }
 
     handlePlay(){
-        this.waveForm.play();
+        // this.waveForm.play();
         if (this.progress === null){
             this.progress = setInterval(() => 
                 this.props.receiveActiveRecording(
@@ -40,19 +40,12 @@ class RecordingShow extends React.Component {
                     this.props.recording.id, 
                     this.waveForm.getDuration(), 
                     this.waveForm.getCurrentTime(),
-                    this.progress]), 
-                        500);
-        }
+                    this.progress,
+                    true]), 
+                500);
 
-        if (this.waveForm && this.waveForm.isPlaying()) {
             this.setState(() => {
-                return ({playButtonImg: window.bigPauseButtonUrl})
-            })
-            // this.state.playButtonImg = window.bigPauseButtonUrl;
-        } else {
-            // this.state.playButtonImg = window.playButtonURL;
-            this.setState(() => {
-                return ({ playButtonImg: window.playButtonURL })
+                return ({ playButtonImg: window.bigPauseButtonUrl })
             })
         }
     }
@@ -60,10 +53,21 @@ class RecordingShow extends React.Component {
     handlePlayPause() {
         //tests if waveForm is loaded 
         if (this.waveForm.getDuration()){
-            this.waveForm.playPause();
             if (this.progress) {
                 clearInterval(this.progress);
                 this.progress = null;
+                this.props.receiveActiveRecording(
+                    [this.waveForm,
+                    this.props.recording.id,
+                    this.waveForm.getDuration(),
+                    this.waveForm.getCurrentTime(),
+                    this.progress,
+                    false]);
+
+            this.setState(() => {
+                return ({ playButtonImg: window.playButtonURL })
+            })
+
             } else {
                 this.progress = setInterval(() =>
                     this.props.receiveActiveRecording(
@@ -71,21 +75,14 @@ class RecordingShow extends React.Component {
                         this.props.recording.id,
                         this.waveForm.getDuration(),
                         this.waveForm.getCurrentTime(),
-                        this.progress]),
+                        this.progress,
+                        true]),
                     500);
-            }
-        }
 
-        if (this.waveForm && this.waveForm.isPlaying()) {
-            this.setState(() => {
-                return ({ playButtonImg: window.bigPauseButtonUrl })
-            })
-            // this.state.playButtonImg = window.bigPauseButtonUrl;
-        } else {
-            // this.state.playButtonImg = window.playButtonURL;
-            this.setState(() => {
-                return ({ playButtonImg: window.playButtonURL })
-            })
+                this.setState(() => {
+                    return ({ playButtonImg: window.bigPauseButtonUrl })
+                })
+            }
         }
     }
 
@@ -222,8 +219,7 @@ const mdp = dispatch => {
         destroyRecording: id => dispatch(destroyRecording(id)), 
         createComment: comment => dispatch(createComment(comment)),
         receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
-        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args)),
-        playActiveRecording: () => dispatch(playActiveRecording())
+        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
     }
 }
 

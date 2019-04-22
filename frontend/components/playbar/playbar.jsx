@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { playActiveRecording, receiveActiveRecording } from '../../actions/active_recording_actions';
+import { receiveActiveRecording } from '../../actions/active_recording_actions';
 
 
 class PlayBar extends React.Component {
@@ -8,32 +8,42 @@ class PlayBar extends React.Component {
         super(props);
 
         this.state = {
-            currentTime: this.props.activeRecording.currentTime
+            currentTime: this.props.activeRecording.currentTime,
+            playPauseButton: window.littlePlayButtonUrl
         }
         this.handlePlayPause = this.handlePlayPause.bind(this);
     }
 
     handlePlayPause() {
-        // tests if waveForm is loaded 
-        // debugger
         if (this.props.activeRecording.recordingElement.getDuration()) {
-            this.props.activeRecording.recordingElement.playPause();
-            console.log(1);
             if (this.progressInt) {
-                // debugger
                 clearInterval(this.progressInt);
                 this.progressInt = null;
-                console.log(2);
+                this.props.receiveActiveRecording(
+                    [this.props.activeRecording.recordingElement,
+                    this.props.activeRecording.recordingId,
+                    this.props.activeRecording.recordingElement.getDuration(),
+                    this.props.activeRecording.recordingElement.getCurrentTime(),
+                    this.progressInt,
+                    false]);
+
+                this.setState(() => {
+                    return ({ playPauseButton: window.littlePlayButtonUrl })
+                })
             } else {
-                console.log(3);
                 this.progressInt = setInterval(() =>
                     this.props.receiveActiveRecording(
                         [this.props.activeRecording.recordingElement,
                         this.props.activeRecording.recordingId,
                         this.props.activeRecording.recordingElement.getDuration(),
                         this.props.activeRecording.recordingElement.getCurrentTime(),
-                        this.progressInt]),
+                        this.progressInt,
+                        true]),
                     500);
+
+            this.setState(() => {
+                return ({ playPauseButton: window.pauseButtonUrl})
+            })
             }
         }
     }
@@ -52,14 +62,12 @@ class PlayBar extends React.Component {
     }
 
     componentDidMount(){
-        // debugger 
         this.setState({
             currentTime: this.props.activeRecording.currentTime
         });
     }
 
     componentDidUpdate(prevProps) {
-        // debugger
         if (prevProps.activeRecording !== this.props.activeRecording) {
             this.setState({
                 currentTime: this.props.activeRecording.currentTime
@@ -68,7 +76,6 @@ class PlayBar extends React.Component {
     }
 
     progress(){
-        // debugger
         let progressPercent = Math.floor((this.state.currentTime / this.props.activeRecording.recordingDuration) * 100);
         return { width: `${progressPercent}%` }
     }
@@ -79,9 +86,8 @@ class PlayBar extends React.Component {
                 <div className="playbar-controlls">
                     <div className="playbar-playpausenext">
                         <img className="playbar-next-button-rev" src={window.nextButtonUrl} />
-                        <img className="playbar-play-button" src={window.littlePlayButtonUrl}
+                        <img className="playbar-play-button" src={this.state.playPauseButton}
                             onClick={this.handlePlayPause}/>
-                        {/* <img className="playbar-pause-button" src={window.pauseButtonUrl}/> */}
                         <img className="playbar-next-button" src={window.nextButtonUrl}/>
                     </div>
                     <h1 className="playbar-time">{this.formatTime(this.state.currentTime)}</h1>
@@ -103,7 +109,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    playActiveRecording: () => dispatch(playActiveRecording()),
     receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
 });
 
