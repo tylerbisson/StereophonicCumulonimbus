@@ -267,8 +267,7 @@ const mdp = dispatch => {
         fetchRecording: id => dispatch(fetchRecording(id)),
         destroyRecording: id => dispatch(destroyRecording(id)), 
         createComment: comment => dispatch(createComment(comment)),
-        receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
-        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
     }
 }
 

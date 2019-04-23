@@ -43,7 +43,7 @@ class RecordingIndex extends React.Component {
             let recordingItems = recordings.map(recording => 
                 <div className="user-recording-item-div">
                     <UserRecordingItem recording={recording} key={recording.id} 
-                        receiveActiveRecording={this.props.receiveActiveRecording} receiveNewActiveRecording={this.props.receiveNewActiveRecording}/>
+                        activeRecording={this.props.activeRecording} receiveActiveRecording={this.props.receiveActiveRecording}/>
                 </div>
             )
 
@@ -66,7 +66,8 @@ const msp = (state, ownProps) => {
         recordings: state.entities.recordings,
         userId: ownProps.match.params.userId,
         currentUser: state.entities.users[state.session.id],
-        userOfPage: state.entities.users[ownProps.match.params.userId] ? state.entities.users[ownProps.match.params.userId] : {username: "", portraitUrl: ""}
+        userOfPage: state.entities.users[ownProps.match.params.userId] ? state.entities.users[ownProps.match.params.userId] : {username: "", portraitUrl: ""},
+        activeRecording: state.ui.activeRecording
     }
 };
 
@@ -74,8 +75,7 @@ const mdp = dispatch => {
     return {
         fetchRecordings: () => dispatch(fetchRecordings()),
         fetchUser: userId => dispatch(fetchUser(userId)),
-        receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
-        receiveNewActiveRecording: args => dispatch(receiveNewActiveRecording(args))
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
     }
 };
 

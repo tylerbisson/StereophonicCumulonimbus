@@ -136,8 +136,9 @@
 }
 
 .user-waveform-play-button{
-    width: 56px;
-    height: 56px;
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
 }
 
 .user-recording-playbuttonandnameandtitle{

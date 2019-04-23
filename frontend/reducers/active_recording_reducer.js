@@ -7,11 +7,14 @@ const activeRecordingReducer = (oldState = {}, action) => {
     switch (action.type) {
         case RECEIVE_ACTIVE_RECORDING:
         if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()){
+            console.log("stop1");
             oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
         }
 
-        if (!action.recordingElement.isPlaying() && action.play) {
+        if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
+            console.log("play1");
+            // debugger
             action.recordingElement.play();
             return Object.assign({}, oldState,
                 {
@@ -23,7 +26,8 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 });
         }
 
-        if (action.recordingElement.isPlaying() && action.play){
+        if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play){
+            console.log("play2");
             return Object.assign({}, oldState, 
                 {["recordingElement"]: action.recordingElement,
                 ["recordingId"]: action.recordingId, 
@@ -33,6 +37,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 });
 
         } else if (action.recordingElement.isPlaying() && action.play === false){
+            console.log("pause");
             action.recordingElement.pause();
             return Object.assign({}, oldState,
                 {
@@ -42,6 +47,17 @@ const activeRecordingReducer = (oldState = {}, action) => {
                     ["currentTime"]: action.currentTime,
                     ["progressTimer"]: action.progressTimer
                 });   
+        } else if (action.recordingElement.isPlaying() && action.play == "stop") {
+            console.log("stop");
+            action.recordingElement.stop();
+            return Object.assign({}, oldState,
+                {
+                    ["recordingElement"]: action.recordingElement,
+                    ["recordingId"]: action.recordingId,
+                    ["recordingDuration"]: action.recordingDuration,
+                    ["currentTime"]: action.currentTime,
+                    ["progressTimer"]: action.progressTimer
+                });
         }
         default:
             return oldState;

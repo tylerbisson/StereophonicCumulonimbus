@@ -36,26 +36,115 @@ class UserRecordingItem extends React.Component {
     }
 
     handlePlay() {
-        this.waveForm.play();
+        // this.waveForm.play();
+        // if (this.progress === null) {
+        //     this.progress = setInterval(() =>
+        //         this.props.receiveActiveRecording(
+        //             [this.waveForm,
+        //             this.props.recording.id,
+        //             this.waveForm.getDuration(),
+        //             this.waveForm.getCurrentTime(),
+        //             this.progress]),
+        //         500);
+        // }
+        // debugger
+        if (this.props.activeRecording && this.props.recording.id !== this.props.activeRecording.recordingId) {
+            clearInterval(this.progress);
+            clearInterval(this.props.activeRecording.progressTimer);
+            // debugger
+
+            this.props.receiveActiveRecording([
+                this.props.activeRecording.recordingElement,
+                this.props.activeRecording.recordingId,
+                this.props.activeRecording.recordingDuration,
+                this.props.activeRecording.currentTime,
+                this.props.activeRecording.progressTimer,
+                "stop"]);
+        }
+        // debugger
+
         if (this.progress === null) {
-            this.progress = setInterval(() =>
+            // debugger
+            this.progress = setInterval(() => 
                 this.props.receiveActiveRecording(
                     [this.waveForm,
                     this.props.recording.id,
                     this.waveForm.getDuration(),
                     this.waveForm.getCurrentTime(),
-                    this.progress]),
+                    this.progress,
+                        true]),
                 500);
+            // debugger
+
+            // this.setState(() => {
+            //     return ({ playButtonImg: window.bigPauseButtonUrl })
+            // })
         }
     }
 
     handlePlayPause() {
+        // console.log("yo");
+        // debugger
         //tests if waveForm is loaded 
+        // if (this.waveForm.getDuration()) {
+        //     this.waveForm.playPause();
+        //     if (this.progress) {
+        //         clearInterval(this.progress);
+        //         this.progress = null;
+        //     } else {
+        //         this.progress = setInterval(() =>
+        //             this.props.receiveActiveRecording(
+        //                 [this.waveForm,
+        //                 this.props.recording.id,
+        //                 this.waveForm.getDuration(),
+        //                 this.waveForm.getCurrentTime(),
+        //                 this.progress]),
+        //             500);
+        //     }
+        // }
+        debugger
         if (this.waveForm.getDuration()) {
-            this.waveForm.playPause();
-            if (this.progress) {
+            if (this.progress || this.props.activeRecording.progressTimer) {
                 clearInterval(this.progress);
+                clearInterval(this.props.activeRecording.progressTimer)
                 this.progress = null;
+                debugger
+                if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+                    debugger
+                    this.props.receiveActiveRecording([
+                        this.props.activeRecording.recordingElement,
+                        this.props.activeRecording.recordingId,
+                        this.props.activeRecording.recordingDuration,
+                        this.props.activeRecording.currentTime,
+                        this.props.activeRecording.progressTimer,
+                        "stop"]);
+
+                    this.progress = setInterval(() =>
+                        this.props.receiveActiveRecording(
+                            [this.waveForm,
+                            this.props.recording.id,
+                            this.waveForm.getDuration(),
+                            this.waveForm.getCurrentTime(),
+                            this.progress,
+                                true]),
+                        500);
+
+                    this.setState(() => {
+                        return ({ playButtonImg: window.bigPauseButtonUrl })
+                    })
+                } else {
+                    this.props.receiveActiveRecording([
+                        this.waveForm,
+                        this.props.recording.id,
+                        this.waveForm.getDuration(),
+                        this.waveForm.getCurrentTime(),
+                        this.progress,
+                        false]);
+
+                    this.setState(() => {
+                        return ({ playButtonImg: window.playButtonURL })
+                    })
+                }
             } else {
                 this.progress = setInterval(() =>
                     this.props.receiveActiveRecording(
@@ -63,8 +152,13 @@ class UserRecordingItem extends React.Component {
                         this.props.recording.id,
                         this.waveForm.getDuration(),
                         this.waveForm.getCurrentTime(),
-                        this.progress]),
+                        this.progress,
+                            true]),
                     500);
+
+                // this.setState(() => {
+                //     return ({ playButtonImg: window.bigPauseButtonUrl })
+                // })
             }
         }
     }
@@ -93,7 +187,7 @@ class UserRecordingItem extends React.Component {
                     {this.props.recording.username}
                 </div>;
             wave = 
-                <div className="user-audio-waveForm-div" onClick={this.handlePlay}>
+                <div className="user-audio-waveForm-div">
                     <div className='user-audio-waveForm' id={`user-audio-waveForm${this.props.recording.id}`}
                         onClick={this.handlePlay}></div>
                 </div>
@@ -131,7 +225,7 @@ class UserRecordingItem extends React.Component {
                         </div>
                     </div>
                     {wave}
-                    {durationTag}
+                    {/* {durationTag} */}
                 </div>
             </>
         )
