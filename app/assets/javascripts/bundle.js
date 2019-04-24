@@ -90,19 +90,34 @@
 /*!******************************************************!*\
   !*** ./frontend/actions/active_recording_actions.js ***!
   \******************************************************/
-/*! exports provided: RECEIVE_ACTIVE_RECORDING, PLAY_ACTIVE_RECORDING, UPDATE_ACTIVE_RECORDING_PROGRESS, receiveActiveRecording */
+/*! exports provided: RECEIVE_ACTIVE_RECORDING, RECEIVE_ACTIVE_RECORDING_FROM_INDEX, PLAY_ACTIVE_RECORDING, UPDATE_ACTIVE_RECORDING_PROGRESS, receiveActiveRecording, receiveActiveRecordingFromIndex */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVE_RECORDING", function() { return RECEIVE_ACTIVE_RECORDING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVE_RECORDING_FROM_INDEX", function() { return RECEIVE_ACTIVE_RECORDING_FROM_INDEX; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PLAY_ACTIVE_RECORDING", function() { return PLAY_ACTIVE_RECORDING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ACTIVE_RECORDING_PROGRESS", function() { return UPDATE_ACTIVE_RECORDING_PROGRESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveActiveRecording", function() { return receiveActiveRecording; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveActiveRecordingFromIndex", function() { return receiveActiveRecordingFromIndex; });
 var RECEIVE_ACTIVE_RECORDING = 'RECEIVE_ACTIVE_RECORDING';
+var RECEIVE_ACTIVE_RECORDING_FROM_INDEX = 'RECEIVE_ACTIVE_RECORDING_FROM_INDEX';
 var PLAY_ACTIVE_RECORDING = 'PLAY_ACTIVE_RECORDING';
 var UPDATE_ACTIVE_RECORDING_PROGRESS = 'UPDATE_ACTIVE_RECORDING_PROGRESS';
 var receiveActiveRecording = function receiveActiveRecording(args) {
+  // debugger
+  return {
+    type: RECEIVE_ACTIVE_RECORDING,
+    recordingElement: args[0],
+    recordingId: args[1],
+    recordingDuration: args[2],
+    currentTime: args[3],
+    progressTimer: args[4],
+    play: args[5]
+  };
+};
+var receiveActiveRecordingFromIndex = function receiveActiveRecordingFromIndex(args) {
   // debugger
   return {
     type: RECEIVE_ACTIVE_RECORDING,
@@ -1642,7 +1657,8 @@ function (_React$Component) {
             recording: recording,
             key: recording.id,
             activeRecording: _this2.props.activeRecording,
-            receiveActiveRecording: _this2.props.receiveActiveRecording
+            receiveActiveRecording: _this2.props.receiveActiveRecording,
+            receiveActiveRecordingFromIndex: _this2.props.receiveActiveRecordingFromIndex
           }));
         });
         var backgroundImg = {
@@ -1683,6 +1699,9 @@ var mdp = function mdp(dispatch) {
     },
     receiveActiveRecording: function receiveActiveRecording(args) {
       return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(args));
+    },
+    receiveActiveRecordingFromIndex: function receiveActiveRecordingFromIndex(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecordingFromIndex"])(args));
     }
   };
 };
@@ -1850,6 +1869,7 @@ function (_React$Component) {
     _classCallCheck(this, RecordingShow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
+    debugger;
     _this.state = {
       recording: _this.props.recording,
       comments: _this.props.comments,
@@ -1878,7 +1898,8 @@ function (_React$Component) {
     value: function handlePlay() {
       var _this3 = this;
 
-      if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+      // debugger
+      if (this.props.activeRecording.recordingId && this.props.recording.id !== this.props.activeRecording.recordingId) {
         clearInterval(this.progress);
         clearInterval(this.props.activeRecording.progressTimer);
         this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, false]);
@@ -2225,9 +2246,15 @@ function (_React$Component) {
   _inherits(UserRecordingItem, _React$Component);
 
   function UserRecordingItem(props) {
+    var _this;
+
     _classCallCheck(this, UserRecordingItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(UserRecordingItem).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserRecordingItem).call(this, props));
+    _this.state = {
+      playButtonImg: window.playButtonURL
+    };
+    return _this;
   }
 
   _createClass(UserRecordingItem, [{
@@ -2244,13 +2271,12 @@ function (_React$Component) {
         cursorWidth: 0
       });
       this.waveForm.load(this.props.recording.audioUrl);
-      this.handlePlay = this.handlePlay.bind(this);
       this.handlePlayPause = this.handlePlayPause.bind(this);
+      this.handlePlay = this.handlePlay.bind(this);
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      // debugger
       if (prevProps.recording !== this.props.recording) {
         this.waveForm.load(this.props.recording.audioUrl);
       }
@@ -2259,80 +2285,57 @@ function (_React$Component) {
         clearInterval(this.progress);
         this.progress = null;
       }
+
+      if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
+        if (this.props.activeRecording.progressTimer && this.props.recording.id === this.props.activeRecording.recordingId) {
+          this.setState({
+            playButtonImg: window.bigPauseButtonUrl
+          });
+        } else {
+          this.setState({
+            playButtonImg: window.playButtonURL
+          });
+        }
+      }
     }
   }, {
     key: "handlePlay",
     value: function handlePlay() {
-      var _this = this;
+      var _this2 = this;
 
-      // this.waveForm.play();
-      // if (this.progress === null) {
-      //     this.progress = setInterval(() =>
-      //         this.props.receiveActiveRecording(
-      //             [this.waveForm,
-      //             this.props.recording.id,
-      //             this.waveForm.getDuration(),
-      //             this.waveForm.getCurrentTime(),
-      //             this.progress]),
-      //         500);
-      // }
-      // debugger
-      if (this.props.activeRecording && this.props.recording.id !== this.props.activeRecording.recordingId) {
+      if (this.props.activeRecording.recordingId && this.props.recording.id !== this.props.activeRecording.recordingId) {
         clearInterval(this.progress);
-        clearInterval(this.props.activeRecording.progressTimer); // debugger
-
+        clearInterval(this.props.activeRecording.progressTimer);
         this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, "stop"]);
-      } // debugger
-
-
-      if (this.progress === null) {
-        // debugger
-        this.progress = setInterval(function () {
-          return _this.props.receiveActiveRecording([_this.waveForm, _this.props.recording.id, _this.waveForm.getDuration(), _this.waveForm.getCurrentTime(), _this.progress, true]);
-        }, 500); // debugger
-        // this.setState(() => {
-        //     return ({ playButtonImg: window.bigPauseButtonUrl })
-        // })
       }
+
+      clearInterval(this.progress);
+      this.progress = setInterval(function () {
+        return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress, true]);
+      }, 500);
+      this.setState(function () {
+        return {
+          playButtonImg: window.bigPauseButtonUrl
+        };
+      });
     }
   }, {
     key: "handlePlayPause",
     value: function handlePlayPause() {
-      var _this2 = this;
-
-      // console.log("yo");
-      // debugger
-      //tests if waveForm is loaded 
-      // if (this.waveForm.getDuration()) {
-      //     this.waveForm.playPause();
-      //     if (this.progress) {
-      //         clearInterval(this.progress);
-      //         this.progress = null;
-      //     } else {
-      //         this.progress = setInterval(() =>
-      //             this.props.receiveActiveRecording(
-      //                 [this.waveForm,
-      //                 this.props.recording.id,
-      //                 this.waveForm.getDuration(),
-      //                 this.waveForm.getCurrentTime(),
-      //                 this.progress]),
-      //             500);
-      //     }
-      // }
-      debugger;
+      var _this3 = this;
 
       if (this.waveForm.getDuration()) {
         if (this.progress || this.props.activeRecording.progressTimer) {
+          console.log("first if");
           clearInterval(this.progress);
           clearInterval(this.props.activeRecording.progressTimer);
           this.progress = null;
-          debugger;
 
           if (this.props.recording.id !== this.props.activeRecording.recordingId) {
-            debugger;
+            console.log("stop and play section");
             this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, "stop"]);
             this.progress = setInterval(function () {
-              return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress, true]);
+              return _this3.props.receiveActiveRecording([_this3.waveForm, _this3.props.recording.id, _this3.waveForm.getDuration(), _this3.waveForm.getCurrentTime(), _this3.progress, true]);
             }, 500);
             this.setState(function () {
               return {
@@ -2340,6 +2343,7 @@ function (_React$Component) {
               };
             });
           } else {
+            console.log("pause section");
             this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime(), this.progress, false]);
             this.setState(function () {
               return {
@@ -2348,11 +2352,20 @@ function (_React$Component) {
             });
           }
         } else {
+          console.log("play section"); // debugger
+
+          if (this.props.activeRecording.recordingId) {
+            this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, "stop"]);
+          }
+
           this.progress = setInterval(function () {
-            return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress, true]);
-          }, 500); // this.setState(() => {
-          //     return ({ playButtonImg: window.bigPauseButtonUrl })
-          // })
+            return _this3.props.receiveActiveRecording([_this3.waveForm, _this3.props.recording.id, _this3.waveForm.getDuration(), _this3.waveForm.getCurrentTime(), _this3.progress, true]);
+          }, 500);
+          this.setState(function () {
+            return {
+              playButtonImg: window.bigPauseButtonUrl
+            };
+          });
         }
       }
     }
@@ -2419,7 +2432,7 @@ function (_React$Component) {
         className: "user-recording-playbuttonandnameandtitle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "user-waveform-play-button",
-        src: window.playButtonURL,
+        src: this.state.playButtonImg,
         onClick: this.handlePlayPause
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, link, username)), wave));
     }
@@ -2999,10 +3012,15 @@ var activeRecordingReducer = function activeRecordingReducer() {
 
   switch (action.type) {
     case _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ACTIVE_RECORDING"]:
+      if (action.play === "stop" && action.recordingElement) {
+        action.recordingElement.stop();
+      }
+
       if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()) {
         console.log("stop1");
         oldState.recordingElement.stop();
         clearInterval(oldState.progressTimer);
+        break;
       }
 
       if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
@@ -3012,6 +3030,7 @@ var activeRecordingReducer = function activeRecordingReducer() {
 
         action.recordingElement.play();
         return Object.assign({}, oldState, (_Object$assign = {}, _defineProperty(_Object$assign, "recordingElement", action.recordingElement), _defineProperty(_Object$assign, "recordingId", action.recordingId), _defineProperty(_Object$assign, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign, "currentTime", action.currentTime), _defineProperty(_Object$assign, "progressTimer", action.progressTimer), _Object$assign));
+        break;
       }
 
       if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
@@ -3019,19 +3038,26 @@ var activeRecordingReducer = function activeRecordingReducer() {
 
         console.log("play2");
         return Object.assign({}, oldState, (_Object$assign2 = {}, _defineProperty(_Object$assign2, "recordingElement", action.recordingElement), _defineProperty(_Object$assign2, "recordingId", action.recordingId), _defineProperty(_Object$assign2, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign2, "currentTime", action.currentTime), _defineProperty(_Object$assign2, "progressTimer", action.progressTimer), _Object$assign2));
+        break;
       } else if (action.recordingElement.isPlaying() && action.play === false) {
         var _Object$assign3;
 
         console.log("pause");
         action.recordingElement.pause();
         return Object.assign({}, oldState, (_Object$assign3 = {}, _defineProperty(_Object$assign3, "recordingElement", action.recordingElement), _defineProperty(_Object$assign3, "recordingId", action.recordingId), _defineProperty(_Object$assign3, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign3, "currentTime", action.currentTime), _defineProperty(_Object$assign3, "progressTimer", action.progressTimer), _Object$assign3));
+        break;
       } else if (action.recordingElement.isPlaying() && action.play == "stop") {
         var _Object$assign4;
 
+        debugger;
         console.log("stop");
         action.recordingElement.stop();
         return Object.assign({}, oldState, (_Object$assign4 = {}, _defineProperty(_Object$assign4, "recordingElement", action.recordingElement), _defineProperty(_Object$assign4, "recordingId", action.recordingId), _defineProperty(_Object$assign4, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign4, "currentTime", action.currentTime), _defineProperty(_Object$assign4, "progressTimer", action.progressTimer), _Object$assign4));
+        break;
       }
+
+      action.recordingElement.stop();
+      console.log("oh no im at the bottom");
 
     default:
       return oldState;

@@ -5,7 +5,7 @@ import {fetchUser} from '../../actions/user_actions';
 import UserRecordingItem from '../recordings/user_recording_item';
 import UserBanner from '../user/user_banner';
 import Nav from '../nav';
-import { receiveNewActiveRecording, receiveActiveRecording } from '../../actions/active_recording_actions';
+import { receiveNewActiveRecording, receiveActiveRecording, receiveActiveRecordingFromIndex } from '../../actions/active_recording_actions';
 
 class RecordingIndex extends React.Component {
     constructor(props) {
@@ -43,7 +43,8 @@ class RecordingIndex extends React.Component {
             let recordingItems = recordings.map(recording => 
                 <div className="user-recording-item-div">
                     <UserRecordingItem recording={recording} key={recording.id} 
-                        activeRecording={this.props.activeRecording} receiveActiveRecording={this.props.receiveActiveRecording}/>
+                        activeRecording={this.props.activeRecording} receiveActiveRecording={this.props.receiveActiveRecording}
+                        receiveActiveRecordingFromIndex={this.props.receiveActiveRecordingFromIndex}/>
                 </div>
             )
 
@@ -75,7 +76,8 @@ const mdp = dispatch => {
     return {
         fetchRecordings: () => dispatch(fetchRecordings()),
         fetchUser: userId => dispatch(fetchUser(userId)),
-        receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
+        receiveActiveRecording: args => dispatch(receiveActiveRecording(args)),
+        receiveActiveRecordingFromIndex: args => dispatch(receiveActiveRecordingFromIndex(args))
     }
 };
 

@@ -5,6 +5,10 @@ import WaveSurfer from 'wavesurfer.js';
 class UserRecordingItem extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            playButtonImg: window.playButtonURL
+        }
     }
 
     componentDidMount(){
@@ -16,15 +20,15 @@ class UserRecordingItem extends React.Component {
             height: 60,
             fillParent: true,
             normalize: true,
-            cursorWidth: 0
+            cursorWidth: 0,
         });   
+        
         this.waveForm.load(this.props.recording.audioUrl);
-        this.handlePlay = this.handlePlay.bind(this);
         this.handlePlayPause = this.handlePlayPause.bind(this);
+        this.handlePlay = this.handlePlay.bind(this);
     }
 
     componentDidUpdate(prevProps) {
-        // debugger
         if (prevProps.recording !== this.props.recording) {
             this.waveForm.load(this.props.recording.audioUrl);
         }
@@ -33,84 +37,56 @@ class UserRecordingItem extends React.Component {
             clearInterval(this.progress);
             this.progress = null;
         }
+        
+        if (prevProps.activeRecording.progressTimer !== this.props.activeRecording.progressTimer) {
+            if (this.props.activeRecording.progressTimer && this.props.recording.id === this.props.activeRecording.recordingId) {
+                this.setState({
+                    playButtonImg: window.bigPauseButtonUrl
+                });
+            } else {
+                this.setState({
+                    playButtonImg: window.playButtonURL
+                });
+            }
+        }
     }
 
     handlePlay() {
-        // this.waveForm.play();
-        // if (this.progress === null) {
-        //     this.progress = setInterval(() =>
-        //         this.props.receiveActiveRecording(
-        //             [this.waveForm,
-        //             this.props.recording.id,
-        //             this.waveForm.getDuration(),
-        //             this.waveForm.getCurrentTime(),
-        //             this.progress]),
-        //         500);
-        // }
-        // debugger
-        if (this.props.activeRecording && this.props.recording.id !== this.props.activeRecording.recordingId) {
-            clearInterval(this.progress);
-            clearInterval(this.props.activeRecording.progressTimer);
-            // debugger
-
-            this.props.receiveActiveRecording([
-                this.props.activeRecording.recordingElement,
-                this.props.activeRecording.recordingId,
-                this.props.activeRecording.recordingDuration,
-                this.props.activeRecording.currentTime,
-                this.props.activeRecording.progressTimer,
-                "stop"]);
-        }
-        // debugger
-
-        if (this.progress === null) {
-            // debugger
-            this.progress = setInterval(() => 
-                this.props.receiveActiveRecording(
-                    [this.waveForm,
-                    this.props.recording.id,
-                    this.waveForm.getDuration(),
-                    this.waveForm.getCurrentTime(),
-                    this.progress,
-                        true]),
-                500);
-            // debugger
-
-            // this.setState(() => {
-            //     return ({ playButtonImg: window.bigPauseButtonUrl })
-            // })
-        }
+    if (this.props.activeRecording.recordingId && this.props.recording.id !== this.props.activeRecording.recordingId) {
+        clearInterval(this.progress);
+        clearInterval(this.props.activeRecording.progressTimer);
+        this.props.receiveActiveRecording([
+            this.props.activeRecording.recordingElement,
+            this.props.activeRecording.recordingId,
+            this.props.activeRecording.recordingDuration,
+            this.props.activeRecording.currentTime,
+            this.props.activeRecording.progressTimer,
+            "stop"]);
+    }
+    clearInterval(this.progress);
+    this.progress = setInterval(() =>
+        this.props.receiveActiveRecording(
+            [this.waveForm,
+            this.props.recording.id,
+            this.waveForm.getDuration(),
+            this.waveForm.getCurrentTime(),
+            this.progress,
+                true]),
+        500);
+        this.setState(() => {
+            return ({ playButtonImg: window.bigPauseButtonUrl })
+        })
     }
 
     handlePlayPause() {
-        // console.log("yo");
-        // debugger
-        //tests if waveForm is loaded 
-        // if (this.waveForm.getDuration()) {
-        //     this.waveForm.playPause();
-        //     if (this.progress) {
-        //         clearInterval(this.progress);
-        //         this.progress = null;
-        //     } else {
-        //         this.progress = setInterval(() =>
-        //             this.props.receiveActiveRecording(
-        //                 [this.waveForm,
-        //                 this.props.recording.id,
-        //                 this.waveForm.getDuration(),
-        //                 this.waveForm.getCurrentTime(),
-        //                 this.progress]),
-        //             500);
-        //     }
-        // }
-        debugger
         if (this.waveForm.getDuration()) {
             if (this.progress || this.props.activeRecording.progressTimer) {
+                console.log("first if")
                 clearInterval(this.progress);
                 clearInterval(this.props.activeRecording.progressTimer)
                 this.progress = null;
-                debugger
                 if (this.props.recording.id !== this.props.activeRecording.recordingId) {
-                    debugger
+                    console.log("stop and play section")
                     this.props.receiveActiveRecording([
                         this.props.activeRecording.recordingElement,
                         this.props.activeRecording.recordingId,
@@ -133,6 +109,7 @@ class UserRecordingItem extends React.Component {
                         return ({ playButtonImg: window.bigPauseButtonUrl })
                     })
                 } else {
+                    console.log("pause section")
                     this.props.receiveActiveRecording([
                         this.waveForm,
                         this.props.recording.id,
@@ -146,6 +123,18 @@ class UserRecordingItem extends React.Component {
                     })
                 }
             } else {
+                console.log("play section")
+                // debugger
+                if (this.props.activeRecording.recordingId){
+                    this.props.receiveActiveRecording([
+                        this.props.activeRecording.recordingElement,
+                        this.props.activeRecording.recordingId,
+                        this.props.activeRecording.recordingDuration,
+                        this.props.activeRecording.currentTime,
+                        this.props.activeRecording.progressTimer,
+                        "stop"]);
+                }
+
                 this.progress = setInterval(() =>
                     this.props.receiveActiveRecording(
                         [this.waveForm,
@@ -156,9 +145,9 @@ class UserRecordingItem extends React.Component {
                             true]),
                     500);
 
-                // this.setState(() => {
-                //     return ({ playButtonImg: window.bigPauseButtonUrl })
-                // })
+                this.setState(() => {
+                    return ({ playButtonImg: window.bigPauseButtonUrl })
+                })
             }
         }
     }
@@ -218,7 +207,7 @@ class UserRecordingItem extends React.Component {
                 </div>
                 <div className="user-recording-info">
                     <div className="user-recording-playbuttonandnameandtitle">
-                        <img className="user-waveform-play-button" src={window.playButtonURL} onClick={this.handlePlayPause} />
+                        <img className="user-waveform-play-button" src={this.state.playButtonImg} onClick={this.handlePlayPause} />
                         <div>
                             {link}
                             {username}

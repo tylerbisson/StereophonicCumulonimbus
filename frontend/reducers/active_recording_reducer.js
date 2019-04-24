@@ -6,10 +6,15 @@ const activeRecordingReducer = (oldState = {}, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_ACTIVE_RECORDING:
+        if (action.play === "stop" && action.recordingElement){
+            action.recordingElement.stop();
+        }
+
         if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()){
             console.log("stop1");
             oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
+            break;
         }
 
         if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
@@ -24,6 +29,8 @@ const activeRecordingReducer = (oldState = {}, action) => {
                     ["currentTime"]: action.currentTime,
                     ["progressTimer"]: action.progressTimer
                 });
+            break;
+
         }
 
         if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play){
@@ -35,7 +42,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 ["currentTime"]: action.currentTime,
                 ["progressTimer"]: action.progressTimer
                 });
-
+            break;
         } else if (action.recordingElement.isPlaying() && action.play === false){
             console.log("pause");
             action.recordingElement.pause();
@@ -47,7 +54,9 @@ const activeRecordingReducer = (oldState = {}, action) => {
                     ["currentTime"]: action.currentTime,
                     ["progressTimer"]: action.progressTimer
                 });   
+            break;
         } else if (action.recordingElement.isPlaying() && action.play == "stop") {
+            debugger
             console.log("stop");
             action.recordingElement.stop();
             return Object.assign({}, oldState,
@@ -58,7 +67,10 @@ const activeRecordingReducer = (oldState = {}, action) => {
                     ["currentTime"]: action.currentTime,
                     ["progressTimer"]: action.progressTimer
                 });
+            break;
         }
+        action.recordingElement.stop();
+        console.log("oh no im at the bottom");
         default:
             return oldState;
     }

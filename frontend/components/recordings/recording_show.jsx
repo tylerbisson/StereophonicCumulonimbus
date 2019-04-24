@@ -11,7 +11,7 @@ import WaveSurfer from 'wavesurfer.js';
 class RecordingShow extends React.Component {
     constructor(props){
         super(props);
-
+        debugger
         this.state = {
             recording: this.props.recording,
             comments: this.props.comments,
@@ -32,7 +32,8 @@ class RecordingShow extends React.Component {
     }
 
     handlePlay(){
-        if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+        // debugger
+        if (this.props.activeRecording.recordingId && this.props.recording.id !== this.props.activeRecording.recordingId) {
             clearInterval(this.progress);
             clearInterval(this.props.activeRecording.progressTimer);
 
