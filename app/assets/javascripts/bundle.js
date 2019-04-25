@@ -1968,7 +1968,7 @@ function (_React$Component) {
           content_type: "Recording",
           content_id: this.props.recording.id
         }
-      }); // .then(() => this.props.fetchRecording(this.props.match.params.recordingId));
+      });
     }
   }, {
     key: "handleDelete",
@@ -2005,7 +2005,8 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       if (prevProps.comments !== this.props.comments) {
         this.setState({
-          comments: this.props.comments
+          comments: this.props.comments,
+          comment: ""
         });
       }
 
@@ -2108,7 +2109,8 @@ function (_React$Component) {
         className: "recording-comment-input",
         type: "text",
         placeholder: "Write a comment",
-        onChange: this.updated("comment")
+        onChange: this.updated("comment"),
+        value: this.state.comment
       })), recordingButtons, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "recording-info-portrait",
         src: this.props.recording.portraitUrl

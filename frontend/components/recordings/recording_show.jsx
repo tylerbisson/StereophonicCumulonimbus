@@ -128,7 +128,6 @@ class RecordingShow extends React.Component {
             { body: this.state.comment, user_id: this.props.currentUser.id, 
                 content_type: "Recording", content_id: this.props.recording.id }
         })
-        // .then(() => this.props.fetchRecording(this.props.match.params.recordingId));
     }
 
     handleDelete(recordingId){
@@ -158,7 +157,8 @@ class RecordingShow extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.comments !== this.props.comments) {
             this.setState({
-                comments: this.props.comments
+                comments: this.props.comments,
+                comment: ""
             });
         }
         
@@ -239,7 +239,7 @@ class RecordingShow extends React.Component {
                         <form className="recording-comment-div" onSubmit={this.handleCommentSubmt}>
                             <div className="recording-comment-userportrait" style={userImg}/>
                             <input className="recording-comment-input" type="text" placeholder="Write a comment"
-                                onChange={this.updated("comment")}/>
+                                onChange={this.updated("comment")} value={this.state.comment}/>
                         </form>
                         {recordingButtons}
                         <img className="recording-info-portrait" src={this.props.recording.portraitUrl}/>
