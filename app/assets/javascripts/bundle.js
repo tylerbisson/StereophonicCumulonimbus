@@ -1868,8 +1868,8 @@ function (_React$Component) {
 
     _classCallCheck(this, RecordingShow);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
-    debugger;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props)); // debugger
+
     _this.state = {
       recording: _this.props.recording,
       comments: _this.props.comments,
@@ -3049,7 +3049,7 @@ var activeRecordingReducer = function activeRecordingReducer() {
       } else if (action.recordingElement.isPlaying() && action.play == "stop") {
         var _Object$assign4;
 
-        debugger;
+        // debugger
         console.log("stop");
         action.recordingElement.stop();
         return Object.assign({}, oldState, (_Object$assign4 = {}, _defineProperty(_Object$assign4, "recordingElement", action.recordingElement), _defineProperty(_Object$assign4, "recordingId", action.recordingId), _defineProperty(_Object$assign4, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign4, "currentTime", action.currentTime), _defineProperty(_Object$assign4, "progressTimer", action.progressTimer), _Object$assign4));
@@ -3497,17 +3497,24 @@ document.addEventListener('DOMContentLoaded', function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/root_reducer */ "./frontend/reducers/root_reducer.js");
+/* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/root_reducer */ "./frontend/reducers/root_reducer.js");
+
+ // import logger from 'redux-logger';
 
 
+var middlewares = [redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]];
 
+if (true) {
+  // must use 'require' (import only allowed at top of file)
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      logger = _require.logger;
 
+  middlewares.push(logger);
+}
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__["default"], preloadedState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middlewares));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);

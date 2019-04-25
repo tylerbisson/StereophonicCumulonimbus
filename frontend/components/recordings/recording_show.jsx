@@ -11,7 +11,7 @@ import WaveSurfer from 'wavesurfer.js';
 class RecordingShow extends React.Component {
     constructor(props){
         super(props);
-        debugger
+        // debugger
         this.state = {
             recording: this.props.recording,
             comments: this.props.comments,

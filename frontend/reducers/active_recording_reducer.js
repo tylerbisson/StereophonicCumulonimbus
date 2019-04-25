@@ -56,7 +56,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 });   
             break;
         } else if (action.recordingElement.isPlaying() && action.play == "stop") {
-            debugger
+            // debugger
             console.log("stop");
             action.recordingElement.stop();
             return Object.assign({}, oldState,
