@@ -22,7 +22,7 @@
     height: 240px;
     position: absolute;
     background-size: auto;
-    filter: saturate(10000%) blur(200px)
+    filter: saturate(10000%) blur(100px)
 }
 
 .recording-audioandtitle{
