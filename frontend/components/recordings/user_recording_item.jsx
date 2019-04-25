@@ -81,12 +81,12 @@ class UserRecordingItem extends React.Component {
     handlePlayPause() {
         if (this.waveForm.getDuration()) {
             if (this.progress || this.props.activeRecording.progressTimer) {
-                console.log("first if")
+                // console.log("first if")
                 clearInterval(this.progress);
                 clearInterval(this.props.activeRecording.progressTimer)
                 this.progress = null;
                 if (this.props.recording.id !== this.props.activeRecording.recordingId) {
-                    console.log("stop and play section")
+                    // console.log("stop and play section")
                     this.props.receiveActiveRecording([
                         this.props.activeRecording.recordingElement,
                         this.props.activeRecording.recordingId,
@@ -109,7 +109,7 @@ class UserRecordingItem extends React.Component {
                         return ({ playButtonImg: window.bigPauseButtonUrl })
                     })
                 } else {
-                    console.log("pause section")
+                    // console.log("pause section")
                     this.props.receiveActiveRecording([
                         this.waveForm,
                         this.props.recording.id,
@@ -123,7 +123,7 @@ class UserRecordingItem extends React.Component {
                     })
                 }
             } else {
-                console.log("play section")
+                // console.log("play section")
                 // debugger
                 if (this.props.activeRecording.recordingId){
                     this.props.receiveActiveRecording([

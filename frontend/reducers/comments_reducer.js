@@ -11,7 +11,7 @@ const commentsReducer = (oldState = {}, action) => {
         case RECEIVE_RECORDING:
             return Object.assign({}, oldState, action.recording.comments);
         case RECEIVE_COMMENT:
-            return Object.assign({}, oldState, action.comment);
+            return Object.assign({}, oldState, {[action.comment.id]: action.comment});
         case RECEIVE_COMMENTS:
             return Object.assign({}, oldState, action.comments);
         default:

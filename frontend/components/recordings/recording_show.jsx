@@ -11,7 +11,6 @@ import WaveSurfer from 'wavesurfer.js';
 class RecordingShow extends React.Component {
     constructor(props){
         super(props);
-        // debugger
         this.state = {
             recording: this.props.recording,
             comments: this.props.comments,
@@ -128,7 +127,8 @@ class RecordingShow extends React.Component {
         this.props.createComment({ comment: 
             { body: this.state.comment, user_id: this.props.currentUser.id, 
                 content_type: "Recording", content_id: this.props.recording.id }
-        }).then(() => this.props.fetchRecording(this.props.match.params.recordingId));
+        })
+        // .then(() => this.props.fetchRecording(this.props.match.params.recordingId));
     }
 
     handleDelete(recordingId){

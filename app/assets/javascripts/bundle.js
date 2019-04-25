@@ -1868,8 +1868,7 @@ function (_React$Component) {
 
     _classCallCheck(this, RecordingShow);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props)); // debugger
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingShow).call(this, props));
     _this.state = {
       recording: _this.props.recording,
       comments: _this.props.comments,
@@ -1961,8 +1960,6 @@ function (_React$Component) {
   }, {
     key: "handleCommentSubmt",
     value: function handleCommentSubmt(e) {
-      var _this5 = this;
-
       e.preventDefault();
       this.props.createComment({
         comment: {
@@ -1971,17 +1968,15 @@ function (_React$Component) {
           content_type: "Recording",
           content_id: this.props.recording.id
         }
-      }).then(function () {
-        return _this5.props.fetchRecording(_this5.props.match.params.recordingId);
-      });
+      }); // .then(() => this.props.fetchRecording(this.props.match.params.recordingId));
     }
   }, {
     key: "handleDelete",
     value: function handleDelete(recordingId) {
-      var _this6 = this;
+      var _this5 = this;
 
       this.props.destroyRecording(recordingId).then(function () {
-        return _this6.props.history.push("/users/".concat(_this6.props.currentUser.id));
+        return _this5.props.history.push("/users/".concat(_this5.props.currentUser.id));
       });
     }
   }, {
@@ -2038,7 +2033,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this6 = this;
 
       var backgroundImg = {
         backgroundImage: 'url(' + this.props.recording.artUrl + ')'
@@ -2054,12 +2049,12 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this7.handleEdit();
+            return _this6.handleEdit();
           }
         }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "recording-button",
           onClick: function onClick() {
-            return _this7.handleDelete(_this7.props.recording.id);
+            return _this6.handleDelete(_this6.props.recording.id);
           }
         }, "Delete"));
       } else {
@@ -2072,7 +2067,7 @@ function (_React$Component) {
 
       var comments = Object.values(this.state.comments);
       comments = comments.filter(function (comment) {
-        return comment["content_id"] === parseInt(_this7.props.recording.id);
+        return comment["content_id"] === parseInt(_this6.props.recording.id);
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
@@ -2326,13 +2321,13 @@ function (_React$Component) {
 
       if (this.waveForm.getDuration()) {
         if (this.progress || this.props.activeRecording.progressTimer) {
-          console.log("first if");
+          // console.log("first if")
           clearInterval(this.progress);
           clearInterval(this.props.activeRecording.progressTimer);
           this.progress = null;
 
           if (this.props.recording.id !== this.props.activeRecording.recordingId) {
-            console.log("stop and play section");
+            // console.log("stop and play section")
             this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, "stop"]);
             this.progress = setInterval(function () {
               return _this3.props.receiveActiveRecording([_this3.waveForm, _this3.props.recording.id, _this3.waveForm.getDuration(), _this3.waveForm.getCurrentTime(), _this3.progress, true]);
@@ -2343,7 +2338,7 @@ function (_React$Component) {
               };
             });
           } else {
-            console.log("pause section");
+            // console.log("pause section")
             this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime(), this.progress, false]);
             this.setState(function () {
               return {
@@ -2352,8 +2347,8 @@ function (_React$Component) {
             });
           }
         } else {
-          console.log("play section"); // debugger
-
+          // console.log("play section")
+          // debugger
           if (this.props.activeRecording.recordingId) {
             this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, "stop"]);
           }
@@ -3017,7 +3012,7 @@ var activeRecordingReducer = function activeRecordingReducer() {
       }
 
       if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()) {
-        console.log("stop1");
+        // console.log("stop1");
         oldState.recordingElement.stop();
         clearInterval(oldState.progressTimer);
         break;
@@ -3026,8 +3021,8 @@ var activeRecordingReducer = function activeRecordingReducer() {
       if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
         var _Object$assign;
 
-        console.log("play1"); // debugger
-
+        // console.log("play1");
+        // debugger
         action.recordingElement.play();
         return Object.assign({}, oldState, (_Object$assign = {}, _defineProperty(_Object$assign, "recordingElement", action.recordingElement), _defineProperty(_Object$assign, "recordingId", action.recordingId), _defineProperty(_Object$assign, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign, "currentTime", action.currentTime), _defineProperty(_Object$assign, "progressTimer", action.progressTimer), _Object$assign));
         break;
@@ -3036,13 +3031,13 @@ var activeRecordingReducer = function activeRecordingReducer() {
       if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
         var _Object$assign2;
 
-        console.log("play2");
+        // console.log("play2");
         return Object.assign({}, oldState, (_Object$assign2 = {}, _defineProperty(_Object$assign2, "recordingElement", action.recordingElement), _defineProperty(_Object$assign2, "recordingId", action.recordingId), _defineProperty(_Object$assign2, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign2, "currentTime", action.currentTime), _defineProperty(_Object$assign2, "progressTimer", action.progressTimer), _Object$assign2));
         break;
       } else if (action.recordingElement.isPlaying() && action.play === false) {
         var _Object$assign3;
 
-        console.log("pause");
+        // console.log("pause");
         action.recordingElement.pause();
         return Object.assign({}, oldState, (_Object$assign3 = {}, _defineProperty(_Object$assign3, "recordingElement", action.recordingElement), _defineProperty(_Object$assign3, "recordingId", action.recordingId), _defineProperty(_Object$assign3, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign3, "currentTime", action.currentTime), _defineProperty(_Object$assign3, "progressTimer", action.progressTimer), _Object$assign3));
         break;
@@ -3050,14 +3045,14 @@ var activeRecordingReducer = function activeRecordingReducer() {
         var _Object$assign4;
 
         // debugger
-        console.log("stop");
+        // console.log("stop");
         action.recordingElement.stop();
         return Object.assign({}, oldState, (_Object$assign4 = {}, _defineProperty(_Object$assign4, "recordingElement", action.recordingElement), _defineProperty(_Object$assign4, "recordingId", action.recordingId), _defineProperty(_Object$assign4, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign4, "currentTime", action.currentTime), _defineProperty(_Object$assign4, "progressTimer", action.progressTimer), _Object$assign4));
         break;
       }
 
       action.recordingElement.stop();
-      console.log("oh no im at the bottom");
+    // console.log("oh no im at the bottom");
 
     default:
       return oldState;
@@ -3079,6 +3074,8 @@ var activeRecordingReducer = function activeRecordingReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/comments_actions */ "./frontend/actions/comments_actions.js");
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3093,7 +3090,7 @@ var commentsReducer = function commentsReducer() {
       return Object.assign({}, oldState, action.recording.comments);
 
     case _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_COMMENT"]:
-      return Object.assign({}, oldState, action.comment);
+      return Object.assign({}, oldState, _defineProperty({}, action.comment.id, action.comment));
 
     case _actions_comments_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_COMMENTS"]:
       return Object.assign({}, oldState, action.comments);
