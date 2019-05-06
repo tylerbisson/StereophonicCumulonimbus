@@ -109,12 +109,12 @@
     border-radius: 100%;
     position: absolute;
     left: 1.5%;
-    top: 14%;
+    top: 17%;
 }
 
 .recording-info-description{
     position: absolute;
-    top: 14%;
+    top: 17%;
     left: 14%;
 }
 
@@ -134,6 +134,7 @@
     border-bottom: solid rgb(237, 238, 239);
     border-width: 1px;
     padding-bottom: 10px;
+    margin-top: 13px;
 }
 
 .recording-button{
