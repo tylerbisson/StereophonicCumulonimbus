@@ -4,6 +4,78 @@ import { Link } from 'react-router-dom';
 class RecordingItem extends React.Component {
     constructor(props) {
         super(props);
+        this.handlePlayPause = this.handlePlayPause.bind(this);
+    }
+
+    handlePlayPause() {
+        //tests if waveForm is loaded 
+        // debugger;
+        // if (this.waveForm.getDuration()) {
+            if (this.progress || this.props.activeRecording.progressTimer) {
+                clearInterval(this.progress);
+                clearInterval(this.props.activeRecording.progressTimer)
+                this.progress = null;
+                if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+                    this.props.receiveActiveRecording([
+                        this.props.activeRecording.recordingElement,
+                        this.props.activeRecording.recordingId,
+                        this.props.activeRecording.recordingDuration,
+                        this.props.activeRecording.currentTime,
+                        this.props.activeRecording.progressTimer,
+                        false]);
+
+                    this.progress = setInterval(() =>
+                        this.props.receiveActiveRecording(
+                            [this.waveForm,
+                            this.props.recording.id,
+                            this.waveForm.getDuration(),
+                            this.waveForm.getCurrentTime(),
+                            this.progress,
+                                true]),
+                        500);
+
+                    this.setState(() => {
+                        return ({ playButtonImg: window.bigPauseButtonUrl })
+                    })
+                } else {
+                    this.props.receiveActiveRecording([
+                        this.waveForm,
+                        this.props.recording.id,
+                        this.waveForm.getDuration(),
+                        this.waveForm.getCurrentTime(),
+                        this.progress,
+                        false]);
+
+                    this.setState(() => {
+                        return ({ playButtonImg: window.playButtonURL })
+                    })
+                }
+            } else {
+                // debugger
+                this.progress = setInterval(() =>
+                    this.props.receiveActiveRecording(
+                        [this.waveForm,
+                        this.props.recording.id,
+                        this.waveForm.getDuration(),
+                        this.waveForm.getCurrentTime(),
+                        this.progress,
+                            true]),
+                    500);
+
+                this.setState(() => {
+                    return ({ playButtonImg: window.bigPauseButtonUrl })
+                })
+            }
+        // }
+    }
+
+    componentDidMount() {
+        // this.props.fetchRecording(this.props.match.params.recordingId);
+        this.waveForm = WaveSurfer.create({
+            container: '#audio-waveForm',
+        });
+        this.waveForm.load(this.props.recording.audioUrl);
+        // this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
 
     render(){
@@ -40,7 +112,8 @@ class RecordingItem extends React.Component {
                     <source src={this.props.recording.audioUrl} type="audio/mpeg"></source>
                 </audio>
 
-                <div className="recording-item-img" key={"recording-item-img" + this.props.recording.id}>
+                <div className="recording-item-img" key={"recording-item-img" + this.props.recording.id}
+                onClick={this.handlePlayPause}>
                     <img className={art} src={this.props.recording.artUrl}/>
                     {playbutton}
                 </div>
@@ -48,6 +121,7 @@ class RecordingItem extends React.Component {
                 {link}
 
                 {username}
+                <div className="invisible-waveform" id="audio-waveForm"></div>
             </div>
         )
     }

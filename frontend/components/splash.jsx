@@ -5,6 +5,8 @@ import { fetchSplashRecordings } from '../actions/recordings_actions';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import RecordingItem from '../components/recordings/recording_item';
+import { receiveActiveRecording } from '../actions/active_recording_actions';
+
 
 class Splash extends React.Component {
     constructor(props) {
@@ -38,7 +40,9 @@ class Splash extends React.Component {
             let recordings = Object.values(this.props.recordings);
 
             recordingItems = recordings.map(recording =>
-                <RecordingItem recording={recording} key={recording.id} />)
+                <RecordingItem recording={recording} key={recording.id} 
+                receiveActiveRecording={this.props.receiveActiveRecording}
+                activeRecording={this.props.activeRecording}/>)
         }
 
         return (
@@ -74,10 +78,11 @@ class Splash extends React.Component {
     };
 };
 
-const mapStateToProps = ({ session, entities: { users, recordings } }) => {
+const mapStateToProps = ({ session, entities: { users, recordings }, ui }) => {
     return {
         recordings: recordings,
-        currentUser: users[session.id]
+        currentUser: users[session.id],
+        activeRecording: ui.activeRecording
     };
 };
 
@@ -86,7 +91,8 @@ const mapDispatchToProps = dispatch => ({
     openModal: modal => dispatch(openModal(modal)),
     closeModal: () => dispatch(closeModal()),
     demoLogin: demoUser => dispatch(login(demoUser)),
-    fetchSplashRecordings: () => dispatch(fetchSplashRecordings())
+    fetchSplashRecordings: () => dispatch(fetchSplashRecordings()),
+    receiveActiveRecording: args => dispatch(receiveActiveRecording(args))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Splash);

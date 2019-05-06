@@ -1732,9 +1732,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1749,12 +1749,69 @@ function (_React$Component) {
   _inherits(RecordingItem, _React$Component);
 
   function RecordingItem(props) {
+    var _this;
+
     _classCallCheck(this, RecordingItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(RecordingItem).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RecordingItem).call(this, props));
+    _this.handlePlayPause = _this.handlePlayPause.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(RecordingItem, [{
+    key: "handlePlayPause",
+    value: function handlePlayPause() {
+      var _this2 = this;
+
+      //tests if waveForm is loaded 
+      // debugger;
+      // if (this.waveForm.getDuration()) {
+      if (this.progress || this.props.activeRecording.progressTimer) {
+        clearInterval(this.progress);
+        clearInterval(this.props.activeRecording.progressTimer);
+        this.progress = null;
+
+        if (this.props.recording.id !== this.props.activeRecording.recordingId) {
+          this.props.receiveActiveRecording([this.props.activeRecording.recordingElement, this.props.activeRecording.recordingId, this.props.activeRecording.recordingDuration, this.props.activeRecording.currentTime, this.props.activeRecording.progressTimer, false]);
+          this.progress = setInterval(function () {
+            return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress, true]);
+          }, 500);
+          this.setState(function () {
+            return {
+              playButtonImg: window.bigPauseButtonUrl
+            };
+          });
+        } else {
+          this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime(), this.progress, false]);
+          this.setState(function () {
+            return {
+              playButtonImg: window.playButtonURL
+            };
+          });
+        }
+      } else {
+        // debugger
+        this.progress = setInterval(function () {
+          return _this2.props.receiveActiveRecording([_this2.waveForm, _this2.props.recording.id, _this2.waveForm.getDuration(), _this2.waveForm.getCurrentTime(), _this2.progress, true]);
+        }, 500);
+        this.setState(function () {
+          return {
+            playButtonImg: window.bigPauseButtonUrl
+          };
+        });
+      } // }
+
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // this.props.fetchRecording(this.props.match.params.recordingId);
+      this.waveForm = WaveSurfer.create({
+        container: '#audio-waveForm'
+      });
+      this.waveForm.load(this.props.recording.audioUrl); // this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
+    }
+  }, {
     key: "render",
     value: function render() {
       var art = "";
@@ -1793,11 +1850,15 @@ function (_React$Component) {
         type: "audio/mpeg"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-item-img",
-        key: "recording-item-img" + this.props.recording.id
+        key: "recording-item-img" + this.props.recording.id,
+        onClick: this.handlePlayPause
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: art,
         src: this.props.recording.artUrl
-      }), playbutton), link, username);
+      }), playbutton), link, username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "invisible-waveform",
+        id: "audio-waveForm"
+      }));
     }
   }]);
 
@@ -2785,6 +2846,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
+/* harmony import */ var _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/active_recording_actions */ "./frontend/actions/active_recording_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2802,6 +2864,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2864,7 +2927,9 @@ function (_React$Component) {
         recordingItems = recordings.map(function (recording) {
           return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_6__["default"], {
             recording: recording,
-            key: recording.id
+            key: recording.id,
+            receiveActiveRecording: _this3.props.receiveActiveRecording,
+            activeRecording: _this3.props.activeRecording
           });
         });
       }
@@ -2914,10 +2979,12 @@ var mapStateToProps = function mapStateToProps(_ref) {
   var session = _ref.session,
       _ref$entities = _ref.entities,
       users = _ref$entities.users,
-      recordings = _ref$entities.recordings;
+      recordings = _ref$entities.recordings,
+      ui = _ref.ui;
   return {
     recordings: recordings,
-    currentUser: users[session.id]
+    currentUser: users[session.id],
+    activeRecording: ui.activeRecording
   };
 };
 
@@ -2937,6 +3004,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchSplashRecordings: function fetchSplashRecordings() {
       return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSplashRecordings"])());
+    },
+    receiveActiveRecording: function receiveActiveRecording(args) {
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(args));
     }
   };
 };
@@ -49736,7 +49806,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
