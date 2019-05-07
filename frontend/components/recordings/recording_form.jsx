@@ -38,7 +38,7 @@ class RecordingForm extends React.Component {
                 data: formData,
                 contentType: false,
                 processData: false
-            }).then(data => {this.props.history.push(`/users/${data.user_id}`)});
+            }).then(data => {this.props.history.push(`/users/${this.props.user_id}`)});
         } else {
             formData.append('recording[title]', this.state.title);
             formData.append('recording[description]', this.state.description);
@@ -51,7 +51,7 @@ class RecordingForm extends React.Component {
                 data: formData,
                 contentType: false,
                 processData: false
-            }).then(data => { this.props.history.push(`/users/${data.user_id}`) });
+            }).then(data => { this.props.history.push(`/users/${this.props.user_idd}`) });
         }
     }
  
