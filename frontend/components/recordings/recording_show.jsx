@@ -217,6 +217,8 @@ class RecordingShow extends React.Component {
         let comments = Object.values(this.state.comments);
         comments = comments.filter(comment => comment["content_id"] === parseInt(this.props.recording.id));
 
+        // debugger
+        console.log(this.props.recording.artUrl);
         return(
             <>
                 <Nav/>
@@ -224,8 +226,7 @@ class RecordingShow extends React.Component {
                     <div className="recording-show-banner" > 
                         <div className="recording-hero" style={backgroundImg}></div>
                         <div className="recording-audioandtitle">
-                            <RecordingItem recording={this.props.recording} key={this.props.recording.id} 
-                                recordingShow = {true}/>
+                            <img className="recording-art-show-imgonly" src={this.props.recording.artUrl} />
                             <img id="waveform-play-button" className="waveform-play-button" src={this.state.playButtonImg} onClick={this.handlePlayPause}/>
                             <h2 className="recording-hero-artist">{this.props.recording.username}</h2>
                             <h1 className="recording-hero-name">{this.props.recording.title}</h1>

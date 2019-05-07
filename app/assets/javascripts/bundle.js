@@ -2130,7 +2130,9 @@ function (_React$Component) {
       var comments = Object.values(this.state.comments);
       comments = comments.filter(function (comment) {
         return comment["content_id"] === parseInt(_this6.props.recording.id);
-      });
+      }); // debugger
+
+      console.log(this.props.recording.artUrl);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2140,10 +2142,9 @@ function (_React$Component) {
         style: backgroundImg
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "recording-audioandtitle"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_recordings_recording_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        recording: this.props.recording,
-        key: this.props.recording.id,
-        recordingShow: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "recording-art-show-imgonly",
+        src: this.props.recording.artUrl
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         id: "waveform-play-button",
         className: "waveform-play-button",
