@@ -5,6 +5,8 @@
     margin: auto;
     font-family: 'Quicksand', sans-serif;
     display: flex;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
 }
 
 .discover-sidebar{
@@ -23,6 +25,10 @@
     padding-bottom: 20px;
     border-bottom: solid rgb(237, 238, 239);
     border-width: 1px;
+}
+
+.discover-rows{
+    margin-bottom: 100px;
 }
 
 .discover-row-name{
