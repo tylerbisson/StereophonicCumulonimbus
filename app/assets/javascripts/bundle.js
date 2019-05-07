@@ -2130,9 +2130,7 @@ function (_React$Component) {
       var comments = Object.values(this.state.comments);
       comments = comments.filter(function (comment) {
         return comment["content_id"] === parseInt(_this6.props.recording.id);
-      }); // debugger
-
-      console.log(this.props.recording.artUrl);
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "recording-show-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

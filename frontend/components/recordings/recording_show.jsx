@@ -217,8 +217,6 @@ class RecordingShow extends React.Component {
         let comments = Object.values(this.state.comments);
         comments = comments.filter(comment => comment["content_id"] === parseInt(this.props.recording.id));
 
-        // debugger
-        console.log(this.props.recording.artUrl);
         return(
             <>
                 <Nav/>
