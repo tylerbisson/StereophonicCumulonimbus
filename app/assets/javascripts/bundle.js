@@ -1636,7 +1636,14 @@ function (_React$Component) {
           userId: this.props.match.params.userId
         });
         this.props.fetchUser(this.props.match.params.userId);
-      }
+      } // if (prevProps.recordings !== this.props.recordings){
+      //     debugger;
+      //     this.props.fetchUser(this.props.match.params.userId);
+      //     // this.setState({
+      //     //     recordings: this.props.recordings
+      //     // });
+      // }
+
     }
   }, {
     key: "render",
@@ -3280,7 +3287,8 @@ var recordingsReducer = function recordingsReducer() {
       return Object.assign({}, oldState, action.currentUser.recordings);
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["ADD_USER"]:
-      return Object.assign({}, oldState, action.currentUser.recordings);
+      // return Object.assign({}, oldState, action.currentUser.recordings);
+      return action.currentUser.recordings;
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RECORDING"]:
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, _defineProperty({}, action.recording.recording.id, action.recording.recording));

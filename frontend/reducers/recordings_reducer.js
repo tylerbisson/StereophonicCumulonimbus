@@ -14,7 +14,8 @@ const recordingsReducer = (oldState = {}, action) => {
         case RECEIVE_CURRENT_USER:
             return Object.assign({}, oldState, action.currentUser.recordings);
         case ADD_USER:
-            return Object.assign({}, oldState, action.currentUser.recordings);
+            // return Object.assign({}, oldState, action.currentUser.recordings);
+            return action.currentUser.recordings;
         case RECEIVE_RECORDING:
             return merge({}, oldState, { [action.recording.recording.id]: action.recording.recording})
         case RECEIVE_RECORDINGS:

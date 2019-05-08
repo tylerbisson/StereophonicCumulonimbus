@@ -30,6 +30,14 @@ class RecordingIndex extends React.Component {
             });
             this.props.fetchUser(this.props.match.params.userId);
         }
+
+        // if (prevProps.recordings !== this.props.recordings){
+        //     debugger;
+        //     this.props.fetchUser(this.props.match.params.userId);
+        //     // this.setState({
+        //     //     recordings: this.props.recordings
+        //     // });
+        // }
     }
 
     render(){

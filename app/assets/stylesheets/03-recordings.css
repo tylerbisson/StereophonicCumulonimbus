@@ -28,12 +28,12 @@
 
 .user-recordings-list{
     height: 100px;
-    /* display: flex; */
     flex-direction: column;
     align-content: flex-start;
     font-family: 'Quicksand', sans-serif;
     height: -webkit-fit-content;
     height: -moz-fit-content;
+    margin-bottom: 50px;
 }
 
 .recording-item {
