@@ -21,8 +21,8 @@ demo_user2_r = Recording.new({title:"2 B Free", description:"cool beat", user_id
 demo_user2_r.save! 
 demo_user2_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/2+B+free.jpg"),
     filename: "2+B+free.jpg")
-demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+2+B+Free.mp3"),
-    filename: "01+2+B+Free.mp3")
+demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+2+B+Free.m4a"),
+    filename: "01+2+B+Free.m4a")
 
 demo_user3 = User.new({username:"Music 4 Dogs", password:'password'})
 demo_user3.save 
@@ -43,8 +43,8 @@ demo_user4_r = Recording.new({title:"ALOHAnet", description:"cool beat", user_id
 demo_user4_r.save! 
 demo_user4_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/ALOHAnet.jpg"),
     filename: "ALOHAnet.jpg")
-demo_user4_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+ALOHAnet.mp3"),
-    filename: "03+ALOHAnet.mp3")
+demo_user4_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+ALOHAnet.m4a"),
+    filename: "03+ALOHAnet.m4a")
 
 demo_user5 = User.new({username:"DJ Central", password:'password'})
 demo_user5.save 
@@ -54,8 +54,8 @@ demo_user5_r = Recording.new({title:"DRIVE (DJ Sports Club Mix)", description:"c
 demo_user5_r.save! 
 demo_user5_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/drive.jpg"),
     filename: "drive.jpg")
-demo_user5_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/DRIVE+(DJ+Sports+Club+Mix).mp3"),
-    filename: "DRIVE+(DJ+Sports+Club+Mix).mp3")
+demo_user5_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/DRIVE+(DJ+Sports+Club+Mix).m4a"),
+    filename: "DRIVE+(DJ+Sports+Club+Mix).m4a")
 
 demo_user6 = User.new({username:"Washington Phillips", password:'password'})
 demo_user6.save 
@@ -65,8 +65,8 @@ demo_user6_r = Recording.new({title:"Lift Him Up That's All", description:"cool 
 demo_user6_r.save! 
 demo_user6_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/lift+him+up+thats+all.jpg"),
     filename: "lift+him+up+thats+all.jpg")
-demo_user6_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/11+Lift+Him+Up+That's+All.mp3"),
-    filename: "11+Lift+Him+Up+That's+All.mp3")
+demo_user6_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/11+Lift+Him+Up+That's+All.m4a"),
+    filename: "11+Lift+Him+Up+That's+All.m4a")
 
 demo_user7 = User.new({username:"Leonce", password:'password'})
 demo_user7.save 
@@ -76,8 +76,8 @@ demo_user7_r = Recording.new({title:"Jeremih - Impatient (Leonce Bounce Mix)", d
 demo_user7_r.save! 
 demo_user7_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/Impatient+(Leonce+Bounce+Mix).jpg"),
     filename: "Impatient+(Leonce+Bounce+Mix).jpg")
-demo_user7_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/07+Jeremih+-+Impatient+(Leonce+Bounce+Mix).mp3"),
-    filename: "07+Jeremih+-+Impatient+(Leonce+Bounce+Mix).mp3")
+demo_user7_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/07+Jeremih+-+Impatient+(Leonce+Bounce+Mix).m4a"),
+    filename: "07+Jeremih+-+Impatient+(Leonce+Bounce+Mix).m4a")
 
 demo_user8 = User.new({username:"Hiroshi Yoshimura (吉村弘)", password:'password'})
 demo_user8.save 
@@ -87,8 +87,8 @@ demo_user8_r = Recording.new({title:"Singing Stream (Spring Mix)", description:"
 demo_user8_r.save! 
 demo_user8_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/Singing+Stream+(Spring+Mix).jpg"),
     filename: "Singing+Stream+(Spring+Mix).jpg")
-demo_user8_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/02+Singing+Stream+(Spring+Mix).mp3"),
-    filename: "02+Singing+Stream+(Spring+Mix).mp3")
+demo_user8_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/02+Singing+Stream+(Spring+Mix).m4a"),
+    filename: "02+Singing+Stream+(Spring+Mix).m4a")
 
 demo_user9 = User.new({username:"Roc Marciano", password:'password'})
 demo_user9.save 
@@ -98,8 +98,8 @@ demo_user2_r = Recording.new({title:"The Horse's Mouth", description:"cool beat"
 demo_user2_r.save! 
 demo_user2_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/the+horses+mouth.jpg"),
     filename: "the+horses+mouth.jpg")
-demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01.+The+Horse's+Mouth+(Prod.+Preservation).mp3"),
-    filename: "01.+The+Horse's+Mouth+(Prod.+Preservation).mp3")
+demo_user2_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01.+The+Horse's+Mouth+(Prod.+Preservation).m4a"),
+    filename: "01.+The+Horse's+Mouth+(Prod.+Preservation).m4a")
 
 demo_user10 = User.new({username:"Delroy Edwards", password:'password'})
 demo_user10.save 
@@ -109,8 +109,8 @@ demo_user10_r = Recording.new({title:"4 Club Use Only", description:"cool beat",
 demo_user10_r.save! 
 demo_user10_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/4+club+use+only.jpg"),
     filename: "4+club+use+only.jpg")
-demo_user10_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+For+Club+Use+Only+(Original+Mix).mp3"),
-    filename: "01+For+Club+Use+Only+(Original+Mix).mp3")
+demo_user10_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+For+Club+Use+Only+(Original+Mix).m4a"),
+    filename: "01+For+Club+Use+Only+(Original+Mix).m4a")
 
 demo_user11 = User.new({username:"Terekke", password:'password'})
 demo_user11.save 
@@ -120,8 +120,8 @@ demo_user11_r = Recording.new({title:"BB2", description:"cool beat", user_id: de
 demo_user11_r.save! 
 demo_user11_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/BB2.jpg"),
     filename: "BB2.jpg")
-demo_user11_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/02+BB2.mp3"),
-    filename: "02+BB2.mp3")
+demo_user11_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/02+BB2.m4a"),
+    filename: "02+BB2.m4a")
 
 demo_user12 = User.new({username:"Gesloten Cirkel", password:'password'})
 demo_user12.save 
@@ -131,8 +131,8 @@ demo_user12_r = Recording.new({title:"Submit X", description:"cool beat", user_i
 demo_user12_r.save! 
 demo_user12_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/submit+x.jpg"),
     filename: "submit+x.jpg")
-demo_user12_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+Submit-X.mp3"),
-    filename: "03+Submit-X.mp3")
+demo_user12_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+Submit-X.m4a"),
+    filename: "03+Submit-X.m4a")
 
 demo_user13 = User.new({username:"The Coneheads", password:'password'})
 demo_user13.save 
@@ -142,8 +142,8 @@ demo_user13_r = Recording.new({title:"OUT OF CONETROL", description:"cool beat",
 demo_user13_r.save! 
 demo_user13_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/coneheads.jpg"),
     filename: "coneheads.jpg")
-demo_user13_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+OUT+OF+CONETROL.mp3"),
-    filename: "01+OUT+OF+CONETROL.mp3")
+demo_user13_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/01+OUT+OF+CONETROL.m4a"),
+    filename: "01+OUT+OF+CONETROL.m4a")
 
 # DEMO USER 
 demo_user = User.new({username:"Tyler Bisson", password:'password'})

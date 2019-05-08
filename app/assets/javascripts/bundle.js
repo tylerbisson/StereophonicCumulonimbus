@@ -1822,12 +1822,12 @@ function (_React$Component) {
 
   _createClass(RecordingItem, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      // this.props.fetchRecording(this.props.match.params.recordingId);
-      this.waveForm = WaveSurfer.create({
-        container: '#audio-waveForm'
-      });
-      this.waveForm.load(this.props.recording.audioUrl); // this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
+    value: function componentDidMount() {// this.props.fetchRecording(this.props.match.params.recordingId);
+      // this.waveForm = WaveSurfer.create({
+      //     container: '#audio-waveForm',
+      // });
+      // this.waveForm.load(this.props.recording.audioUrl);
+      // this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
   }, {
     key: "render",
@@ -1873,10 +1873,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: art,
         src: this.props.recording.artUrl
-      })), link, username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "invisible-waveform",
-        id: "audio-waveForm"
-      }));
+      })), link, username);
     }
   }]);
 
@@ -3104,7 +3101,7 @@ var activeRecordingReducer = function activeRecordingReducer() {
       if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()) {
         var _Object$assign;
 
-        console.log("stop1");
+        // console.log("stop1");
         debugger;
         oldState.recordingElement.stop();
         clearInterval(oldState.progressTimer);
@@ -3115,8 +3112,8 @@ var activeRecordingReducer = function activeRecordingReducer() {
       if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
         var _Object$assign2;
 
-        console.log("play1"); // debugger
-
+        // console.log("play1");
+        // debugger
         action.recordingElement.play();
         return Object.assign({}, oldState, (_Object$assign2 = {}, _defineProperty(_Object$assign2, "recordingElement", action.recordingElement), _defineProperty(_Object$assign2, "recordingId", action.recordingId), _defineProperty(_Object$assign2, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign2, "currentTime", action.currentTime), _defineProperty(_Object$assign2, "progressTimer", action.progressTimer), _Object$assign2));
         break;
@@ -3125,14 +3122,13 @@ var activeRecordingReducer = function activeRecordingReducer() {
       if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
         var _Object$assign3;
 
-        console.log("play2");
+        // console.log("play2");
         return Object.assign({}, oldState, (_Object$assign3 = {}, _defineProperty(_Object$assign3, "recordingElement", action.recordingElement), _defineProperty(_Object$assign3, "recordingId", action.recordingId), _defineProperty(_Object$assign3, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign3, "currentTime", action.currentTime), _defineProperty(_Object$assign3, "progressTimer", action.progressTimer), _Object$assign3));
         break;
       } else if (action.recordingElement.isPlaying() && action.play === false) {
         var _Object$assign4;
 
-        console.log("pause");
-
+        // console.log("pause");
         if (action.stop === true) {
           // debugger;
           action.recordingElement.stop();
@@ -3146,14 +3142,14 @@ var activeRecordingReducer = function activeRecordingReducer() {
         var _Object$assign5;
 
         // debugger
-        console.log("stop");
+        // console.log("stop");
         action.recordingElement.stop();
         return Object.assign({}, oldState, (_Object$assign5 = {}, _defineProperty(_Object$assign5, "recordingElement", action.recordingElement), _defineProperty(_Object$assign5, "recordingId", action.recordingId), _defineProperty(_Object$assign5, "recordingDuration", action.recordingDuration), _defineProperty(_Object$assign5, "currentTime", action.currentTime), _defineProperty(_Object$assign5, "progressTimer", action.progressTimer), _Object$assign5));
         break;
       }
 
       action.recordingElement.stop();
-      console.log("oh no im at the bottom");
+    // console.log("oh no im at the bottom");
 
     default:
       return oldState;

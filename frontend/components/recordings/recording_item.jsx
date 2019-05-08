@@ -70,10 +70,10 @@ class RecordingItem extends React.Component {
 
     componentDidMount() {
         // this.props.fetchRecording(this.props.match.params.recordingId);
-        this.waveForm = WaveSurfer.create({
-            container: '#audio-waveForm',
-        });
-        this.waveForm.load(this.props.recording.audioUrl);
+        // this.waveForm = WaveSurfer.create({
+        //     container: '#audio-waveForm',
+        // });
+        // this.waveForm.load(this.props.recording.audioUrl);
         // this.props.receiveActiveRecording([this.waveForm, this.props.recording.id, this.waveForm.getDuration(), this.waveForm.getCurrentTime()]);
     }
 
@@ -120,7 +120,7 @@ class RecordingItem extends React.Component {
                 {link}
 
                 {username}
-                <div className="invisible-waveform" id="audio-waveForm"></div>
+                {/* <div className="invisible-waveform" id="audio-waveForm"></div> */}
             </div>
         )
     }

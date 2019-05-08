@@ -11,7 +11,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
         }
 
         if (oldState.recordingElement !== action.recordingElement && oldState.recordingElement && action.recordingElement.isPlaying()){
-            console.log("stop1");
+            // console.log("stop1");
             debugger
             oldState.recordingElement.stop();
             clearInterval(oldState.progressTimer);
@@ -27,7 +27,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
         }
 
         if (!action.recordingElement.isPlaying() && action.play !== "stop" && action.play) {
-            console.log("play1");
+            // console.log("play1");
             // debugger
             action.recordingElement.play();
             return Object.assign({}, oldState,
@@ -42,7 +42,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
         }
 
         if (action.recordingElement.isPlaying() && action.play !== "stop" && action.play){
-            console.log("play2");
+            // console.log("play2");
             return Object.assign({}, oldState, 
                 {["recordingElement"]: action.recordingElement,
                 ["recordingId"]: action.recordingId, 
@@ -52,7 +52,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
                 });
             break;
         } else if (action.recordingElement.isPlaying() && action.play === false){
-            console.log("pause");
+            // console.log("pause");
             if (action.stop === true){
                 // debugger;
                 action.recordingElement.stop();
@@ -71,7 +71,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
             break;
         } else if (action.recordingElement.isPlaying() && action.play == "stop") {
             // debugger
-            console.log("stop");
+            // console.log("stop");
             action.recordingElement.stop();
             return Object.assign({}, oldState,
                 {
@@ -84,7 +84,7 @@ const activeRecordingReducer = (oldState = {}, action) => {
             break;
         }
         action.recordingElement.stop();
-        console.log("oh no im at the bottom");
+        // console.log("oh no im at the bottom");
         default:
             return oldState;
     }
