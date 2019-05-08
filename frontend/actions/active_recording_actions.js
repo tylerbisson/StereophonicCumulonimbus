@@ -13,7 +13,8 @@ export const receiveActiveRecording = args => {
         recordingDuration: args[2],
         currentTime: args[3],
         progressTimer: args[4],
-        play: args[5]
+        play: args[5],
+        stop: args[6]
     }
 };
 
@@ -26,6 +27,7 @@ export const receiveActiveRecordingFromIndex = args => {
         recordingDuration: args[2],
         currentTime: args[3],
         progressTimer: args[4],
-        play: args[5]
+        play: args[5], 
+        stop: args[6]
     }
 };
