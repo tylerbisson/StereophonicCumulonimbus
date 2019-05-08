@@ -32,8 +32,8 @@ demo_user3_r = Recording.new({title:"piper maru", description:"cool beat", user_
 demo_user3_r.save! 
 demo_user3_r.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/piper+maru.jpg"),
     filename: "piper+maru.jpg")
-demo_user3_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/piper+maru.m4a"),
-    filename: "piper+maru.m4a")
+demo_user3_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/piper+maru+1.m4a"),
+    filename: "piper+maru+1.m4a")
 
 demo_user4 = User.new({username:"Palmboman II", password:'password'})
 demo_user4.save 
