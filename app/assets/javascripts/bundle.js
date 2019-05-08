@@ -366,6 +366,7 @@ var logoutCurrentUser = function logoutCurrentUser() {
   };
 };
 var receiveErrors = function receiveErrors(errors) {
+  debugger;
   return {
     type: RECEIVE_SESSION_ERRORS,
     errors: errors
@@ -2699,6 +2700,7 @@ function (_React$Component) {
         });
 
         if (this.props.errors.length === 0) {
+          debugger;
           this.props.closeModal();
         }
       }
@@ -3422,6 +3424,9 @@ var sessionReducer = function sessionReducer() {
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
+      return action.errors;
 
     default:
       return state;

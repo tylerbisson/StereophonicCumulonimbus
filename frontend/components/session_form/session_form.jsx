@@ -37,6 +37,7 @@ class SessionForm extends React.Component {
                 this.props.processForm(formData)
                     .then(data => this.props.history.push(`/discover`));
                 if (this.props.errors.length === 0) {
+                    debugger;
                     this.props.closeModal();
                 } 
             }
