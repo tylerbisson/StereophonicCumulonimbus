@@ -366,7 +366,6 @@ var logoutCurrentUser = function logoutCurrentUser() {
   };
 };
 var receiveErrors = function receiveErrors(errors) {
-  debugger;
   return {
     type: RECEIVE_SESSION_ERRORS,
     errors: errors
@@ -2682,24 +2681,24 @@ function (_React$Component) {
       if (this.props.formType === 'login') {
         var user = Object.assign({}, this.state);
         this.props.processForm(user).then(function (data) {
-          return _this3.props.history.push("/discover");
-        });
+          _this3.props.closeModal();
 
-        if (this.props.errors.length === 0) {
-          this.props.closeModal();
-        }
+          _this3.props.history.push("/discover");
+        });
       } else {
         formData.append('user[username]', this.state.username);
         formData.append('user[password]', this.state.password);
-        formData.append('user[portrait]', this.state.portraitFile);
-        this.props.processForm(formData).then(function (data) {
-          return _this3.props.history.push("/discover");
-        });
+        formData.append('user[portrait]', this.state.portraitFile); // this.props.processForm(formData)
+        //     .then(data => this.props.history.push(`/discover`));
+        // if (this.props.errors.session.length === 0) {
+        //     this.props.closeModal();
+        // } 
 
-        if (this.props.errors.length === 0) {
-          debugger;
-          this.props.closeModal();
-        }
+        this.props.processForm(formData).then(function (data) {
+          _this3.props.closeModal();
+
+          _this3.props.history.push("/discover");
+        });
       }
     }
   }, {
