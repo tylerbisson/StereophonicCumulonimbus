@@ -366,6 +366,7 @@ var logoutCurrentUser = function logoutCurrentUser() {
   };
 };
 var receiveErrors = function receiveErrors(errors) {
+  console.log(errors);
   return {
     type: RECEIVE_SESSION_ERRORS,
     errors: errors
