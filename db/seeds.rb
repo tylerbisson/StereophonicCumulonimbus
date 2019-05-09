@@ -148,40 +148,40 @@ demo_user13_r.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumul
 # DEMO USER 
 demo_user = User.new({username:"Tyler Bisson", password:'password'})
 demo_user.save 
-demo_user.portrait.attach(io: File.open("app/assets/images/tyler.jpeg"),
+demo_user.portrait.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/artists/tyler.jpg"),
     filename: "tyler.jpeg")
 
 r1 = Recording.new({title:"Leaf Crackle", description:"cool beat", user_id: demo_user.id})
 r1.save! 
-r1.art.attach(io: File.open("app/assets/images/thats_spooky.png"),
-    filename: "thats_spooky.png")
-r1.audio.attach(io: File.open("app/assets/audio/leaf_crackle.mp3"),
-    filename: "leaf_crackle.mp3")
+r1.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/thats_spooky.jpg"),
+    filename: "thats_spooky.jpg")
+r1.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/03+School+Bell+Like+Leaf+Crackle+Like+Champaine+Fizzle.m4a"),
+    filename: "03+School+Bell+Like+Leaf+Crackle+Like+Champaine+Fizzle.m4a")
 
 r2 = Recording.new({title:"Scenic Court", description:"cool beat", user_id: demo_user.id})
 r2.save! 
-r2.art.attach(io: File.open("app/assets/images/man_cub.jpg"),
+r2.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/man_cub.jpg"),
     filename: "man_cub.jpg")
-r2.audio.attach(io: File.open("app/assets/audio/scenic_court.mp3"),
-    filename: "scenic_court.mp3")
+r2.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/08+Scenic+Court.m4a"),
+    filename: "08+Scenic+Court.m4a")
 
 r3 = Recording.new({title:"leaf peeper, half asleep", description:"cool beat", user_id: demo_user.id})
 r3.save! 
-r3.art.attach(io: File.open("app/assets/images/staycation.jpg"),
+r3.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/staycation.jpg"),
     filename: "staycation.jpg")
-r3.audio.attach(io: File.open("app/assets/audio/leef_peeper.m4a"),
-    filename: "leef_peeper.m4a")
+r3.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/05+leaf+peeper%2C+half+asleep+1.m4a"),
+    filename: "05+leaf+peeper%2C+half+asleep+1.m4a")
 
 r4 = Recording.new({title:"Harrisonburg", description:"cool beat", user_id: demo_user.id})
 r4.save! 
-r4.art.attach(io: File.open("app/assets/images/dataloss.jpg"),
+r4.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/dataloss.jpg"),
     filename: "dataloss.jpg")
-r4.audio.attach(io: File.open("app/assets/audio/harrisonburg.m4a"),
-    filename: "harrisonburg.m4a")
+r4.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/02+hangover+boogie+1.m4a"),
+    filename: "02+hangover+boogie+1.m4a")
 
 r5 = Recording.new({title:"Milk Weed", description:"cool beat", user_id: demo_user.id})
 r5.save! 
-r5.art.attach(io: File.open("app/assets/images/rube.png"),
-    filename: "rube.png")
-r5.audio.attach(io: File.open("app/assets/audio/milkweed.m4a"),
-    filename: "milkweed.m4a")
+r5.art.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/art/rube.jpg"),
+    filename: "rube.jpg")
+r5.audio.attach(io: open("https://s3.amazonaws.com/stereophonic-cumulonimbus-seed/full+stack+assets/recordings/milkweed+1.m4a"),
+    filename: "milkweed+1.m4a")
