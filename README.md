@@ -1,6 +1,7 @@
 # Stereophonic Cumulonimbus
 
-Stereophonic Cumulonimbus live link
+[Stereophonic Cumulonimbus live link](https://stereophoniccumulonimbus.herokuapp.com/#/)
+
 
 Stereophonic Cumulonimbus is full-stack, single-page app in homage to SoundCloud. Users can stream music, comment on their favorite tracks, and upload their own recordings 
 
