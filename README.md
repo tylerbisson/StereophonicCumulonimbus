@@ -28,17 +28,17 @@ The frontend state is managed with React and Redux and the backend utilizes Ruby
 
 #### Styled in homage to soundcloud 
 
-![alt text](app/assets/images/splash.png)
+![alt text](app/assets/images/splash.jpeg)
 
 #### Full user authentication
 
-![alt text](app/assets/images/auth.png)
+![alt text](app/assets/images/auth.jpeg)
 
 #### Continuous audio playback throughout inter-component navigation 
 
-![alt text](app/assets/images/playback.png)
+![alt text](app/assets/images/playback.jpeg)
 
 #### Full CRUD for recordings 
 
-![alt text](app/assets/images/crud.png)
+![alt text](app/assets/images/crud.jpeg)
 
