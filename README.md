@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#Stereophonic Cumulonimbus
 
-Things you may want to cover:
+Stereophonic Cumulonimbus is full-stack, single-page app in homage to SoundCloud. Users can stream music, comment on their favorite tracks, and upload their own recordings 
 
-* Ruby version
+The frontend state is managed with React and Redux and the backend utilizes Ruby on Rails. ActiveStorage and AWS work to manage audio and image assets. 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
