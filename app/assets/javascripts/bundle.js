@@ -2859,26 +2859,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
-/* harmony import */ var _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/active_recording_actions */ "./frontend/actions/active_recording_actions.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+/* harmony import */ var _components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/recordings/recording_item */ "./frontend/components/recordings/recording_item.jsx");
+/* harmony import */ var _actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/active_recording_actions */ "./frontend/actions/active_recording_actions.js");
 
 
 
@@ -2887,106 +2869,74 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+function Splash(props) {
+  Object(react__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
+    props.fetchSplashRecordings();
+  }, []); // useEffect(() => {
+  //     if (prevProps.currentUser !== props.currentUser && !props.currentUser) {
+  //         props.fetchSplashRecordings();
+  //     }
+  // })
 
+  var handleDemoLogin = function handleDemoLogin() {
+    props.demoLogin({
+      username: "Tyler Bisson",
+      password: 'password'
+    }).then(function (data) {
+      props.history.push("/discover");
+    });
+  };
 
-var Splash =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Splash, _React$Component);
+  var recordingItems = Object.values(props.recordings);
 
-  function Splash(props) {
-    var _this;
-
-    _classCallCheck(this, Splash);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Splash).call(this, props));
-    _this.handleDemoLogin = _this.handleDemoLogin.bind(_assertThisInitialized(_this));
-    return _this;
+  if (Object.keys(props.recordings).length < 1) {
+    recordingItems = null;
+  } else {
+    var recordings = Object.values(props.recordings);
+    recordingItems = recordings.map(function (recording) {
+      return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        recording: recording,
+        key: recording.id,
+        receiveActiveRecording: props.receiveActiveRecording,
+        activeRecording: props.activeRecording
+      });
+    });
   }
 
-  _createClass(Splash, [{
-    key: "handleDemoLogin",
-    value: function handleDemoLogin() {
-      var _this2 = this;
-
-      this.props.demoLogin({
-        username: "Tyler Bisson",
-        password: 'password'
-      }).then(function (data) {
-        _this2.props.history.push("/discover");
-      });
+  return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("section", {
+    className: "greeting-hero"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("nav", {
+    className: "login-signup"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    className: "nav-buttonbox-left-splash"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("img", {
+    className: "logo",
+    src: window.logoURL
+  }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", null, "STEREOPHONIC CUMULONIMBUS")), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    className: "nav-buttonbox-right"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
+    className: "nav-login",
+    onClick: function onClick() {
+      return props.openModal('login');
     }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchSplashRecordings();
+  }, "Sign in"), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
+    className: "nav-signup",
+    onClick: function onClick() {
+      return props.openModal('signup');
     }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (prevProps.currentUser !== this.props.currentUser && !this.props.currentUser) {
-        this.props.fetchSplashRecordings();
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this3 = this;
-
-      var recordingItems = Object.values(this.props.recordings);
-
-      if (Object.keys(this.props.recordings).length < 1) {
-        recordingItems = null;
-      } else {
-        var recordings = Object.values(this.props.recordings);
-        recordingItems = recordings.map(function (recording) {
-          return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_recordings_recording_item__WEBPACK_IMPORTED_MODULE_6__["default"], {
-            recording: recording,
-            key: recording.id,
-            receiveActiveRecording: _this3.props.receiveActiveRecording,
-            activeRecording: _this3.props.activeRecording
-          });
-        });
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("section", {
-        className: "greeting-hero"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("nav", {
-        className: "login-signup"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-        className: "nav-buttonbox-left-splash"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("img", {
-        className: "logo",
-        src: window.logoURL
-      }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", null, "STEREOPHONIC CUMULONIMBUS")), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-        className: "nav-buttonbox-right"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
-        className: "nav-login",
-        onClick: function onClick() {
-          return _this3.props.openModal('login');
-        }
-      }, "Sign in"), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
-        className: "nav-signup",
-        onClick: function onClick() {
-          return _this3.props.openModal('signup');
-        }
-      }, "Create account"))), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-        className: "hero-slogan"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", null, "What's next in music is first on Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
-        className: "demo-button",
-        onClick: this.handleDemoLogin
-      }, "Login as Demo User"))), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("section", {
-        className: "splash-recordings"
-      }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", {
-        className: "splash-recordings-header"
-      }, "Hear what\u2019s trending for free in the cult of Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("ul", {
-        className: "splash-recordings-list"
-      }, recordingItems)));
-    }
-  }]);
-
-  return Splash;
-}(react__WEBPACK_IMPORTED_MODULE_4___default.a.Component);
+  }, "Create account"))), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    className: "hero-slogan"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", null, "What's next in music is first on Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
+    className: "demo-button",
+    onClick: handleDemoLogin
+  }, "Login as Demo User"))), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("section", {
+    className: "splash-recordings"
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", {
+    className: "splash-recordings-header"
+  }, "Hear what\u2019s trending for free in the cult of Stereophonic Cumulonimbus"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("ul", {
+    className: "splash-recordings-list"
+  }, recordingItems)));
+}
 
 ;
 
@@ -3021,7 +2971,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       return dispatch(Object(_actions_recordings_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSplashRecordings"])());
     },
     receiveActiveRecording: function receiveActiveRecording(args) {
-      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_7__["receiveActiveRecording"])(args));
+      return dispatch(Object(_actions_active_recording_actions__WEBPACK_IMPORTED_MODULE_6__["receiveActiveRecording"])(args));
     }
   };
 };
@@ -3316,6 +3266,7 @@ var recordingsReducer = function recordingsReducer() {
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, oldState, action.recordings);
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SPLASH_RECORDINGS"]:
+      // return Object.assign({}, oldState, action.recordings);
       return action.recordings;
 
     case _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_0__["DELETE_RECORDING"]:
@@ -3737,7 +3688,7 @@ var Auth = function Auth(_ref) {
     exact: exact,
     render: function render(props) {
       return !loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-        to: "/recordings/new"
+        to: "/recordings"
       });
     }
   });
@@ -3760,7 +3711,6 @@ var Protected = function Protected(_ref2) {
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-  // debugger
   return {
     loggedIn: Boolean(state.session.id)
   };
