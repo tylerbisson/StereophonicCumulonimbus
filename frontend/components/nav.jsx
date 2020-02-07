@@ -4,46 +4,40 @@ import { openModal, closeModal } from '../actions/modal_actions';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-class Nav extends React.Component {
-    constructor(props) {
-        super(props);
+function Nav(props) {
 
-        this.redirectToUserPage = this.redirectToUserPage.bind(this);
-        this.redirectToHome = this.redirectToHome.bind(this);
+    const redirectToUserPage = () =>{
+        props.history.push(`/users/${props.currentUser.id}`)
     }
 
-    redirectToUserPage(){
-        this.props.history.push(`/users/${this.props.currentUser.id}`)
-    }
-
-    redirectToHome(){
-        if(this.props.currentUser){
-            this.props.history.push(`/discover`)
+    const redirectToHome = () => {
+        if(props.currentUser){
+            props.history.push(`/discover`)
         } else {
-            this.props.history.push(`/`)
+            props.history.push(`/`)
         }
     }
 
-    navLoggedIn(){
+    const navLoggedIn = () => {
         return (
             <div className="nav-bar">
                 <nav className="nav-loggedin">
                     <div className="nav-buttonbox-left">
                         <img className="nav-loggedin-logo" src={window.logoURL} />
-                        <button className="nav-home" onClick={this.redirectToHome}>
+                        <button className="nav-home" onClick={redirectToHome}>
                             Home
                         </button>
                     </div>
                     <div className="nav-buttonbox-right-loggedin">
                         <button className="nav-upload"
-                        onClick={() => this.props.history.push(`/recordings/new`)}>
+                        onClick={() => props.history.push(`/recordings/new`)}>
                             Upload
                         </button>
-                        <button className={"nav-greetingmessage"} onClick={this.redirectToUserPage}>
-                            <img className="user-portrait" src={this.props.currentUser.portraitUrl} />
-                            {this.props.currentUser.username}
+                        <button className={"nav-greetingmessage"} onClick={redirectToUserPage}>
+                            <img className="user-portrait" src={props.currentUser.portraitUrl} />
+                            {props.currentUser.username}
                         </button>
-                        <button className="nav-logout" onClick={this.props.logout}>
+                        <button className="nav-logout" onClick={props.logout}>
                             Log Out
                         </button>
                     </div>
@@ -52,13 +46,13 @@ class Nav extends React.Component {
         )
     }
 
-    navLoggedOut() {
+    const navLoggedOut = () => {
         return (
             <div className="nav-bar">
                 <nav className="nav-loggedin">
                     <div className="nav-buttonbox-left">
                         <img className="nav-loggedin-logo" src={window.logoURL} />
-                        <button className="nav-home" onClick={this.redirectToHome}>
+                        <button className="nav-home" onClick={redirectToHome}>
                             Home
                         </button>
                     </div>
@@ -75,9 +69,7 @@ class Nav extends React.Component {
         )
     }
 
-    render() {
-        return this.props.currentUser ? this.navLoggedIn() : this.navLoggedOut();
-    };
+    return props.currentUser ? navLoggedIn() : navLoggedOut();
 };
 
 const mapStateToProps = ({ session, entities: { users, recordings } }) => {

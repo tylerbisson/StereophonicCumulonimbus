@@ -930,127 +930,81 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
 
 
+function Nav(props) {
+  var redirectToUserPage = function redirectToUserPage() {
+    props.history.push("/users/".concat(props.currentUser.id));
+  };
 
-var Nav =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Nav, _React$Component);
-
-  function Nav(props) {
-    var _this;
-
-    _classCallCheck(this, Nav);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Nav).call(this, props));
-    _this.redirectToUserPage = _this.redirectToUserPage.bind(_assertThisInitialized(_this));
-    _this.redirectToHome = _this.redirectToHome.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(Nav, [{
-    key: "redirectToUserPage",
-    value: function redirectToUserPage() {
-      this.props.history.push("/users/".concat(this.props.currentUser.id));
+  var redirectToHome = function redirectToHome() {
+    if (props.currentUser) {
+      props.history.push("/discover");
+    } else {
+      props.history.push("/");
     }
-  }, {
-    key: "redirectToHome",
-    value: function redirectToHome() {
-      if (this.props.currentUser) {
-        this.props.history.push("/discover");
-      } else {
-        this.props.history.push("/");
+  };
+
+  var navLoggedIn = function navLoggedIn() {
+    return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-bar"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("nav", {
+      className: "nav-loggedin"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-buttonbox-left"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
+      className: "nav-loggedin-logo",
+      src: window.logoURL
+    }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-home",
+      onClick: redirectToHome
+    }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-buttonbox-right-loggedin"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-upload",
+      onClick: function onClick() {
+        return props.history.push("/recordings/new");
       }
-    }
-  }, {
-    key: "navLoggedIn",
-    value: function navLoggedIn() {
-      var _this2 = this;
+    }, "Upload"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-greetingmessage",
+      onClick: redirectToUserPage
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
+      className: "user-portrait",
+      src: props.currentUser.portraitUrl
+    }), props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-logout",
+      onClick: props.logout
+    }, "Log Out"))));
+  };
 
-      return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-bar"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("nav", {
-        className: "nav-loggedin"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-buttonbox-left"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
-        className: "nav-loggedin-logo",
-        src: window.logoURL
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-home",
-        onClick: this.redirectToHome
-      }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-buttonbox-right-loggedin"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-upload",
-        onClick: function onClick() {
-          return _this2.props.history.push("/recordings/new");
-        }
-      }, "Upload"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-greetingmessage",
-        onClick: this.redirectToUserPage
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
-        className: "user-portrait",
-        src: this.props.currentUser.portraitUrl
-      }), this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-logout",
-        onClick: this.props.logout
-      }, "Log Out"))));
-    }
-  }, {
-    key: "navLoggedOut",
-    value: function navLoggedOut() {
-      return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-bar"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("nav", {
-        className: "nav-loggedin"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-buttonbox-left"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
-        className: "nav-loggedin-logo",
-        src: window.logoURL
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-home",
-        onClick: this.redirectToHome
-      }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-        className: "nav-buttonbox-right-loggedin"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-loggedout-login"
-      }, "Log In"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
-        className: "nav-loggedout-signup"
-      }, "Sign Up"))));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.props.currentUser ? this.navLoggedIn() : this.navLoggedOut();
-    }
-  }]);
+  var navLoggedOut = function navLoggedOut() {
+    return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-bar"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("nav", {
+      className: "nav-loggedin"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-buttonbox-left"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("img", {
+      className: "nav-loggedin-logo",
+      src: window.logoURL
+    }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-home",
+      onClick: redirectToHome
+    }, "Home")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      className: "nav-buttonbox-right-loggedin"
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-loggedout-login"
+    }, "Log In"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+      className: "nav-loggedout-signup"
+    }, "Sign Up"))));
+  };
 
-  return Nav;
-}(react__WEBPACK_IMPORTED_MODULE_3___default.a.Component);
+  return props.currentUser ? navLoggedIn() : navLoggedOut();
+}
 
 ;
 
@@ -2872,7 +2826,8 @@ __webpack_require__.r(__webpack_exports__);
 function Splash(props) {
   Object(react__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
     props.fetchSplashRecordings();
-  }, []); // useEffect(() => {
+  }, []); // CANT REMEMBER WHAT THE POINT OF THIS IS 2/6/20
+  // useEffect(() => {
   //     if (prevProps.currentUser !== props.currentUser && !props.currentUser) {
   //         props.fetchSplashRecordings();
   //     }

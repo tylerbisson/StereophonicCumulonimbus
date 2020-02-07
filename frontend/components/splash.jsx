@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { logout, login } from '../actions/session_actions';
 import { openModal, closeModal } from '../actions/modal_actions';
 import { fetchSplashRecordings } from '../actions/recordings_actions';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import RecordingItem from '../components/recordings/recording_item';
 import { receiveActiveRecording } from '../actions/active_recording_actions';
 
@@ -12,7 +12,8 @@ function Splash(props) {
     useEffect(() => {
         props.fetchSplashRecordings();
     }, [])
-
+    
+    // CANT REMEMBER WHAT THE POINT OF THIS IS 2/6/20
     // useEffect(() => {
     //     if (prevProps.currentUser !== props.currentUser && !props.currentUser) {
     //         props.fetchSplashRecordings();
