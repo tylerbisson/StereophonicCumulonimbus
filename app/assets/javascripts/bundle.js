@@ -3428,14 +3428,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util/session_api_util */ "./frontend/util/session_api_util.js");
-/* harmony import */ var _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/recordings_actions */ "./frontend/actions/recordings_actions.js");
-/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/comments_actions */ "./frontend/actions/comments_actions.js");
-/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
+/* harmony import */ var _actions_comments_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/comments_actions */ "./frontend/actions/comments_actions.js");
+/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 
@@ -3448,7 +3444,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var store;
 
   if (window.currentUser) {
-    // debugger 
     var preloadedState = {
       entities: {
         recordings: window.currentUser.recordings,
@@ -3458,30 +3453,22 @@ document.addEventListener('DOMContentLoaded', function () {
         id: window.currentUser.user.id
       }
     };
-    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_8__["default"])(preloadedState);
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_6__["default"])(preloadedState);
     delete window.currentUser;
   } else {
-    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_8__["default"])();
-  } //TESTINGTESTINGTESTING
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  } //ACTIONS ADDED TO WINDOW FOR EASE OF DEV 2/6/20
 
 
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["login"]; // window.signup = sessionAPIUtil.signup;
-
+  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["login"];
   window.logout = _util_session_api_util__WEBPACK_IMPORTED_MODULE_3__["logout"];
-  window.createComment = _actions_comments_actions__WEBPACK_IMPORTED_MODULE_6__["createComment"]; // we don't put the store directly on the window because
-  // it can be confusing when debugging, sometimes giving you access to state
-  // when you shouldn't
-
+  window.createComment = _actions_comments_actions__WEBPACK_IMPORTED_MODULE_4__["createComment"];
   window.getState = store.getState;
   window.dispatch = store.dispatch; // just for testing!
-  // window.createRecording = recordingActions.createRecording;
-
-  window.fetchSplashRecordings = _actions_recordings_actions__WEBPACK_IMPORTED_MODULE_4__["fetchSplashRecordings"];
-  window.fetchUser = _actions_user_actions__WEBPACK_IMPORTED_MODULE_5__["fetchUser"]; //TESTINGTESTINGTESTING
 
   var root = document.getElementById('root');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Stereophonic Cumulonimbus"), root);
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_5__["default"], {
     store: store
   }), root);
 });
