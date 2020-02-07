@@ -1,11 +1,7 @@
 import React from 'react';
-// import GreetingContainer from './greeting/greeting_container';
 import {
     Route, 
-    Redirect, 
     Switch, 
-    Link, 
-    HashRouter
 } from 'react-router-dom';
 import Modal from '../components/modal/modal'
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
