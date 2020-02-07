@@ -1,65 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { withRouter } from 'react-router-dom';
 
-class SessionForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            portraitFile: null,
-            portraitUrl: null,
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleImgFile = this.handleImgFile.bind(this);
-    }
+function SessionForm (props) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [portraitFile, setPortraitFile] = useState(null);
+    const [portraitUrl, setPortraitUrl] = useState(null);
 
-    update(field) {
-        return e => this.setState({
-            [field]: e.currentTarget.value
-        });
-    }
-
-    handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-            if (this.props.formType === 'login'){
-                const user = Object.assign({}, this.state);
-                this.props.processForm(user)
-                    .then(data => {
-                        this.props.closeModal();
-                        this.props.history.push(`/discover`);
+            if (props.formType === 'login'){
+                let data = {
+                    username: username,
+                    password: password
+                };
+                props.processForm(data)
+                    .then(() => {
+                        props.closeModal();
+                        props.history.push(`/discover`);
                     });
             } else {
-                formData.append('user[username]', this.state.username);
-                formData.append('user[password]', this.state.password);
-                formData.append('user[portrait]', this.state.portraitFile);
-                // this.props.processForm(formData)
-                //     .then(data => this.props.history.push(`/discover`));
-                // if (this.props.errors.session.length === 0) {
-                //     this.props.closeModal();
-                // } 
-                this.props.processForm(formData)
-                    .then(data => {
-                        this.props.closeModal();
-                        this.props.history.push(`/discover`);
+                let formData = new FormData();
+                formData.append('user[username]', username);
+                formData.append('user[password]', password);
+                formData.append('user[portrait]', portraitFile);
+                props.processForm(formData)
+                    .then(() => {
+                        props.closeModal();
+                        props.history.push(`/discover`);
                     });
             }
     }
 
-    handleImgFile(e) {
+    const handleImgFile = (e) => {
         const file = e.currentTarget.files[0];
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
-            this.setState({ portraitFile: file, portraitUrl: fileReader.result });
+            setPortraitFile(file);
+            setPortraitUrl(fileReader.result);
+            // setState({ portraitFile: file, portraitUrl: fileReader.result });
         }
         if (file) {
             fileReader.readAsDataURL(file);
         }
     }
 
-    renderErrors() {
-        let errorArr = Object.values(this.props.errors)
+    const renderErrors = () => {
+        let errorArr = Object.values(props.errors)
         return (
             <ul className="modal-errors">
                 {errorArr.map((error, i) => (
@@ -71,15 +58,13 @@ class SessionForm extends React.Component {
         );
     }
 
-    render() {
-
         let backgroundImg = {
-            backgroundImage: 'url(' + this.state.portraitUrl + ')'
+            backgroundImage: 'url(' + portraitUrl + ')'
         };
 
         let modalMessage ="";
         let portraitUpload = null;
-        if (this.props.formType === 'login'){
+        if (props.formType === 'login'){
             modalMessage = <h1 className="modal-message">Sign into your Stereophonic Cumulonimbus account</h1>;
         } else {
             modalMessage = <h1 className="modal-message">Create your Stereophonic Cumulonimbus account</h1>;
@@ -87,7 +72,7 @@ class SessionForm extends React.Component {
             <>
                 <div className="modal-profile-picture" style={backgroundImg}> 
                     <input className="modal-profile-picture-file-input"
-                        type="file" onChange={this.handleImgFile} />
+                        type="file" onChange={handleImgFile} />
                 </div>
                 <h2 className="modal-profile-picture-label">
                     Upload Profile Picture
@@ -96,8 +81,7 @@ class SessionForm extends React.Component {
         }
 
         return (
-            <>
-            <form onSubmit={this.handleSubmit} 
+            <form onSubmit={handleSubmit} 
                 className="login-form-box">
                 {modalMessage}
                 {portraitUpload}
@@ -105,8 +89,8 @@ class SessionForm extends React.Component {
                     <br />
                     <div className="login-text"> 
                             <input type="text"
-                                    value={this.state.username}
-                                    onChange={this.update('username')}
+                                    value={username}
+                                    onChange={e => setUsername(e.target.value)}
                                     className="login-input"
                                     placeholder="username"
                                     />
@@ -114,8 +98,8 @@ class SessionForm extends React.Component {
                     <br />
                     <div className="login-text"> 
                         <input type="password"
-                                value={this.state.password}
-                                onChange={this.update('password')}
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
                                 className="login-input"
                                 placeholder="password"
                                 />
@@ -124,11 +108,9 @@ class SessionForm extends React.Component {
                     <button className="session-submit" type="submit"> 
                         Continue 
                     </button>
-            {this.renderErrors()}
+            {renderErrors()}
             </form>
-            </>
         );
     }
-}
 
 export default withRouter(SessionForm);
