@@ -2526,15 +2526,10 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(_ref) {
   var errors = _ref.errors,
       session = _ref.session;
-  // let id = session.id;
-  // if (!id){
-  //     id = null;
-  // }
   return {
     currentUserId: session,
     errors: errors.session,
-    formType: 'login' // navLink: <Link to="/signup">sign up instead</Link>,
-
+    formType: 'login'
   };
 };
 
@@ -2945,8 +2940,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-
 
 
 var UserBanner = function UserBanner(_ref) {

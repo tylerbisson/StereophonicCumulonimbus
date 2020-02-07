@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         store = configureStore();
     }
+    
     //ACTIONS ADDED TO WINDOW FOR EASE OF DEV 2/6/20
     window.login = sessionActions.login;
     window.logout = sessionAPIUtil.logout;
