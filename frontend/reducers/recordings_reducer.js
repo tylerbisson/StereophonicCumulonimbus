@@ -21,6 +21,7 @@ const recordingsReducer = (oldState = {}, action) => {
         case RECEIVE_RECORDINGS:
             return merge({}, oldState, action.recordings);
         case RECEIVE_SPLASH_RECORDINGS: 
+            // return Object.assign({}, oldState, action.recordings);
             return action.recordings;
         case DELETE_RECORDING: 
             let newState = merge({}, oldState);
